@@ -1,4 +1,4 @@
-package com.carrier.modelexposer.webservice.openmarkov;
+package com.carrier.modelexposer.openmarkov;
 
 
 import com.carrier.modelexposer.webservice.domain.Attribute;
@@ -8,7 +8,6 @@ import org.openmarkov.core.model.network.*;
 import org.openmarkov.core.model.network.potential.TablePotential;
 import org.openmarkov.inference.variableElimination.tasks.VEPropagation;
 import org.openmarkov.io.probmodel.reader.PGMXReader_0_2;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -18,19 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 public class OpenMarkovClassifier {
-    @Value ("${path}")
-    String path;
-    String model;
+    private String path;
+    private String model;
 
     private ProbNet network;
 
     public OpenMarkovClassifier(String path, String model) {
         this.path = path;
         this.model = model;
-        loadModel();
-    }
-
-    public OpenMarkovClassifier() {
         loadModel();
     }
 
