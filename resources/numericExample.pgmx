@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProbModelXML formatVersion="0.2.0">
+  <ProbNet type="BayesianNetwork">
+    <Comment showWhenOpeningNetwork="false"><![CDATA[<<Double click to add/modify comment>>]]></Comment>
+    <DecisionCriteria>
+      <Criterion name="---" unit="---" />
+    </DecisionCriteria>
+    <AdditionalProperties />
+    <Variables>
+      <Variable name="Discrete Child" type="discretized" role="chance">
+        <Coordinates x="536" y="239" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <States>
+          <State name="Negative" />
+          <State name="Positive" />
+        </States>
+        <Thresholds>
+          <Threshold value="-Infinity" belongsTo="left" />
+          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="Infinity" belongsTo="right" />
+        </Thresholds>
+      </Variable>
+      <Variable name="Discrete Parent" type="discretized" role="chance">
+        <Coordinates x="490" y="149" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <States>
+          <State name="Negative" />
+          <State name="positive" />
+        </States>
+        <Thresholds>
+          <Threshold value="-Infinity" belongsTo="left" />
+          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="Infinity" belongsTo="right" />
+        </Thresholds>
+      </Variable>
+    </Variables>
+    <Links>
+      <Link directed="true">
+        <Variable name="Discrete Parent" />
+        <Variable name="Discrete Child" />
+      </Link>
+    </Links>
+    <Potentials>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Discrete Child" />
+          <Variable name="Discrete Parent" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Discrete Parent" />
+        </Variables>
+      </Potential>
+    </Potentials>
+    <OON />
+  </ProbNet>
+  <InferenceOptions>
+    <MulticriteriaOptions>
+      <SelectedAnalysisType>UNICRITERION</SelectedAnalysisType>
+      <Unicriterion>
+        <Scales>
+          <Scale Criterion="---" Value="1.0" />
+        </Scales>
+      </Unicriterion>
+      <CostEffectiveness>
+        <Scales>
+          <Scale Criterion="---" Value="1.0" />
+        </Scales>
+        <CE_Criteria>
+          <CE_Criterion Criterion="---" Value="Cost" />
+        </CE_Criteria>
+      </CostEffectiveness>
+    </MulticriteriaOptions>
+  </InferenceOptions>
+</ProbModelXML>
