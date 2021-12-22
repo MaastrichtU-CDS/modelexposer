@@ -54,6 +54,24 @@ public class OpenMarkovClassifierTest {
     }
 
     @Test
+    public void testClassifyTestSanaNetExample()
+            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
+                   InvalidStateException, UnexpectedInferenceException {
+        {
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    "resources/", "20211222 - Model.pgmx");
+            List<String> targets = Arrays.asList("CVD_risk");
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("age", "60_70");
+            ClassifyIndividualResponse response = classifier.classify(evidence, targets);
+            assertEquals(response.getAttributes().size(), 1);
+
+
+        }
+    }
+
+
+    @Test
     public void testClassifyTestDiscreteVariables()
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
