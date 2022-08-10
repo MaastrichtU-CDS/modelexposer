@@ -4,9 +4,16 @@ import com.carrier.modelexposer.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.webservice.domain.Attribute;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualRequest;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.openmarkov.core.exception.*;
+import org.openmarkov.core.model.network.ProbNet;
+import org.openmarkov.io.probmodel.reader.PGMXReader_0_2;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -116,5 +123,33 @@ public class ServerTest {
             });
 
         }
+    }
+
+    @Test
+    public void testGetBayesianModel()
+            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
+                   InvalidStateException, UnexpectedInferenceException, IOException, ParserException {
+        {
+            String path = "resources/";
+            String model = "BN-two-diseases.pgmx";
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    path, model);
+            Server server = new Server(classifier);
+            String output = server.getBayesianModel();
+            String expected = expectedModel(path + model);
+
+            assertEquals(output, expected);
+
+            PGMXReader_0_2 pgmxReader = new PGMXReader_0_2();
+            InputStream targetStream = new ByteArrayInputStream(output.getBytes());
+            ProbNet network = pgmxReader.loadProbNet(model, targetStream);
+
+            assertEquals(classifier.getNetwork().toString(), network.toString());
+        }
+    }
+
+    private String expectedModel(String path) throws IOException {
+        FileInputStream fis = new FileInputStream(path);
+        return IOUtils.toString(fis, "UTF-8");
     }
 }
