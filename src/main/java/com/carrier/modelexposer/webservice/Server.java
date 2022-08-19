@@ -45,5 +45,4 @@ public class Server {
         }
         return classifier.getModelPgmx();
     }
-
 }

@@ -60,6 +60,37 @@
     <build>
         <plugins>
             <plugin>
+                <!-- THis plugin ensures all the libraries are included in the jar file which is needed due to how
+                 openMarkov works-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>final</finalName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!--Makes sure there is a main class in the jar with all the dependencies-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.carrier.modelexposer.WebserviceDtApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -84,11 +115,14 @@
                             <usedDependencies>
                                 <usedDependency>org.springframework.boot:spring-boot-starter-web</usedDependency>
                             </usedDependencies>
+                            <ignoredDependencies>
+                                <ignoredDependency>org.junit.jupiter:junit-jupiter-api:jar</ignoredDependency>
+                            </ignoredDependencies>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!--Code style check-->
+            <!--            Code style check-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -156,10 +190,20 @@
             </plugin>
             <!--            Turn this on if you want to run just the n-scalar party protocol, turn it off to be able to
             use it as a library, stupid spring boot ruins libraries apparently-->
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>ProjectRepo</id>
+            <name>ProjectRepo</name>
+            <url>file://${project.basedir}/openmarkov</url>
+        </repository>
+    </repositories>
 </project>
+
+

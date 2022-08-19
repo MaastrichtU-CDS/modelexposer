@@ -59,7 +59,7 @@ public class OpenMarkovClassifierTest {
                    InvalidStateException, UnexpectedInferenceException {
         {
             OpenMarkovClassifier classifier = new OpenMarkovClassifier(
-                    "resources/", "20211222 - Model.pgmx");
+                    "resources/", "20211222-Model.pgmx");
             List<String> targets = Arrays.asList("CVD_risk");
             Map<String, String> evidence = new HashMap<>();
             evidence.put("age", "60_70");
