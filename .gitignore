@@ -3,3 +3,4 @@
 /modelexposer/target/
 /target
 /*.iml
+/dockerBuildFlorian.sh
