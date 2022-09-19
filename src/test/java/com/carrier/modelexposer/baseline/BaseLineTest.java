@@ -3,6 +3,7 @@ package com.carrier.modelexposer.baseline;
 import org.junit.jupiter.api.Test;
 import org.openmarkov.core.exception.*;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.carrier.modelexposer.baseline.BaseLine.collectExampleBaseLinesEvidences;
@@ -14,33 +15,15 @@ public class BaseLineTest {
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
         {
-            Map<String, Map<String, String>> baseLineEvidences = collectExampleBaseLinesEvidences();
-            assertEquals(baseLineEvidences.size(), 17);
+            List<Map<String, String>> baseLineEvidences = collectExampleBaseLinesEvidences();
+            assertEquals(baseLineEvidences.size(), 5);
 
-            // Should contain the following combos:
-            // 1 value combo:
+            // Should contain the following values:
             //"ex-Smoker"
             //"Physical medium"
             //"Physical high"
             //"Nutrition medium"
             //"Nutrition high"
-
-            //combo's containing 2 values:
-            //"ex-Smoker Physical medium"
-            //"ex-Smoker Physical high"
-            //"ex-Smoker Nutrition medium"
-            //"ex-Smoker Nutrition high"
-
-            //"Nutrition medium Physical medium"
-            //"Nutrition high Physical high"
-            //"Nutrition medium Physical high"
-            //"Nutrition high Physical medium"
-
-            //combo's containing 3 values:
-            //"ex-Smoker Nutrition medium Physical medium"
-            //"ex-Smoker Nutrition high Physical high"
-            //"ex-Smoker Nutrition medium Physical high"
-            //"ex-Smoker Nutrition high Physical medium"
 
         }
     }

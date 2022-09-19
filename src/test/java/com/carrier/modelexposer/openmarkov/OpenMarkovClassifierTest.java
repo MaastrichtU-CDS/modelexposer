@@ -104,7 +104,7 @@ public class OpenMarkovClassifierTest {
             Map<String, String> evidence = new HashMap<>();
             evidence.put("smoking_status", "current_smoker");
             ClassifyIndividualComparisonResponse result = classifier.compareClassifications(evidence, targets);
-            assertEquals(result.getComparisons().size(), 17); // 1 original, 17 comparisons
+            assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
         }
     }
 }

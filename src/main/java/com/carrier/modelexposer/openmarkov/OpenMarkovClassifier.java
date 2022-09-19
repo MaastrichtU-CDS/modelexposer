@@ -52,14 +52,14 @@ public class OpenMarkovClassifier {
                                                                        List<String> targets)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
-        Map<String, Map<String, String>> baselineEvidences = collectExampleBaseLinesEvidences();
+        List<Map<String, String>> baselineEvidences = collectExampleBaseLinesEvidences();
         ClassifyIndividualComparisonResponse result = new ClassifyIndividualComparisonResponse();
         result.setBaseline(classify(evidence, targets));
-        for (String key : baselineEvidences.keySet()) {
+        for (Map<String, String> baseline : baselineEvidences) {
             Map<String, String> evidences = new HashMap<>();
-            evidences.putAll(baselineEvidences.get(key));
-            evidence.putAll(evidence);
-            result.addResult(baselineEvidences.get(key), classify(evidences, targets).getAttributes());
+            evidences.putAll(baseline);
+            evidences.putAll(evidence);
+            result.addResult(baseline, classify(evidences, targets).getAttributes());
         }
         return result;
     }

@@ -168,7 +168,7 @@ public class ServerTest {
             req.setEvidence(evidence);
             req.setTargets(targets);
             ClassifyIndividualComparisonResponse result = server.classifyIndividualWithComparisons(req);
-            assertEquals(result.getComparisons().size(), 17); // 1 original, 17 comparisons
+            assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
         }
     }
 
