@@ -1,4 +1,4 @@
-docker login -u "fvandaalen" -p "GxTgeu8i7iNvXa3" docker.io
+docker login -u "user" -p "password" docker.io
 
 IMAGE=fvandaalen/carrier:modelexposer_bayesian
 docker build -t modelexposer_bayesian .

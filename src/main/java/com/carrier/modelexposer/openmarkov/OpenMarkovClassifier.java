@@ -2,6 +2,7 @@ package com.carrier.modelexposer.openmarkov;
 
 
 import com.carrier.modelexposer.webservice.domain.Attribute;
+import com.carrier.modelexposer.webservice.domain.ClassifyIndividualComparisonResponse;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
 import org.apache.commons.io.IOUtils;
 import org.openmarkov.core.exception.*;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.carrier.modelexposer.baseline.BaseLine.collectExampleBaseLinesEvidences;
 
 public class OpenMarkovClassifier {
     private String path;
@@ -43,6 +46,22 @@ public class OpenMarkovClassifier {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public ClassifyIndividualComparisonResponse compareClassifications(Map<String, String> evidence,
+                                                                       List<String> targets)
+            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
+                   InvalidStateException, UnexpectedInferenceException {
+        Map<String, Map<String, String>> baselineEvidences = collectExampleBaseLinesEvidences();
+        ClassifyIndividualComparisonResponse result = new ClassifyIndividualComparisonResponse();
+        result.setBaseline(classify(evidence, targets));
+        for (String key : baselineEvidences.keySet()) {
+            Map<String, String> evidences = new HashMap<>();
+            evidences.putAll(baselineEvidences.get(key));
+            evidence.putAll(evidence);
+            result.addResult(baselineEvidences.get(key), classify(evidences, targets).getAttributes());
+        }
+        return result;
     }
 
     public ClassifyIndividualResponse classify(Map<String, String> evidence, List<String> targets)

@@ -1,6 +1,7 @@
 package com.carrier.modelexposer.openmarkov;
 
 import com.carrier.modelexposer.webservice.domain.Attribute;
+import com.carrier.modelexposer.webservice.domain.ClassifyIndividualComparisonResponse;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
 import org.junit.jupiter.api.Test;
 import org.openmarkov.core.exception.*;
@@ -89,6 +90,21 @@ public class OpenMarkovClassifierTest {
             assertEquals(response.getAttributes().get(0).getProbabilities().get("Negative"), 0.5, 0.01);
             assertEquals(response.getAttributes().get(0).getProbabilities().get("Positive"), 0.5, 0.01);
 
+        }
+    }
+
+    @Test
+    public void testComparisons()
+            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
+                   InvalidStateException, UnexpectedInferenceException {
+        {
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    "resources/", "model.pgmx");
+            List<String> targets = Arrays.asList("CVD_risk");
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("smoking_status", "current_smoker");
+            ClassifyIndividualComparisonResponse result = classifier.compareClassifications(evidence, targets);
+            assertEquals(result.getComparisons().size(), 17); // 1 original, 17 comparisons
         }
     }
 }

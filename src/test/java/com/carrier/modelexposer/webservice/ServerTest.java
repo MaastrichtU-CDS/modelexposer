@@ -2,6 +2,7 @@ package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.webservice.domain.Attribute;
+import com.carrier.modelexposer.webservice.domain.ClassifyIndividualComparisonResponse;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualRequest;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
 import org.apache.commons.io.IOUtils;
@@ -145,6 +146,29 @@ public class ServerTest {
             ProbNet network = pgmxReader.loadProbNet(model, targetStream);
 
             assertEquals(classifier.getNetwork().toString(), network.toString());
+        }
+    }
+
+    @Test
+    public void testComparison()
+            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
+                   InvalidStateException, UnexpectedInferenceException, IOException, ParserException {
+        {
+            String path = "resources/";
+            String model = "model.pgmx";
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    path, model);
+            Server server = new Server(classifier);
+
+            List<String> targets = Arrays.asList("CVD_risk");
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("smoking_status", "current_smoker");
+
+            ClassifyIndividualRequest req = new ClassifyIndividualRequest();
+            req.setEvidence(evidence);
+            req.setTargets(targets);
+            ClassifyIndividualComparisonResponse result = server.classifyIndividualWithComparisons(req);
+            assertEquals(result.getComparisons().size(), 17); // 1 original, 17 comparisons
         }
     }
 
