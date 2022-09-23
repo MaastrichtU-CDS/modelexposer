@@ -1,17 +1,27 @@
 package com.carrier.modelexposer.webservice.domain;
 
-import java.util.List;
 import java.util.Map;
 
 public class ClassifyIndividualRequest {
-    private Map<String, String> evidence;
-    private List<String> targets;
+    public enum ModelType { baysian }
 
-    public List<String> getTargets() {
+    private Map<String, String> evidence;
+    private ModelType modelType;
+    private Map<String, String> targets;
+
+    public ModelType getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(ModelType modelType) {
+        this.modelType = modelType;
+    }
+
+    public Map<String, String> getTargets() {
         return targets;
     }
 
-    public void setTargets(List<String> targets) {
+    public void setTargets(Map<String, String> targets) {
         this.targets = targets;
     }
 

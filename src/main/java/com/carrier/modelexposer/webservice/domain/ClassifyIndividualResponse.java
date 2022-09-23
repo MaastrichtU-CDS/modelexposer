@@ -1,16 +1,16 @@
 package com.carrier.modelexposer.webservice.domain;
 
-import java.util.List;
+import java.util.Map;
 
 public class ClassifyIndividualResponse {
-    private List<Attribute> attributes;
+    private Map<String, Map<String, Double>> probabilities;
 
-    public List<Attribute> getAttributes() {
-        return attributes;
+    public Map<String, Map<String, Double>> getProbabilities() {
+        return probabilities;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
+    public void setProbabilities(Map<String, Map<String, Double>> probabilities) {
+        this.probabilities = probabilities;
     }
 }
 

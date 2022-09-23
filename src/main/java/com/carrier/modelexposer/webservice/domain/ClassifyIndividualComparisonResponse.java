@@ -24,12 +24,12 @@ public class ClassifyIndividualComparisonResponse {
         this.comparisons = comparisons;
     }
 
-    public void addResult(Map<String, String> evidence, List<Attribute> result) {
+    public void addResult(Map<String, String> evidence, Map<String, Map<String, Double>> probabilities) {
         if (comparisons == null) {
             comparisons = new ArrayList<>();
         }
         Comparison c = new Comparison();
-        c.setAttributes(result);
+        c.setProbabilities(probabilities);
         c.setChanged(evidence);
         comparisons.add(c);
     }

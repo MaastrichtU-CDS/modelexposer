@@ -27,14 +27,19 @@ public class Server {
         this.classifier = classifier;
     }
 
-    @PostMapping ("classifyIndividualBayesian")
-    public ClassifyIndividualResponse classifyIndividualBayesian(@RequestBody ClassifyIndividualRequest req)
+    @PostMapping ("estimateBaseLineRisk")
+    public ClassifyIndividualResponse estimateBaseLineRisk(@RequestBody ClassifyIndividualRequest req)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
-        if (classifier == null) {
-            classifier = new OpenMarkovClassifier(path, model);
+
+        if (req.getModelType() == ClassifyIndividualRequest.ModelType.baysian) {
+            if (classifier == null) {
+                classifier = new OpenMarkovClassifier(path, model);
+            }
+            return classifier.classify(req.getEvidence(), req.getTargets());
+        } else {
+            return new ClassifyIndividualResponse();
         }
-        return classifier.classify(req.getEvidence(), req.getTargets());
     }
 
     @PostMapping ("classifyIndividualWithComparisons")
@@ -42,10 +47,14 @@ public class Server {
             @RequestBody ClassifyIndividualRequest req)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
-        if (classifier == null) {
-            classifier = new OpenMarkovClassifier(path, model);
+        if (req.getModelType() == ClassifyIndividualRequest.ModelType.baysian) {
+            if (classifier == null) {
+                classifier = new OpenMarkovClassifier(path, model);
+            }
+            return classifier.compareClassifications(req.getEvidence(), req.getTargets());
+        } else {
+            return new ClassifyIndividualComparisonResponse();
         }
-        return classifier.compareClassifications(req.getEvidence(), req.getTargets());
     }
 
     @GetMapping ("getBayesianModel")

@@ -1,9 +1,8 @@
 package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.openmarkov.OpenMarkovClassifier;
-import com.carrier.modelexposer.webservice.domain.Attribute;
+import com.carrier.modelexposer.webservice.domain.ClassifyIndividualBayesianRequest;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualComparisonResponse;
-import com.carrier.modelexposer.webservice.domain.ClassifyIndividualRequest;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
@@ -15,9 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,41 +35,22 @@ public class ServerTest {
             //now make the real test server
             server = new Server(classifier);
 
-            List<String> targets = Arrays.asList("Disease 1", "Disease 2");
+            Map<String, String> targets = new HashMap<>();
+            targets.put("Disease 1", "present");
+            targets.put("Disease 2", "present");
             Map<String, String> evidence = new HashMap<>();
             evidence.put("Symptom", "absent");
 
-            ClassifyIndividualRequest req = new ClassifyIndividualRequest();
+            ClassifyIndividualBayesianRequest req = new ClassifyIndividualBayesianRequest();
             req.setEvidence(evidence);
             req.setTargets(targets);
 
 
-            ClassifyIndividualResponse response = server.classifyIndividualBayesian(req);
-            assertEquals(response.getAttributes().size(), 2);
+            ClassifyIndividualResponse response = server.estimateBaseLineRisk(req);
+            assertEquals(response.getProbabilities().size(), 2);
 
-            //there is some randomness to the order so find the results manually
-            Attribute disease1 = null;
-            for (Attribute a : response.getAttributes()) {
-                if (a.getName().equals("Disease 1")) {
-                    disease1 = a;
-                }
-            }
-            Attribute disease2 = null;
-            for (Attribute a : response.getAttributes()) {
-                if (a.getName().equals("Disease 2")) {
-                    disease2 = a;
-                }
-            }
-
-            assertEquals(disease1.getName(), "Disease 1");
-            assertEquals(disease1.getProbabilities().size(), 2);
-            assertEquals(disease1.getProbabilities().get("absent"), 0.99, 0.01);
-            assertEquals(disease1.getProbabilities().get("present"), 0.00, 0.01);
-
-            assertEquals(disease2.getName(), "Disease 2");
-            assertEquals(disease2.getProbabilities().size(), 2);
-            assertEquals(disease2.getProbabilities().get("absent"), 0.99, 0.01);
-            assertEquals(disease2.getProbabilities().get("present"), 0.00, 0.01);
+            assertEquals(response.getProbabilities().get("Disease 1").get("present"), 0.00, 0.01);
+            assertEquals(response.getProbabilities().get("Disease 2").get("present"), 0.00, 0.01);
         }
     }
 
@@ -86,16 +64,17 @@ public class ServerTest {
                     "resources/", "BN-two-diseases.pgmx");
             Server server = new Server(classifier);
 
-            List<String> targets = Arrays.asList("this is wrong");
+            Map<String, String> targets = new HashMap<>();
+            targets.put("this is wrong", "and so is this");
             Map<String, String> evidence = new HashMap<>();
             evidence.put("Symptom", "absent");
 
-            ClassifyIndividualRequest req = new ClassifyIndividualRequest();
+            ClassifyIndividualBayesianRequest req = new ClassifyIndividualBayesianRequest();
             req.setEvidence(evidence);
             req.setTargets(targets);
 
             assertThrows(NodeNotFoundException.class, () -> {
-                server.classifyIndividualBayesian(req);
+                server.estimateBaseLineRisk(req);
             });
 
         }
@@ -111,20 +90,49 @@ public class ServerTest {
                     "resources/", "BN-two-diseases.pgmx");
             Server server = new Server(classifier);
 
-            List<String> targets = Arrays.asList("Disease 1");
+            Map<String, String> targets = new HashMap<>();
+            targets.put("Disease 1", "present");
             Map<String, String> evidence = new HashMap<>();
             evidence.put("Symptom", "nonsense");
 
-            ClassifyIndividualRequest req = new ClassifyIndividualRequest();
+            ClassifyIndividualBayesianRequest req = new ClassifyIndividualBayesianRequest();
             req.setEvidence(evidence);
             req.setTargets(targets);
 
             assertThrows(InvalidStateException.class, () -> {
-                server.classifyIndividualBayesian(req);
+                server.estimateBaseLineRisk(req);
             });
 
         }
     }
+
+    @Test
+    public void testClassifyTestIncorrectTargetState()
+            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
+                   InvalidStateException, UnexpectedInferenceException {
+        {
+
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    "resources/", "BN-two-diseases.pgmx");
+            Server server = new Server(classifier);
+
+            Map<String, String> targets = new HashMap<>();
+            targets.put("Disease 1", "nonsense");
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("Symptom", "present");
+
+            ClassifyIndividualBayesianRequest req = new ClassifyIndividualBayesianRequest();
+            req.setEvidence(evidence);
+            req.setTargets(targets);
+
+
+            ClassifyIndividualResponse response = server.estimateBaseLineRisk(req);
+            assertEquals(response.getProbabilities().size(), 1);
+            assertEquals(response.getProbabilities().get("Disease 1").size(), 0);
+
+        }
+    }
+
 
     @Test
     public void testGetBayesianModel()
@@ -160,13 +168,16 @@ public class ServerTest {
                     path, model);
             Server server = new Server(classifier);
 
-            List<String> targets = Arrays.asList("CVD_risk");
+            Map<String, String> targets = new HashMap<>();
+            targets.put("CVD", "yes");
             Map<String, String> evidence = new HashMap<>();
             evidence.put("smoking_status", "current_smoker");
 
-            ClassifyIndividualRequest req = new ClassifyIndividualRequest();
+
+            ClassifyIndividualBayesianRequest req = new ClassifyIndividualBayesianRequest();
             req.setEvidence(evidence);
             req.setTargets(targets);
+        
             ClassifyIndividualComparisonResponse result = server.classifyIndividualWithComparisons(req);
             assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
         }

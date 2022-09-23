@@ -1,7 +1,6 @@
 package com.carrier.modelexposer.openmarkov;
 
 
-import com.carrier.modelexposer.webservice.domain.Attribute;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualComparisonResponse;
 import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
 import org.apache.commons.io.IOUtils;
@@ -49,7 +48,7 @@ public class OpenMarkovClassifier {
     }
 
     public ClassifyIndividualComparisonResponse compareClassifications(Map<String, String> evidence,
-                                                                       List<String> targets)
+                                                                       Map<String, String> targets)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
         List<Map<String, String>> baselineEvidences = collectExampleBaseLinesEvidences();
@@ -59,12 +58,12 @@ public class OpenMarkovClassifier {
             Map<String, String> evidences = new HashMap<>();
             evidences.putAll(baseline);
             evidences.putAll(evidence);
-            result.addResult(baseline, classify(evidences, targets).getAttributes());
+            result.addResult(baseline, classify(evidences, targets).getProbabilities());
         }
         return result;
     }
 
-    public ClassifyIndividualResponse classify(Map<String, String> evidence, List<String> targets)
+    public ClassifyIndividualResponse classify(Map<String, String> evidence, Map<String, String> targets)
             throws NodeNotFoundException, IncompatibleEvidenceException, InvalidStateException,
                    NotEvaluableNetworkException, UnexpectedInferenceException {
 
@@ -73,7 +72,7 @@ public class OpenMarkovClassifier {
         EvidenceCase preResolutionEvidence = null;
 
         List<Variable> variablesOfInterest = new ArrayList<>();
-        for (String target : targets) {
+        for (String target : targets.keySet()) {
             variablesOfInterest.add(network.getVariable(target));
         }
 
@@ -85,7 +84,6 @@ public class OpenMarkovClassifier {
                 postResolutionEvidence.addFinding(f);
             } else if (v.getVariableType() == VariableType.DISCRETIZED) {
                 Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
-
             }
         }
 
@@ -96,24 +94,28 @@ public class OpenMarkovClassifier {
         vePropagation.setPostResolutionEvidence(postResolutionEvidence);
         HashMap<Variable, TablePotential> posteriorVales = vePropagation.getPosteriorValues();
 
-        return createResults(posteriorVales);
+        return createResults(posteriorVales, targets);
     }
 
-    private ClassifyIndividualResponse createResults(HashMap<Variable, TablePotential> posteriorValues) {
-        List<Attribute> attributes = new ArrayList<>();
+    private ClassifyIndividualResponse createResults(HashMap<Variable, TablePotential> posteriorValues,
+                                                     Map<String, String> targets) {
+        Map<String, Map<String, Double>> probabilities = new HashMap<>();
         for (Variable key : posteriorValues.keySet()) {
-            Attribute a = new Attribute();
-            Map<String, Double> prob = new HashMap<>();
-            a.setProbabilities(prob);
+            String name = key.getName();
             TablePotential potential = posteriorValues.get(key);
-            for (int i = 0; i < potential.values.length; i++) {
-                prob.put(key.getStateName(i), potential.values[i]);
+            Map<String, Double> prob = probabilities.get(name);
+            if (prob == null) {
+                prob = new HashMap<>();
+                probabilities.put(name, prob);
             }
-            attributes.add(a);
-            a.setName(key.getName());
+            for (int i = 0; i < potential.values.length; i++) {
+                if (key.getStateName(i).equals(targets.get(name))) {
+                    prob.put(targets.get(name), potential.values[i]);
+                }
+            }
         }
         ClassifyIndividualResponse response = new ClassifyIndividualResponse();
-        response.setAttributes(attributes);
+        response.setProbabilities(probabilities);
         return response;
     }
 
