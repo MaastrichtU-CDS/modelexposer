@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ClassifyIndividualComparisonResponse {
+public class ReducedRiskResponse {
     private List<Comparison> comparisons;
-    private ClassifyIndividualResponse baseline;
+    private RiskResponse baseline;
 
-    public ClassifyIndividualResponse getBaseline() {
+    public RiskResponse getBaseline() {
         return baseline;
     }
 
-    public void setBaseline(ClassifyIndividualResponse baseline) {
+    public void setBaseline(RiskResponse baseline) {
         this.baseline = baseline;
     }
 
@@ -24,7 +24,7 @@ public class ClassifyIndividualComparisonResponse {
         this.comparisons = comparisons;
     }
 
-    public void addResult(Map<String, String> evidence, Map<String, Map<String, Double>> probabilities) {
+    public void addResult(Map<String, String> evidence, Map<String, Double> probabilities) {
         if (comparisons == null) {
             comparisons = new ArrayList<>();
         }

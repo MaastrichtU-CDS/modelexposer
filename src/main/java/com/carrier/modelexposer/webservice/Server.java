@@ -1,12 +1,11 @@
 package com.carrier.modelexposer.webservice;
 
+import com.carrier.modelexposer.classifier.Classifier;
 import com.carrier.modelexposer.openmarkov.OpenMarkovClassifier;
-import com.carrier.modelexposer.webservice.domain.ClassifyIndividualComparisonResponse;
-import com.carrier.modelexposer.webservice.domain.ClassifyIndividualRequest;
-import com.carrier.modelexposer.webservice.domain.ClassifyIndividualResponse;
-import org.openmarkov.core.exception.*;
+import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
+import com.carrier.modelexposer.webservice.domain.RiskRequest;
+import com.carrier.modelexposer.webservice.domain.RiskResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,52 +17,54 @@ public class Server {
     private String path;
     @Value ("${model}")
     private String model;
-    private OpenMarkovClassifier classifier;
+    @Value ("${defaultModel}")
+    private RiskRequest.ModelType defaultClassifier;
+
+    @Value ("${targetAttribute}")
+    private String target;
+    @Value ("${targetValue}")
+    private String targetValue;
+
+
+    private Classifier classifier;
 
     public Server() {
     }
 
-    public Server(OpenMarkovClassifier classifier) {
-        this.classifier = classifier;
+    public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model) {
+        this.target = target;
+        this.targetValue = targetValue;
+        this.defaultClassifier = def;
+        this.path = path;
+        this.model = model;
     }
 
     @PostMapping ("estimateBaseLineRisk")
-    public ClassifyIndividualResponse estimateBaseLineRisk(@RequestBody ClassifyIndividualRequest req)
-            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
-                   InvalidStateException, UnexpectedInferenceException {
+    public RiskResponse estimateBaseLineRisk(@RequestBody RiskRequest req)
+            throws Exception {
+        setClassifier(req);
+        return classifier.classify(req.getEvidence());
+    }
 
-        if (req.getModelType() == ClassifyIndividualRequest.ModelType.baysian) {
-            if (classifier == null) {
-                classifier = new OpenMarkovClassifier(path, model);
-            }
-            return classifier.classify(req.getEvidence(), req.getTargets());
-        } else {
-            return new ClassifyIndividualResponse();
+    private void setClassifier(RiskRequest req) {
+        checkDefault(req);
+        if (req.getModelType() == RiskRequest.ModelType.bayesian) {
+            classifier = new OpenMarkovClassifier(path, model, target, targetValue);
         }
     }
 
-    @PostMapping ("classifyIndividualWithComparisons")
-    public ClassifyIndividualComparisonResponse classifyIndividualWithComparisons(
-            @RequestBody ClassifyIndividualRequest req)
-            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
-                   InvalidStateException, UnexpectedInferenceException {
-        if (req.getModelType() == ClassifyIndividualRequest.ModelType.baysian) {
-            if (classifier == null) {
-                classifier = new OpenMarkovClassifier(path, model);
-            }
-            return classifier.compareClassifications(req.getEvidence(), req.getTargets());
-        } else {
-            return new ClassifyIndividualComparisonResponse();
+
+    private void checkDefault(RiskRequest req) {
+        if (req.getModelType() == null) {
+            req.setModelType(defaultClassifier);
         }
     }
 
-    @GetMapping ("getBayesianModel")
-    public String getBayesianModel()
-            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
-                   InvalidStateException, UnexpectedInferenceException {
-        if (classifier == null) {
-            classifier = new OpenMarkovClassifier(path, model);
-        }
-        return classifier.getModelPgmx();
+    @PostMapping ("estimateReducedRisk")
+    public ReducedRiskResponse estimateReducedRisk(
+            @RequestBody RiskRequest req)
+            throws Exception {
+        setClassifier(req);
+        return classifier.compareClassifications(req.getEvidence());
     }
 }

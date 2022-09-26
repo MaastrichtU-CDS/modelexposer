@@ -2,7 +2,7 @@ package com.carrier.modelexposer.webservice.domain;
 
 import java.util.Map;
 
-public class Comparison extends ClassifyIndividualResponse {
+public class Comparison extends RiskResponse {
     private Map<String, String> changed;
 
     public Map<String, String> getChanged() {

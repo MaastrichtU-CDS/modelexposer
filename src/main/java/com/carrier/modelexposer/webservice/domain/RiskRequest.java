@@ -2,12 +2,11 @@ package com.carrier.modelexposer.webservice.domain;
 
 import java.util.Map;
 
-public class ClassifyIndividualRequest {
-    public enum ModelType { baysian }
+public class RiskRequest {
+    public enum ModelType { bayesian }
 
     private Map<String, String> evidence;
     private ModelType modelType;
-    private Map<String, String> targets;
 
     public ModelType getModelType() {
         return modelType;
@@ -15,14 +14,6 @@ public class ClassifyIndividualRequest {
 
     public void setModelType(ModelType modelType) {
         this.modelType = modelType;
-    }
-
-    public Map<String, String> getTargets() {
-        return targets;
-    }
-
-    public void setTargets(Map<String, String> targets) {
-        this.targets = targets;
     }
 
     public Map<String, String> getEvidence() {
