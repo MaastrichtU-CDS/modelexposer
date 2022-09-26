@@ -1,4 +1,4 @@
-package com.carrier.modelexposer.openmarkov;
+package com.carrier.modelexposer.classifier.openmarkov;
 
 
 import com.carrier.modelexposer.classifier.Classifier;

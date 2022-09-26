@@ -1,7 +1,7 @@
 package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.classifier.Classifier;
-import com.carrier.modelexposer.openmarkov.OpenMarkovClassifier;
+import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
 import com.carrier.modelexposer.webservice.domain.RiskRequest;
 import com.carrier.modelexposer.webservice.domain.RiskResponse;
