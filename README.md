@@ -1,5 +1,3 @@
-# THIS REPO HAS BEEN MOVED TO: https://github.com/MaastrichtU-CDS/modelexposer
-
 # ModelExposer
 
 Exposes a model via a JSON rest API.
