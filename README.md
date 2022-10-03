@@ -2,6 +2,9 @@
 
 Exposes a model via a JSON rest API.
 
+## Docker hub:
+Docker images can be found at: https://hub.docker.com/repository/docker/fvandaalen/carrier
+
 ### Included models:
 
 Currently it can only run bayesian models It uses the openmarkov library ( http://www.openmarkov.org/ )
@@ -17,6 +20,7 @@ The spring configuration expects the following:
 This contains the path to the model and the name of the bayesian model.
 
 The model is expected to come as a .pgmx file.
+
 
 ### Classifying an individual
 
