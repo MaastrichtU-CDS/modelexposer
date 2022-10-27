@@ -30,9 +30,7 @@ public class OpenMarkovClassifierTest {
     }
 
     @Test
-    public void testComparisons()
-            throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
-                   InvalidStateException, UnexpectedInferenceException {
+    public void testComparisons() throws Exception {
         {
             OpenMarkovClassifier classifier = new OpenMarkovClassifier(
                     "resources/", "model.pgmx", "CVD", "yes");

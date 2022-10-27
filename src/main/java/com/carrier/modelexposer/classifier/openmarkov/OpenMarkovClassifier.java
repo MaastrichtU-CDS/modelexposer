@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.carrier.modelexposer.baseline.BaseLine.collectExampleBaseLinesEvidences;
-
 public class OpenMarkovClassifier extends Classifier {
     private String path;
     private String model;
@@ -51,17 +49,18 @@ public class OpenMarkovClassifier extends Classifier {
         }
     }
 
-    public ReducedRiskResponse compareClassifications(Map<String, String> evidence)
+    public ReducedRiskResponse compareClassifications(Map<String, String> evidence,
+                                                      List<Map<String, String>> comparisons)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException {
-        List<Map<String, String>> baselineEvidences = collectExampleBaseLinesEvidences();
+
         ReducedRiskResponse result = new ReducedRiskResponse();
         result.setBaseline(classify(evidence));
-        for (Map<String, String> baseline : baselineEvidences) {
+        for (Map<String, String> comparison : comparisons) {
             Map<String, String> evidences = new HashMap<>();
             evidences.putAll(evidence);
-            evidences.putAll(baseline);
-            result.addResult(baseline, classify(evidences).getProbabilities());
+            evidences.putAll(comparison);
+            result.addResult(comparison, classify(evidences).getProbabilities());
         }
         return result;
     }

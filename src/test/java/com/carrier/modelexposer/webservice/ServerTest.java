@@ -1,6 +1,7 @@
 package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.webservice.domain.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.openmarkov.core.exception.InvalidStateException;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.carrier.modelexposer.baseline.BaseLine.collectExampleBaseLinesEvidences;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -115,6 +117,49 @@ public class ServerTest {
             }
 
             assertEquals(comparisons.get("smoking_status ex_smoker"), 0.041, 0.01);
+            assertEquals(comparisons.get("physical_activity_score medium"), 0.074, 0.01);
+            assertEquals(comparisons.get("physical_activity_score high"), 0.074, 0.01);
+            assertEquals(comparisons.get("nutrition_score high"), 0.053, 0.01);
+            assertEquals(comparisons.get("nutrition_score medium"), 0.073, 0.01);
+        }
+    }
+
+    @Test
+    public void testPredefinedComparison()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "model.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("smoking_status", "current_smoker");
+
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setEvidence(evidence);
+            req.setComparisons(collectExampleBaseLinesEvidences());
+            req.getComparisons().get(0).putAll(req.getComparisons().get(1));
+
+            ReducedRiskResponse result = server.estimateReducedRisk(req);
+            assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
+
+            Map<String, Double> comparisons = new HashMap<>();
+            for (Comparison c : result.getComparisons()) {
+                String name = "";
+                for (String s : c.getChanged().keySet()) {
+                    if (name.length() > 0) {
+                        name += ", ";
+                    }
+                    name += s + " " + c.getChanged().get(s);
+                }
+                comparisons.put(name, c.getProbabilities().get("CVD"));
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(req));
+
+            assertEquals(comparisons.get("smoking_status ex_smoker, nutrition_score medium"), 0.032, 0.01);
             assertEquals(comparisons.get("physical_activity_score medium"), 0.074, 0.01);
             assertEquals(comparisons.get("physical_activity_score high"), 0.074, 0.01);
             assertEquals(comparisons.get("nutrition_score high"), 0.053, 0.01);

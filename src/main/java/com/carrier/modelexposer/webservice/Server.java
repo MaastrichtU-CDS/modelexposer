@@ -65,6 +65,10 @@ public class Server {
             @RequestBody RiskRequest req)
             throws Exception {
         setClassifier(req);
-        return classifier.compareClassifications(req.getEvidence());
+        if (req.getComparisons().size() > 0) {
+            return classifier.compareClassifications(req.getEvidence(), req.getComparisons());
+        } else {
+            return classifier.compareClassifications(req.getEvidence());
+        }
     }
 }
