@@ -86,6 +86,7 @@ public class OpenMarkovClassifier extends Classifier {
                 postResolutionEvidence.addFinding(f);
             } else if (v.getVariableType() == VariableType.DISCRETIZED) {
                 Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
+                postResolutionEvidence.addFinding(f);
             }
         }
 

@@ -55,4 +55,21 @@ public class OpenMarkovClassifierTest {
             assertEquals(comparisons.get("nutrition_score medium"), 0.073, 0.01);
         }
     }
+
+    @Test
+    public void testDiscretizedModel() throws Exception {
+        {
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    "resources/", "discretized.pgmx", "B", "present");
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("A", "99");
+            RiskResponse result = classifier.classify(evidence);
+
+            assertEquals(result.getProbabilities().get("B"), 0.9, 0.01);
+
+            evidence.put("A", "101");
+            RiskResponse result2 = classifier.classify(evidence);
+            assertEquals(result2.getProbabilities().get("B"), 0.1, 0.01);
+        }
+    }
 }
