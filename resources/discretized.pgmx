@@ -28,6 +28,22 @@
           <State name="present" />
         </States>
       </Variable>
+      <Variable name="C" type="discretized" role="chance">
+        <Coordinates x="403" y="201" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <States>
+          <State name="state1" />
+          <State name="state2" />
+          <State name="state3" />
+        </States>
+        <Thresholds>
+          <Threshold value="1.0" belongsTo="left" />
+          <Threshold value="2.0" belongsTo="right" />
+          <Threshold value="3.0" belongsTo="right" />
+          <Threshold value="4.0" belongsTo="right" />
+        </Thresholds>
+      </Variable>
     </Variables>
     <Links>
       <Link directed="true">
@@ -47,6 +63,11 @@
           <Variable name="A" />
         </Variables>
         <Values>0.1 0.9 0.9 0.1</Values>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="C" />
+        </Variables>
       </Potential>
     </Potentials>
   </ProbNet>
