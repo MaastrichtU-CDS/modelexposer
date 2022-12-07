@@ -77,7 +77,9 @@ public class ServerTest {
             req.setEvidence(evidence);
 
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getMessage(), "Unknown state 'nonsense' for attribute 'smoking_status'");
+            assertEquals(r.getMessage(),
+                         "Unknown state 'nonsense' for attribute 'smoking_status', expected valid states: " +
+                                 "'never_smoker', 'ex_smoker', 'current_smoker'");
         }
     }
 

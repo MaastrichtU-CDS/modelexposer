@@ -97,7 +97,14 @@ public class OpenMarkovClassifier extends Classifier {
                 try {
                     index = v.getStateIndex(v.getState(evidence.get(key)));
                 } catch (InvalidStateException e) {
-                    throw new UnknownStateException(evidence.get(key), key);
+                    String validStates = "";
+                    for (int i = 0; i < v.getNumStates(); i++) {
+                        if (validStates.length() > 0) {
+                            validStates += ", ";
+                        }
+                        validStates += "'" + v.getStateName(i) + "'";
+                    }
+                    throw new UnknownStateException(evidence.get(key), key, validStates);
                 }
                 Finding f = new Finding(v, index);
                 postResolutionEvidence.addFinding(f);

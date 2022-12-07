@@ -149,6 +149,168 @@ The following two exceptions can be thrown:
 - UnknownAttribute Exception:
     - message: "Unknown attribute 'x'"
 - UnknownState Exception:
-    - message: "Unknown state 'x' for attribute 'y'"
+    - message: "Unknown state 'x' for attribute 'y',expected valid states: 'a', 'b', 'c'"
 
 - - -
+
+### Example calls:
+
+- - - 
+
+#### estimateBaseLineRisk-endpoint:
+
+Example 1:
+input:
+
+```
+{
+  "evidence" : {
+    "smoking_status" : "current_smoker"
+  }
+}
+```
+
+output:
+
+```
+{"probabilities": {"CVD": 0.07865005183850245}}
+```
+
+--- 
+Example 2:
+input:
+
+```
+{
+  "evidence" : {
+    "smoking_status" : "ex_smoker"
+  }
+}
+```
+
+output:
+
+```
+{"probabilities": {"CVD": 0.04145569771244592}}
+```
+
+--- 
+Example 3:
+input:
+
+```
+{
+  "evidence" : {
+    "smoking_status" : "ex_smoker",
+    "gender" : "male"
+  }
+}
+```
+
+output:
+
+```
+{"probabilities": {"CVD": 0.04145569771244591}}
+```
+
+--- 
+Example 4:
+input:
+
+```
+{
+  "evidence" : {
+    "smoking_status" : "nonsense",
+    "gender" : "male"
+  }
+}
+```
+
+output:
+
+```
+{"message": "Unknown state 'nonsense' for attribute 'smoking_status', expected valid states: 'never_smoker', 'ex_smoker', 'current_smoker'"}
+```
+
+--- 
+Example 5:
+input:
+
+```
+{
+  "evidence" : {
+    "nonsense" : "nonsense",
+    "gender" : "male"
+  }
+}
+```
+
+output:
+
+```
+{"message": "Unknown attribute 'nonsense'"}
+```
+
+---
+Example 5:
+input:
+
+```
+{
+  "evidence" : {
+    "smoking_status" : "ex_smoker",
+    "gender" : "male",
+    "nutrition_score" : "high"
+  }
+}
+```
+
+output:
+
+```
+{"probabilities": {"CVD": 0.01834995014955134}}
+```
+
+--- 
+
+#### estimateReducedRisk-endpoint
+
+Example 1: input:
+
+```
+{
+  "evidence" : {
+    "smoking_status" : "current_smoker"
+  }
+}
+```
+
+ouput:
+
+```
+{
+   "comparisons":    [
+            {
+         "probabilities": {"CVD": 0.04145569771244591},
+         "changed": {"smoking_status": "ex_smoker"}
+      },
+            {
+         "probabilities": {"CVD": 0.0733798604187438},
+         "changed": {"nutrition_score": "medium"}
+      },
+            {
+         "probabilities": {"CVD": 0.05225324027916252},
+         "changed": {"nutrition_score": "high"}
+      },
+            {
+         "probabilities": {"CVD": 0.07483549351944169},
+         "changed": {"physical_activity_score": "medium"}
+      },
+            {
+         "probabilities": {"CVD": 0.07483549351944169},
+         "changed": {"physical_activity_score": "high"}
+      }
+   ],
+   "baseline": {"probabilities": {"CVD": 0.07865005183850243}}
+}
+```
