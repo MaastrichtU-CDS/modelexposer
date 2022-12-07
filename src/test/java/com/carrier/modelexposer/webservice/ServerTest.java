@@ -1,11 +1,8 @@
 package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.webservice.domain.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
-import org.openmarkov.core.exception.InvalidStateException;
-import org.openmarkov.core.exception.NodeNotFoundException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +11,6 @@ import java.util.Map;
 
 import static com.carrier.modelexposer.baseline.BaseLine.collectExampleBaseLinesEvidences;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ServerTest {
 
@@ -34,7 +30,7 @@ public class ServerTest {
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setEvidence(evidence);
 
-            RiskResponse response = server.estimateBaseLineRisk(req);
+            RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
             assertEquals(response.getProbabilities().size(), 1);
 
             assertEquals(response.getProbabilities().get("CVD"), 0.078, 0.001);
@@ -58,9 +54,8 @@ public class ServerTest {
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setEvidence(evidence);
 
-            assertThrows(NodeNotFoundException.class, () -> {
-                server.estimateBaseLineRisk(req);
-            });
+            ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(), "Unknown attribute 'nonsense'");
 
         }
     }
@@ -81,10 +76,8 @@ public class ServerTest {
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setEvidence(evidence);
 
-            assertThrows(InvalidStateException.class, () -> {
-                server.estimateBaseLineRisk(req);
-            });
-
+            ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(), "Unknown state 'nonsense' for attribute 'smoking_status'");
         }
     }
 
@@ -104,7 +97,7 @@ public class ServerTest {
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setEvidence(evidence);
 
-            ReducedRiskResponse result = server.estimateReducedRisk(req);
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateReducedRisk(req);
             assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
 
             Map<String, Double> comparisons = new HashMap<>();
@@ -142,7 +135,7 @@ public class ServerTest {
             req.setComparisons(collectExampleBaseLinesEvidences());
             req.getComparisons().get(0).putAll(req.getComparisons().get(1));
 
-            ReducedRiskResponse result = server.estimateReducedRisk(req);
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateReducedRisk(req);
             assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
 
             Map<String, Double> comparisons = new HashMap<>();
@@ -156,8 +149,6 @@ public class ServerTest {
                 }
                 comparisons.put(name, c.getProbabilities().get("CVD"));
             }
-            ObjectMapper mapper = new ObjectMapper();
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(req));
 
             assertEquals(comparisons.get("smoking_status ex_smoker, nutrition_score medium"), 0.032, 0.01);
             assertEquals(comparisons.get("physical_activity_score medium"), 0.074, 0.01);

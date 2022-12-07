@@ -1,5 +1,7 @@
 package com.carrier.modelexposer.classifier.openmarkov;
 
+import com.carrier.modelexposer.exception.UnknownAttributeException;
+import com.carrier.modelexposer.exception.UnknownStateException;
 import com.carrier.modelexposer.webservice.domain.Comparison;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
 import com.carrier.modelexposer.webservice.domain.RiskResponse;
@@ -15,7 +17,8 @@ public class OpenMarkovClassifierTest {
     @Test
     public void testClassifyTestSanaNetExample()
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
-                   InvalidStateException, UnexpectedInferenceException {
+                   InvalidStateException, UnexpectedInferenceException, UnknownStateException,
+                   UnknownAttributeException {
         {
             OpenMarkovClassifier classifier = new OpenMarkovClassifier(
                     "resources/", "model.pgmx", "CVD", "yes");

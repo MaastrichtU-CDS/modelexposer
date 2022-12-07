@@ -2,9 +2,11 @@ package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.classifier.Classifier;
 import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
-import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
+import com.carrier.modelexposer.exception.UnknownAttributeException;
+import com.carrier.modelexposer.exception.UnknownStateException;
+import com.carrier.modelexposer.webservice.domain.ExceptionResponse;
+import com.carrier.modelexposer.webservice.domain.Response;
 import com.carrier.modelexposer.webservice.domain.RiskRequest;
-import com.carrier.modelexposer.webservice.domain.RiskResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,10 +42,13 @@ public class Server {
     }
 
     @PostMapping ("estimateBaseLineRisk")
-    public RiskResponse estimateBaseLineRisk(@RequestBody RiskRequest req)
-            throws Exception {
+    public Response estimateBaseLineRisk(@RequestBody RiskRequest req) throws Exception {
         setClassifier(req);
-        return classifier.classify(req.getEvidence());
+        try {
+            return classifier.classify(req.getEvidence());
+        } catch (UnknownStateException | UnknownAttributeException e) {
+            return new ExceptionResponse(e);
+        }
     }
 
     private void setClassifier(RiskRequest req) {
@@ -61,14 +66,18 @@ public class Server {
     }
 
     @PostMapping ("estimateReducedRisk")
-    public ReducedRiskResponse estimateReducedRisk(
-            @RequestBody RiskRequest req)
-            throws Exception {
+    public Response estimateReducedRisk(
+            @RequestBody RiskRequest req) throws Exception {
         setClassifier(req);
-        if (req.getComparisons().size() > 0) {
-            return classifier.compareClassifications(req.getEvidence(), req.getComparisons());
-        } else {
-            return classifier.compareClassifications(req.getEvidence());
+        try {
+            if (req.getComparisons().size() > 0) {
+                return classifier.compareClassifications(req.getEvidence(), req.getComparisons());
+
+            } else {
+                return classifier.compareClassifications(req.getEvidence());
+            }
+        } catch (UnknownStateException | UnknownAttributeException e) {
+            return new ExceptionResponse(e);
         }
     }
 }

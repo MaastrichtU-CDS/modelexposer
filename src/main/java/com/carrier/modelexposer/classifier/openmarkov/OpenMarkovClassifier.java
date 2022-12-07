@@ -2,6 +2,8 @@ package com.carrier.modelexposer.classifier.openmarkov;
 
 
 import com.carrier.modelexposer.classifier.Classifier;
+import com.carrier.modelexposer.exception.UnknownAttributeException;
+import com.carrier.modelexposer.exception.UnknownStateException;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
 import com.carrier.modelexposer.webservice.domain.RiskResponse;
 import org.apache.commons.io.IOUtils;
@@ -52,7 +54,8 @@ public class OpenMarkovClassifier extends Classifier {
     public ReducedRiskResponse compareClassifications(Map<String, String> evidence,
                                                       List<Map<String, String>> comparisons)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
-                   InvalidStateException, UnexpectedInferenceException {
+                   InvalidStateException, UnexpectedInferenceException, UnknownStateException,
+                   UnknownAttributeException {
 
         ReducedRiskResponse result = new ReducedRiskResponse();
         result.setBaseline(classify(evidence));
@@ -66,8 +69,8 @@ public class OpenMarkovClassifier extends Classifier {
     }
 
     public RiskResponse classify(Map<String, String> evidence)
-            throws NodeNotFoundException, IncompatibleEvidenceException, InvalidStateException,
-                   NotEvaluableNetworkException, UnexpectedInferenceException {
+            throws UnknownAttributeException, UnknownStateException, IncompatibleEvidenceException,
+                   InvalidStateException, NotEvaluableNetworkException {
 
         VEPropagation vePropagation;
         EvidenceCase postResolutionEvidence = new EvidenceCase();
@@ -75,13 +78,27 @@ public class OpenMarkovClassifier extends Classifier {
 
         List<Variable> variablesOfInterest = new ArrayList<>();
         for (String target : target.keySet()) {
-            variablesOfInterest.add(network.getVariable(target));
+            try {
+                variablesOfInterest.add(network.getVariable(target));
+            } catch (NodeNotFoundException e) {
+                throw new UnknownAttributeException(target);
+            }
         }
 
         for (String key : evidence.keySet()) {
-            Variable v = network.getVariable(key);
+            Variable v = null;
+            try {
+                v = network.getVariable(key);
+            } catch (NodeNotFoundException e) {
+                throw new UnknownAttributeException(key);
+            }
             if (v.getVariableType() == VariableType.FINITE_STATES) {
-                int index = v.getStateIndex(v.getState(evidence.get(key)));
+                int index = 0;
+                try {
+                    index = v.getStateIndex(v.getState(evidence.get(key)));
+                } catch (InvalidStateException e) {
+                    throw new UnknownStateException(evidence.get(key), key);
+                }
                 Finding f = new Finding(v, index);
                 postResolutionEvidence.addFinding(f);
             } else if (v.getVariableType() == VariableType.DISCRETIZED) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ReducedRiskResponse {
+public class ReducedRiskResponse extends Response {
     private List<Comparison> comparisons;
     private RiskResponse baseline;
 
