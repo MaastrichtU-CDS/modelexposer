@@ -5,6 +5,7 @@ import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.exception.UnknownAttributeException;
 import com.carrier.modelexposer.exception.UnknownStateException;
 import com.carrier.modelexposer.webservice.domain.ExceptionResponse;
+import com.carrier.modelexposer.webservice.domain.ReducedRiskRequest;
 import com.carrier.modelexposer.webservice.domain.Response;
 import com.carrier.modelexposer.webservice.domain.RiskRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,15 +68,10 @@ public class Server {
 
     @PostMapping ("estimateReducedRisk")
     public Response estimateReducedRisk(
-            @RequestBody RiskRequest req) throws Exception {
+            @RequestBody ReducedRiskRequest req) throws Exception {
         setClassifier(req);
         try {
-            if (req.getComparisons().size() > 0) {
-                return classifier.compareClassifications(req.getInput(), req.getComparisons());
-
-            } else {
-                return classifier.compareClassifications(req.getInput());
-            }
+            return classifier.compareClassifications(req.getInput(), req.getChanges());
         } catch (UnknownStateException | UnknownAttributeException e) {
             return new ExceptionResponse(e);
         }

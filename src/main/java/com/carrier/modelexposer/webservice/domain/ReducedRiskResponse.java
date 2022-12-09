@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ReducedRiskResponse extends Response {
-    private List<Comparison> comparisons;
+    private List<Intervention> changes;
     private RiskResponse baseline;
 
     public RiskResponse getBaseline() {
@@ -16,21 +16,21 @@ public class ReducedRiskResponse extends Response {
         this.baseline = baseline;
     }
 
-    public List<Comparison> getComparisons() {
-        return comparisons;
+    public List<Intervention> getChanges() {
+        return changes;
     }
 
-    public void setComparisons(List<Comparison> comparisons) {
-        this.comparisons = comparisons;
+    public void setChanges(List<Intervention> changes) {
+        this.changes = changes;
     }
 
     public void addResult(Map<String, String> evidence, Map<String, Double> probabilities) {
-        if (comparisons == null) {
-            comparisons = new ArrayList<>();
+        if (changes == null) {
+            changes = new ArrayList<>();
         }
-        Comparison c = new Comparison();
+        Intervention c = new Intervention();
         c.setProbabilities(probabilities);
         c.setChanged(evidence);
-        comparisons.add(c);
+        changes.add(c);
     }
 }

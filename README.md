@@ -34,62 +34,25 @@ This allows for the following webservice call:
 - http://localhost:8080/estimateBaseLineRisk
 - http://localhost:8080/estimateReducedRisk
 
-The first call estimates the risk for CVD for a given individual, the second also provides a number of comparisons with
-certain baseline values. These comparisons are very basic, only changing 1 attribute at a time. They also do note take
-into account if the original patient already did better than this baseline (e.g. it will calculate the probability of
-CSV if the patient stops smoking for a patient who never smoked to begin with)
+The first call estimates the risk for CVD for a given individual, the second also provides a number of changes with
+certain baseline values. These changes are very basic, only changing 1 attribute at a time. They also do note take into
+account if the original patient already did better than this baseline (e.g. it will calculate the probability of CSV if
+the patient stops smoking for a patient who never smoked to begin with)
 
-#### Input:
+#### Input estimateBaseLineRisk
 
-Both methods expect the same input as the basis: values of all known input variables, as well as the target variables of
-interest in JSON format. It can deal with missing input variables. Expects a POST request. If modelType is left empty
-the modelExposer defaults to the Bayesian Network
+If modelType is left empty we will default to the docker image.
 
 ```
 {
   "input" : {
-    "smoking_status" : "current_smoker"
+    "current_smoker" : "yes"
   },
   "modelType" : "bayesian"
 }
 ```
 
-In addition to this it is possible to indicate the comparisons of interest for the estimateReducedRisk endpoint, as
-opposed to using the basic comparisons provided by the modelExposer. Input with comparisons looks like this:
-
-```
-{
-  "input" : {
-    "smoking_status" : "current_smoker"
-  },
-  "comparisons" : [ {
-    "smoking_status" : "ex_smoker",
-    "nutrition_score" : "medium"
-  }, {
-    "nutrition_score" : "medium"
-  }, {
-    "nutrition_score" : "high"
-  }, {
-    "physical_activity_score" : "medium"
-  }, {
-    "physical_activity_score" : "high"
-  } ],
-  "modelType" : "bayesian"
-}
-
-Process finished with exit code 0
-
-```
-
-#### Output:
-
-probabilities of the various possible values for the target variable in JSON format. Both endpoints return similar
-output:
-The main difference is that the estimateBaseLineRisk-endpoint returns a JSON object containing 1 list of attributes with
-probabilities. The estimateReducedRisk-endpoint however returns a JSON object that contains 1 list, labeled "baseline",
-for the original data and a list of comparisons, labeled "comparisons".
-
-estimateBaseLineRisk-endpoint:
+#### Output estimateBaseLineRisk:
 
 ```
 {
@@ -99,35 +62,38 @@ estimateBaseLineRisk-endpoint:
 }
 ```
 
-estimateReducedRisk-endpoint:
+#### Input estimateReducedRisk-endpoint
+Similar to estimateBaseLineRisk the field modelType is optional
+```
+{
+  "input" : {
+    "gender" : "male"
+  },"changes":[{
+  	"current_smoker":"yes"
+  },{
+  	"BMI":"20"
+  	}],
+	"modelType" : "bayesian"
+}
+```
+#### Output estimateReducedRisk-endpoint
 
 ```
 {
-   "comparisons":    [
+   "changes":    [
             {
-         "probabilities": {"CVD": 0.04145569771244592},
-         "changed": {"smoking_status": "ex_smoker"}
+         "probabilities": {"CVD": 0.0865},
+         "changed": {"current_smoker": "yes"}
       },
             {
-         "probabilities": {"CVD": 0.0733798604187438},
-         "changed": {"nutrition_score": "medium"}
-      },
-            {
-         "probabilities": {"CVD": 0.05225324027916252},
-         "changed": {"nutrition_score": "high"}
-      },
-            {
-         "probabilities": {"CVD": 0.07483549351944169},
-         "changed": {"physical_activity_score": "medium"}
-      },
-            {
-         "probabilities": {"CVD": 0.07483549351944169},
-         "changed": {"physical_activity_score": "high"}
+         "probabilities": {"CVD": 0.0865},
+         "changed": {"BMI": "20"}
       }
    ],
-   "baseline": {"probabilities": {"CVD": 0.07865005183850245}}
+   "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
 }
 ```
+
 
 #### Model:
 
@@ -255,5 +221,34 @@ output:
 
 #### estimateReducedRisk-endpoint
 
-estimateReducedRisk does not currently work while the model is still under construction due to the need to hardcode the
-comparisons.
+Example 1:
+Input:
+```
+{
+  "input" : {
+    "gender" : "male"
+  },"changes":[{
+  	"current_smoker":"yes"
+  },{
+  	"BMI":"20"
+  	}],
+	"modelType" : "bayesian"
+}
+```
+
+Output:
+```
+{
+   "changes":    [
+            {
+         "probabilities": {"CVD": 0.0865},
+         "changed": {"current_smoker": "yes"}
+      },
+            {
+         "probabilities": {"CVD": 0.0865},
+         "changed": {"BMI": "20"}
+      }
+   ],
+   "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
+}
+```
