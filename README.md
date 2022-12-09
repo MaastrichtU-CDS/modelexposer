@@ -153,7 +153,7 @@ The following two exceptions can be thrown:
 
 - - -
 
-### Example calls:
+### Example calls that can currenty be used for reference in a unit-test:
 
 - - - 
 
@@ -164,8 +164,8 @@ input:
 
 ```
 {
-  "evidence" : {
-    "smoking_status" : "current_smoker"
+  "input" : {
+    "age" : "1"
   }
 }
 ```
@@ -173,7 +173,7 @@ input:
 output:
 
 ```
-{"probabilities": {"CVD": 0.07865005183850245}}
+{"probabilities": {"CVD": 0.08650000000000001}}
 ```
 
 --- 
@@ -182,8 +182,8 @@ input:
 
 ```
 {
-  "evidence" : {
-    "smoking_status" : "ex_smoker"
+  "input" : {
+    "current_smoker" : "yes"
   }
 }
 ```
@@ -191,7 +191,7 @@ input:
 output:
 
 ```
-{"probabilities": {"CVD": 0.04145569771244592}}
+{"probabilities": {"CVD": 0.08650000000000002}}
 ```
 
 --- 
@@ -200,8 +200,8 @@ input:
 
 ```
 {
-  "evidence" : {
-    "smoking_status" : "ex_smoker",
+  "input" : {
+    "current_smoker" : "yes",
     "gender" : "male"
   }
 }
@@ -210,7 +210,7 @@ input:
 output:
 
 ```
-{"probabilities": {"CVD": 0.04145569771244591}}
+{"probabilities": {"CVD": 0.0865}}
 ```
 
 --- 
@@ -219,8 +219,8 @@ input:
 
 ```
 {
-  "evidence" : {
-    "smoking_status" : "nonsense",
+  "input" : {
+    "current_smoker" : "nonsense",
     "gender" : "male"
   }
 }
@@ -229,7 +229,7 @@ input:
 output:
 
 ```
-{"message": "Unknown state 'nonsense' for attribute 'smoking_status', expected valid states: 'never_smoker', 'ex_smoker', 'current_smoker'"}
+{"message": "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: 'no', 'yes'"}
 ```
 
 --- 
@@ -238,7 +238,7 @@ input:
 
 ```
 {
-  "evidence" : {
+  "input" : {
     "nonsense" : "nonsense",
     "gender" : "male"
   }
@@ -251,66 +251,9 @@ output:
 {"message": "Unknown attribute 'nonsense'"}
 ```
 
----
-Example 5:
-input:
-
-```
-{
-  "evidence" : {
-    "smoking_status" : "ex_smoker",
-    "gender" : "male",
-    "nutrition_score" : "high"
-  }
-}
-```
-
-output:
-
-```
-{"probabilities": {"CVD": 0.01834995014955134}}
-```
-
 --- 
 
 #### estimateReducedRisk-endpoint
 
-Example 1: input:
-
-```
-{
-  "evidence" : {
-    "smoking_status" : "current_smoker"
-  }
-}
-```
-
-ouput:
-
-```
-{
-   "comparisons":    [
-            {
-         "probabilities": {"CVD": 0.04145569771244591},
-         "changed": {"smoking_status": "ex_smoker"}
-      },
-            {
-         "probabilities": {"CVD": 0.0733798604187438},
-         "changed": {"nutrition_score": "medium"}
-      },
-            {
-         "probabilities": {"CVD": 0.05225324027916252},
-         "changed": {"nutrition_score": "high"}
-      },
-            {
-         "probabilities": {"CVD": 0.07483549351944169},
-         "changed": {"physical_activity_score": "medium"}
-      },
-            {
-         "probabilities": {"CVD": 0.07483549351944169},
-         "changed": {"physical_activity_score": "high"}
-      }
-   ],
-   "baseline": {"probabilities": {"CVD": 0.07865005183850243}}
-}
-```
+estimateReducedRisk does not currently work while the model is still under construction due to the need to hardcode the
+comparisons.
