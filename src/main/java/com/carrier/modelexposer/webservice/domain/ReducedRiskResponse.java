@@ -1,11 +1,9 @@
 package com.carrier.modelexposer.webservice.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class ReducedRiskResponse extends Response {
-    private List<Intervention> changes;
+    private Intervention changes;
     private RiskResponse baseline;
 
     public RiskResponse getBaseline() {
@@ -16,21 +14,18 @@ public class ReducedRiskResponse extends Response {
         this.baseline = baseline;
     }
 
-    public List<Intervention> getChanges() {
+    public Intervention getChanges() {
         return changes;
     }
 
-    public void setChanges(List<Intervention> changes) {
+    public void setChanges(Intervention changes) {
         this.changes = changes;
     }
 
-    public void addResult(Map<String, String> evidence, Map<String, Double> probabilities) {
-        if (changes == null) {
-            changes = new ArrayList<>();
-        }
+    public void setResult(Map<String, String> evidence, Map<String, Double> probabilities) {
         Intervention c = new Intervention();
         c.setProbabilities(probabilities);
         c.setChanged(evidence);
-        changes.add(c);
+        changes = c;
     }
 }

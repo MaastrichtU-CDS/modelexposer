@@ -1,17 +1,16 @@
 package com.carrier.modelexposer.webservice.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ReducedRiskRequest extends RiskRequest {
-    private List<Map<String, String>> changes = new ArrayList<>();
+    private Map<String, String> changes = new HashMap<>();
 
-    public List<Map<String, String>> getChanges() {
+    public Map<String, String> getChanges() {
         return changes;
     }
 
-    public void setChanges(List<Map<String, String>> changes) {
+    public void setChanges(Map<String, String> changes) {
         this.changes = changes;
     }
 }

@@ -259,12 +259,10 @@ Input:
 {
   "input" : {
     "gender" : "male"
-  },"changes":[{
+  },"changes":{
   	"current_smoker":"yes",
   	"gout":"yes"
-  },{
-  	"BMI":"20"
-  	}],
+  },
   	"modelType" : "bayesian"
 }
 ```
@@ -272,19 +270,13 @@ Input:
 Output:
 ```
 {
-   "changes":    [
-            {
-         "probabilities": {"CVD": 0.083},
-         "changed":          {
-            "current_smoker": "yes",
-            "gout": "yes"
-         }
-      },
-            {
-         "probabilities": {"CVD": 0.0865},
-         "changed": {"BMI": "20"}
+   "changes":    {
+      "probabilities": {"CVD": 0.083},
+      "changed":       {
+         "current_smoker": "yes",
+         "gout": "yes"
       }
-   ],
+   },
    "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
 }
 ```

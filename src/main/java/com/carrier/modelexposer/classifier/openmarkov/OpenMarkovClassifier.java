@@ -52,19 +52,19 @@ public class OpenMarkovClassifier extends Classifier {
     }
 
     public ReducedRiskResponse compareClassifications(Map<String, String> evidence,
-                                                      List<Map<String, String>> comparisons)
+                                                      Map<String, String> comparison)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException, UnknownStateException,
                    UnknownAttributeException {
 
         ReducedRiskResponse result = new ReducedRiskResponse();
         result.setBaseline(classify(evidence));
-        for (Map<String, String> comparison : comparisons) {
-            Map<String, String> evidences = new HashMap<>();
-            evidences.putAll(evidence);
-            evidences.putAll(comparison);
-            result.addResult(comparison, classify(evidences).getProbabilities());
-        }
+
+        Map<String, String> evidences = new HashMap<>();
+        evidences.putAll(evidence);
+        evidences.putAll(comparison);
+        result.setResult(comparison, classify(evidences).getProbabilities());
+
         return result;
     }
 
