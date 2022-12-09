@@ -41,13 +41,13 @@ CSV if the patient stops smoking for a patient who never smoked to begin with)
 
 #### Input:
 
-Both methods expect the same input as the basis: values of all known evidence variables, as well as the target variables
-of interest in JSON format. It can deal with missing evidence variables. Expects a POST request. If modelType is left
-empty the modelExposer defaults to the Bayesian Network
+Both methods expect the same input as the basis: values of all known input variables, as well as the target variables of
+interest in JSON format. It can deal with missing input variables. Expects a POST request. If modelType is left empty
+the modelExposer defaults to the Bayesian Network
 
 ```
 {
-  "evidence" : {
+  "input" : {
     "smoking_status" : "current_smoker"
   },
   "modelType" : "bayesian"
@@ -59,7 +59,7 @@ opposed to using the basic comparisons provided by the modelExposer. Input with 
 
 ```
 {
-  "evidence" : {
+  "input" : {
     "smoking_status" : "current_smoker"
   },
   "comparisons" : [ {
