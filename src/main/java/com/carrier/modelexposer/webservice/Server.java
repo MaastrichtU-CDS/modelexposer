@@ -45,7 +45,7 @@ public class Server {
     public Response estimateBaseLineRisk(@RequestBody RiskRequest req) throws Exception {
         setClassifier(req);
         try {
-            return classifier.classify(req.getEvidence());
+            return classifier.classify(req.getInput());
         } catch (UnknownStateException | UnknownAttributeException e) {
             return new ExceptionResponse(e);
         }
@@ -71,10 +71,10 @@ public class Server {
         setClassifier(req);
         try {
             if (req.getComparisons().size() > 0) {
-                return classifier.compareClassifications(req.getEvidence(), req.getComparisons());
+                return classifier.compareClassifications(req.getInput(), req.getComparisons());
 
             } else {
-                return classifier.compareClassifications(req.getEvidence());
+                return classifier.compareClassifications(req.getInput());
             }
         } catch (UnknownStateException | UnknownAttributeException e) {
             return new ExceptionResponse(e);

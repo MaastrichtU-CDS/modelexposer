@@ -7,7 +7,7 @@ import java.util.Map;
 public class RiskRequest {
     public enum ModelType { bayesian }
 
-    private Map<String, String> evidence;
+    private Map<String, String> input;
     private List<Map<String, String>> comparisons = new ArrayList<>();
     private ModelType modelType;
 
@@ -27,11 +27,11 @@ public class RiskRequest {
         this.modelType = modelType;
     }
 
-    public Map<String, String> getEvidence() {
-        return evidence;
+    public Map<String, String> getInput() {
+        return input;
     }
 
-    public void setEvidence(Map<String, String> evidence) {
-        this.evidence = evidence;
+    public void setInput(Map<String, String> input) {
+        this.input = input;
     }
 }

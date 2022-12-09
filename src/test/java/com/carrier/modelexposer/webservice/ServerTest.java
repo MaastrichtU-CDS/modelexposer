@@ -28,7 +28,7 @@ public class ServerTest {
             evidence.put("smoking_status", "current_smoker");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
-            req.setEvidence(evidence);
+            req.setInput(evidence);
 
             RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
             assertEquals(response.getProbabilities().size(), 1);
@@ -52,7 +52,7 @@ public class ServerTest {
             evidence.put("nonsense", "current_smoker");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
-            req.setEvidence(evidence);
+            req.setInput(evidence);
 
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Unknown attribute 'nonsense'");
@@ -74,7 +74,7 @@ public class ServerTest {
             evidence.put("smoking_status", "nonsense");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
-            req.setEvidence(evidence);
+            req.setInput(evidence);
 
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
@@ -97,7 +97,7 @@ public class ServerTest {
 
 
             ReducedRiskRequest req = new ReducedRiskRequest();
-            req.setEvidence(evidence);
+            req.setInput(evidence);
 
             ReducedRiskResponse result = (ReducedRiskResponse) server.estimateReducedRisk(req);
             assertEquals(result.getComparisons().size(), 5); // 1 original, 5 comparisons
@@ -133,7 +133,7 @@ public class ServerTest {
 
 
             ReducedRiskRequest req = new ReducedRiskRequest();
-            req.setEvidence(evidence);
+            req.setInput(evidence);
             req.setComparisons(collectExampleBaseLinesEvidences());
             req.getComparisons().get(0).putAll(req.getComparisons().get(1));
 
