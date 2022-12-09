@@ -252,3 +252,39 @@ Output:
    "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
 }
 ```
+---
+Example 2:
+Input:
+```
+{
+  "input" : {
+    "gender" : "male"
+  },"changes":[{
+  	"current_smoker":"yes",
+  	"gout":"yes"
+  },{
+  	"BMI":"20"
+  	}],
+  	"modelType" : "bayesian"
+}
+```
+
+Output:
+```
+{
+   "changes":    [
+            {
+         "probabilities": {"CVD": 0.083},
+         "changed":          {
+            "current_smoker": "yes",
+            "gout": "yes"
+         }
+      },
+            {
+         "probabilities": {"CVD": 0.0865},
+         "changed": {"BMI": "20"}
+      }
+   ],
+   "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
+}
+```
