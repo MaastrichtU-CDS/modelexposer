@@ -18,13 +18,13 @@ public class ServerTest {
             throws Exception {
         {
             String path = "resources/";
-            String model = "model.pgmx";
+            String model = "dummy_model_sananet.pgmx";
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
 
 
             Map<String, String> evidence = new HashMap<>();
-            evidence.put("smoking_status", "current_smoker");
+            evidence.put("current_smoker", "yes");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -32,7 +32,124 @@ public class ServerTest {
             RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
             assertEquals(response.getProbabilities().size(), 1);
 
-            assertEquals(response.getProbabilities().get("CVD"), 0.078, 0.001);
+            assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
+        }
+    }
+
+    @Test
+    public void testClassifyTestPackYearsConversion()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_substance", "cigarette");
+            evidence.put("current_smoker_cigarette_years", "1");
+            evidence.put("current_smoker_cigarette_number_per_day", "2");
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response.getProbabilities().size(), 1);
+
+            Map<String, String> evidence2 = new HashMap<>();
+            evidence2.put("current_smoker", "yes");
+            evidence2.put("current_smoker_substance", "cigar");
+            evidence2.put("current_smoker_cigar_years", "2");
+            evidence2.put("current_smoker_cigar_number_per_week", "20");
+
+            req.setInput(evidence2);
+
+            RiskResponse response2 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response2.getProbabilities().size(), 1);
+
+            Map<String, String> evidence3 = new HashMap<>();
+            evidence3.put("current_smoker", "yes");
+            evidence3.put("current_smoker_substance", "pipe");
+            evidence3.put("current_smoker_pipe_years", "3");
+            evidence3.put("current_smoker_pipe_number_per_week", "30");
+
+            req.setInput(evidence3);
+
+            RiskResponse response3 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response3.getProbabilities().size(), 1);
+
+            Map<String, String> evidence4 = new HashMap<>();
+            evidence4.put("current_smoker", "yes");
+            evidence4.put("current_smoker_substance", "e-cigarette");
+            evidence4.put("current_smoker_e-cigarette_years", "4");
+            evidence4.put("current_smoker_e-cigarette_number_per_day", "40");
+
+            req.setInput(evidence4);
+
+            RiskResponse response4 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response4.getProbabilities().size(), 1);
+
+            Map<String, String> evidence5 = new HashMap<>();
+
+            evidence5.put("current_smoker", "no");
+            evidence5.put("ex_smoker", "yes");
+            evidence5.put("ex_smoker_substance", "cigarette");
+            evidence5.put("ex_smoker_cigarette_years", "1");
+            evidence5.put("ex_smoker_cigarette_number_per_day", "2");
+
+            req.setInput(evidence5);
+
+            RiskResponse response5 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response5.getProbabilities().size(), 1);
+
+            Map<String, String> evidence6 = new HashMap<>();
+            evidence6.put("current_smoker", "no");
+            evidence6.put("ex_smoker", "yes");
+            evidence6.put("ex_smoker_substance", "cigar");
+            evidence6.put("ex_smoker_cigar_years", "6");
+            evidence6.put("ex_smoker_cigar_number_per_week", "60");
+
+            req.setInput(evidence6);
+
+            RiskResponse response6 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response6.getProbabilities().size(), 1);
+
+            Map<String, String> evidence7 = new HashMap<>();
+            evidence7.put("current_smoker", "no");
+            evidence7.put("ex_smoker", "yes");
+            evidence7.put("ex_smoker_substance", "pipe");
+            evidence7.put("ex_smoker_pipe_years", "7");
+            evidence7.put("ex_smoker_pipe_number_per_week", "70");
+
+            req.setInput(evidence7);
+
+            RiskResponse response7 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response7.getProbabilities().size(), 1);
+
+            Map<String, String> evidence8 = new HashMap<>();
+            evidence8.put("current_smoker", "no");
+            evidence8.put("ex_smoker", "yes");
+            evidence8.put("ex_smoker_substance", "e-cigarette");
+            evidence8.put("ex_smoker_e-cigarette_years", "8");
+            evidence8.put("ex_smoker_e-cigarette_number_per_day", "80");
+
+            req.setInput(evidence8);
+
+            RiskResponse response8 = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response8.getProbabilities().size(), 1);
+
+
+            assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
+            assertEquals(response2.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response3.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response4.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response5.getProbabilities().get("CVD"), 0.085, 0.001);
+            assertEquals(response6.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response7.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response8.getProbabilities().get("CVD"), 0.087, 0.001);
         }
     }
 
@@ -42,7 +159,7 @@ public class ServerTest {
         {
 
             String path = "resources/";
-            String model = "model.pgmx";
+            String model = "dummy_model_sananet.pgmx";
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
 
@@ -87,21 +204,21 @@ public class ServerTest {
             throws Exception {
         {
             String path = "resources/";
-            String model = "model.pgmx";
+            String model = "dummy_model_sananet.pgmx";
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
 
             Map<String, String> evidence = new HashMap<>();
-            evidence.put("smoking_status", "current_smoker");
+            evidence.put("current_smoker", "yes");
 
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
 
             Map<String, String> change1 = new HashMap<>();
-            change1.put("smoking_status", "ex_smoker");
+            change1.put("current_smoker", "no");
             req.setChanges(change1);
-            
+
             ReducedRiskResponse result = (ReducedRiskResponse) server.estimateReducedRisk(req);
 
             Map<String, Double> comparisons = new HashMap<>();
@@ -113,7 +230,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("smoking_status ex_smoker"), 0.041, 0.01);
+            assertEquals(comparisons.get("pack_years 0current_smoker yes"), 0.085, 0.01);
         }
     }
 
