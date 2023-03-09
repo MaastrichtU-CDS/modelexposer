@@ -6,7 +6,6 @@ import com.carrier.modelexposer.exception.UnknownAttributeException;
 import com.carrier.modelexposer.exception.UnknownStateException;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
 import com.carrier.modelexposer.webservice.domain.RiskResponse;
-import org.apache.commons.io.IOUtils;
 import org.openmarkov.core.exception.*;
 import org.openmarkov.core.model.network.*;
 import org.openmarkov.core.model.network.potential.TablePotential;
@@ -14,7 +13,6 @@ import org.openmarkov.inference.variableElimination.tasks.VEPropagation;
 import org.openmarkov.io.probmodel.reader.PGMXReader_0_2;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,26 +136,6 @@ public class OpenMarkovClassifier extends Classifier {
         RiskResponse response = new RiskResponse();
         response.setProbabilities(probabilities);
         return response;
-    }
-
-    public String getModelPgmx() {
-        try {
-            return readModel(path + model);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ProbNet getNetwork() {
-        return network;
-    }
-
-    private String readModel(String path)
-            throws IOException {
-
-        FileInputStream fis = new FileInputStream(path);
-        return IOUtils.toString(fis, "UTF-8");
     }
 }
 

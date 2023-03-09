@@ -615,6 +615,7 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q2" type="finiteStates" role="chance">
@@ -627,6 +628,7 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q3" type="finiteStates" role="chance">
@@ -639,10 +641,11 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q4" type="finiteStates" role="chance">
-        <Coordinates x="1381" y="796" />
+        <Coordinates x="1383" y="796" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -651,6 +654,7 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q6" type="finiteStates" role="chance">
@@ -663,10 +667,11 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q5" type="finiteStates" role="chance">
-        <Coordinates x="1329" y="845" />
+        <Coordinates x="1327" y="845" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -675,6 +680,7 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q7" type="finiteStates" role="chance">
@@ -687,6 +693,7 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q8" type="finiteStates" role="chance">
@@ -699,6 +706,7 @@
           <State name="2-4" />
           <State name="6-8" />
           <State name="&gt;8" />
+          <State name="1-2" />
         </States>
       </Variable>
       <Variable name="PJQ9_Q1" type="finiteStates" role="chance">
@@ -871,6 +879,19 @@
           <State name="OC" />
         </States>
       </Variable>
+      <Variable name="CHAMPS_MVPA_Q9" type="finiteStates" role="chance">
+        <Coordinates x="1157" y="1024" />
+        <States>
+          <State name="4-6" />
+          <State name="0" />
+          <State name="0.5-1" />
+          <State name="&lt;0.5" />
+          <State name="2-4" />
+          <State name="6-8" />
+          <State name="&gt;8" />
+          <State name="1-2" />
+        </States>
+      </Variable>
     </Variables>
     <Links>
       <Link directed="true">
@@ -908,6 +929,10 @@
       <Link directed="true">
         <Variable name="ex_smoker" />
         <Variable name="LDL" />
+      </Link>
+      <Link directed="true">
+        <Variable name="ex_smoker" />
+        <Variable name="ex_smoker_substance" />
       </Link>
       <Link directed="true">
         <Variable name="ex_smoker_6m" />
@@ -1210,6 +1235,10 @@
         <Variable name="weight" />
       </Link>
       <Link directed="true">
+        <Variable name="CHAMPS_MVPA_Q6" />
+        <Variable name="ex_smoker_substance" />
+      </Link>
+      <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q5" />
         <Variable name="pregnancy_diabetes" />
       </Link>
@@ -1325,6 +1354,14 @@
         <Variable name="ex_smoker_substance" />
         <Variable name="CVD" />
       </Link>
+      <Link directed="true">
+        <Variable name="CHAMPS_MVPA_Q9" />
+        <Variable name="CHAMPS_MVPA_Q7" />
+      </Link>
+      <Link directed="true">
+        <Variable name="CHAMPS_MVPA_Q9" />
+        <Variable name="CHAMPS_MVPA_Q8" />
+      </Link>
     </Links>
     <Potentials>
       <Potential type="Table" role="conditionalProbability">
@@ -1370,13 +1407,12 @@
         </Variables>
         <Values>0.564565 0.435435 0.564655 0.435345 0.456 0.544 0.4 0.6 0.4279 0.5721</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="current_smoker_substance" />
           <Variable name="ex_smoker" />
           <Variable name="CHAMPS_MVPA_Q6" />
         </Variables>
-        <Values>0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1429,13 +1465,12 @@
         </Variables>
         <Values>0.0666666667 0.6 0.3333333333333333 0.2366666667 0.43 0.3333333333333333 0.0666666667 0.6 0.3333333333333333 0.2366666667 0.43 0.3333333333333333 0.0666666667 0.6 0.3333333333333333 0.2366666667 0.43 0.3333333333333333 0.0666666667 0.6 0.3333333333333333 0.2366666667 0.43 0.3333333333333333</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="pregnancy_diabetes" />
           <Variable name="diabetes_type_1" />
           <Variable name="CHAMPS_MVPA_Q5" />
         </Variables>
-        <Values>0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.1666666667 0.5 0.3333333333333333</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1582,14 +1617,13 @@
         </Variables>
         <Values>0.78 0.22 0.324 0.676 0.243 0.757</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="spondylitis_ankylosans" />
           <Variable name="steroid_tablets" />
-          <Variable name="GAD7_Q1" />
           <Variable name="CHAMPS_MVPA_Q8" />
+          <Variable name="GAD7_Q1" />
         </Variables>
-        <Values>0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534 0.76 0.24 0.956466 0.043534</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1628,13 +1662,12 @@
         </Variables>
         <Values>0.03 0.97 0.35 0.65 0.24 0.76 0.2 0.8</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="antihypertensives" />
           <Variable name="currently_pregnant" />
           <Variable name="CHAMPS_MVPA_Q8" />
         </Variables>
-        <Values>0.35 0.65 0.65 0.35 0.35 0.65 0.65 0.35 0.35 0.65 0.65 0.35 0.35 0.65 0.65 0.35 0.35 0.65 0.65 0.35 0.35 0.65 0.65 0.35 0.35 0.65 0.65 0.35</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1704,13 +1737,12 @@
         </Variables>
         <Values>0.675 0.325 0.766 0.234</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="weight" />
           <Variable name="BMI" />
           <Variable name="CHAMPS_MVPA_Q6" />
         </Variables>
-        <Values>0.769 0.231 0.4 0.6 0.769 0.231 0.4 0.6 0.769 0.231 0.4 0.6 0.769 0.231 0.4 0.6 0.769 0.231 0.4 0.6 0.769 0.231 0.4 0.6 0.769 0.231 0.4 0.6</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1815,8 +1847,8 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_Q1" />
-          <Variable name="CHAMPS_MVPA_Q4" />
           <Variable name="alcohol" />
+          <Variable name="CHAMPS_MVPA_Q4" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1850,19 +1882,21 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_Q7" />
+          <Variable name="CHAMPS_MVPA_Q9" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_Q8" />
           <Variable name="PJQ9_Q10" />
+          <Variable name="CHAMPS_MVPA_Q9" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="PJQ9_Q1" />
-          <Variable name="GAD7_Q3" />
           <Variable name="CHAMPS_MVPA_Q1" />
+          <Variable name="GAD7_Q3" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1890,8 +1924,8 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="PJQ9_Q5" />
-          <Variable name="GAD7_Q6" />
           <Variable name="CHAMPS_MVPA_Q2" />
+          <Variable name="GAD7_Q6" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1955,18 +1989,23 @@
           <Variable name="GAD7_Q6" />
         </Variables>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="ex_smoker_substance" />
+          <Variable name="lipid_modifying_agents" />
           <Variable name="ex_smoker" />
           <Variable name="CHAMPS_MVPA_Q6" />
-          <Variable name="lipid_modifying_agents" />
         </Variables>
-        <Values>0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34 0.001 0.2 0.1 0.3245 0.3745 0.35 0.2 0.01 0.1 0.34</Values>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="ethnicity" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="CHAMPS_MVPA_Q9" />
+          <Variable name="PJQ9_Q10" />
         </Variables>
       </Potential>
     </Potentials>

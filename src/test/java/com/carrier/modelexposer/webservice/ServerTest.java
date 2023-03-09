@@ -154,6 +154,38 @@ public class ServerTest {
     }
 
     @Test
+    public void testClassifyTestPackYearsInvalidFormat()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_substance", "cigarette");
+
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(),
+                         "Missing attribute 'current_smoker_cigarette_years' is expected to be present");
+
+            evidence.put("current_smoker_cigarette_years", "fout");
+            evidence.put("current_smoker_cigarette_number_per_day", "2");
+            r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(),
+                         "Attribute 'current_smoker_cigarette_years' is expected to be an integer value");
+
+        }
+    }
+
+    @Test
     public void testClassifyTestWrongNodeName()
             throws Exception {
         {
