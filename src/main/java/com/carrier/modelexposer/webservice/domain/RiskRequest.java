@@ -3,7 +3,7 @@ package com.carrier.modelexposer.webservice.domain;
 import java.util.Map;
 
 public class RiskRequest {
-    public enum ModelType { bayesian }
+    public enum ModelType { bayesian, score2 }
 
     private Map<String, String> input;
     private ModelType modelType;

@@ -232,6 +232,79 @@ public class ServerTest {
     }
 
     @Test
+    public void testScore2Classifier()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "model.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("gender", "male");
+            evidence.put("age", "50");
+            evidence.put("current_smoker", "yes");
+            evidence.put("SBP", "140");
+            evidence.put("TC", "6.3");
+            evidence.put("HDL", "1.4");
+
+            RiskRequest req = new RiskRequest();
+            req.setInput(evidence);
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            RiskResponse r = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getProbabilities().get("CVD"), 0.0631, 0.001);
+        }
+    }
+
+    @Test
+    public void testScore2ClassifierInvalidValues()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "model.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("gender", "nonsense");
+            evidence.put("age", "50");
+            evidence.put("current_smoker", "yes");
+            evidence.put("SBP", "140");
+            evidence.put("TC", "6.3");
+            evidence.put("HDL", "1.4");
+
+            RiskRequest req = new RiskRequest();
+            req.setInput(evidence);
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(),
+                         "Unknown state 'nonsense' for attribute 'gender', expected valid states: 'male', 'female'");
+
+            evidence.put("gender", "male");
+            evidence.put("current_smoker", "nonsense");
+
+            r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(),
+                         "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: 'yes', 'no'");
+
+            evidence.put("current_smoker", "yes");
+            evidence.put("SBP", "nonsense");
+
+            r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(), "Attribute 'SBP' is expected to be an double value");
+
+            evidence.remove("SBP");
+
+            r = (ExceptionResponse) server.estimateBaseLineRisk(req);
+            assertEquals(r.getMessage(), "Missing attribute 'SBP' is expected to be present");
+        }
+    }
+
+    @Test
     public void testComparison()
             throws Exception {
         {

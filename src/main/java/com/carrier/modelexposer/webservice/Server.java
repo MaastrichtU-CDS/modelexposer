@@ -2,10 +2,8 @@ package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.classifier.Classifier;
 import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
-import com.carrier.modelexposer.exception.InvalidIntegerException;
-import com.carrier.modelexposer.exception.MissingAttributeException;
-import com.carrier.modelexposer.exception.UnknownAttributeException;
-import com.carrier.modelexposer.exception.UnknownStateException;
+import com.carrier.modelexposer.classifier.score2.Score2Classifier;
+import com.carrier.modelexposer.exception.*;
 import com.carrier.modelexposer.webservice.domain.ExceptionResponse;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskRequest;
 import com.carrier.modelexposer.webservice.domain.Response;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.carrier.modelexposer.util.Util.getIntValue;
 
 @RestController
 public class Server {
@@ -55,7 +55,7 @@ public class Server {
             Map<String, String> updatedInput = cleanUpEvidence(req.getInput());
             return classifier.classify(updatedInput);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
-                | MissingAttributeException e) {
+                | MissingAttributeException | InvalidDoubleException e) {
             return new ExceptionResponse(e);
         }
     }
@@ -76,6 +76,8 @@ public class Server {
 
     private Map<String, String> cleanUpEvidence(Map<String, String> input)
             throws InvalidIntegerException, MissingAttributeException {
+        //This is a general cleanup of variables which are too specific but can be generalized.
+        //E.g. adress is too unique, but can be used to derive if you live in a "bad" location
         input = updateAdress(input);
         return updatePackYears(input);
     }
@@ -145,28 +147,11 @@ public class Server {
 
     private int createPackYears(String years, String count, Map<String, String> input)
             throws MissingAttributeException, InvalidIntegerException {
-        String y = input.get(years);
-        String c = input.get(count);
 
-        if (y == null) {
-            throw new MissingAttributeException(years);
-        } else if (c == null) {
-            throw new MissingAttributeException(count);
-        } else {
-            int yInt = 0;
-            int cInt = 0;
-            try {
-                cInt = Integer.valueOf(c);
-            } catch (NumberFormatException e) {
-                throw new InvalidIntegerException(count);
-            }
-            try {
-                yInt = Integer.valueOf(y);
-            } catch (NumberFormatException e) {
-                throw new InvalidIntegerException(years);
-            }
-            return yInt * cInt;
-        }
+        int yInt = getIntValue(input, years);
+        int cInt = getIntValue(input, count);
+        return yInt * cInt;
+
     }
 
     private Map<String, String> cleanUpSmoking(Map<String, String> input) {
@@ -200,6 +185,8 @@ public class Server {
         checkDefault(req);
         if (req.getModelType() == RiskRequest.ModelType.bayesian) {
             classifier = new OpenMarkovClassifier(path, model, target, targetValue);
+        } else if (req.getModelType() == RiskRequest.ModelType.score2) {
+            classifier = new Score2Classifier();
         }
     }
 
