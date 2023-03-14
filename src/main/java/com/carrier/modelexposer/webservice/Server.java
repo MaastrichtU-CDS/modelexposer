@@ -78,6 +78,7 @@ public class Server {
             throws InvalidIntegerException, MissingAttributeException {
         //This is a general cleanup of variables which are too specific but can be generalized.
         //E.g. adress is too unique, but can be used to derive if you live in a "bad" location
+        input.remove("date_question_x_completed"); //why is this in the model?
         input = updateAdress(input);
         return updatePackYears(input);
     }

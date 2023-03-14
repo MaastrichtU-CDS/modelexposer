@@ -892,6 +892,68 @@
           <State name="1-2" />
         </States>
       </Variable>
+      <Variable name="difficulties_household_income" type="finiteStates" role="chance">
+        <Coordinates x="1470" y="368" />
+        <States>
+          <State name="very_difficult" />
+          <State name="difficult" />
+          <State name="not_difficult_not_easy" />
+          <State name="easy" />
+          <State name="very_easy" />
+        </States>
+      </Variable>
+      <Variable name="household_size" type="discretized" role="chance">
+        <Coordinates x="1510" y="728" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <States>
+          <State name="weinig" />
+          <State name="veel" />
+        </States>
+        <Thresholds>
+          <Threshold value="0.0" belongsTo="left" />
+          <Threshold value="2.0" belongsTo="right" />
+          <Threshold value="Infinity" belongsTo="right" />
+        </Thresholds>
+      </Variable>
+      <Variable name="net_household_income" type="finiteStates" role="chance">
+        <Coordinates x="1463" y="675" />
+        <States>
+          <State name="4750-4999" />
+          <State name="&gt;5000" />
+          <State name="4500-4749" />
+          <State name="4250-4499" />
+          <State name="4000-4249" />
+          <State name="3750-3999" />
+          <State name="3500-3749" />
+          <State name="3250-3499" />
+          <State name="3000-3249" />
+          <State name="2750-2999" />
+          <State name="2500-2749" />
+          <State name="2250-2499" />
+          <State name="2000-2249" />
+          <State name="1750-1999" />
+          <State name="1500-1749" />
+          <State name="1250-1499" />
+          <State name="1000-1249" />
+          <State name="750-999" />
+          <State name="&lt;750" />
+        </States>
+      </Variable>
+      <Variable name="step_count" type="discretized" role="chance">
+        <Coordinates x="1518" y="468" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <States>
+          <State name="inactive" />
+          <State name="active" />
+        </States>
+        <Thresholds>
+          <Threshold value="0.0" belongsTo="left" />
+          <Threshold value="5000.0" belongsTo="right" />
+          <Threshold value="Infinity" belongsTo="right" />
+        </Thresholds>
+      </Variable>
     </Variables>
     <Links>
       <Link directed="true">
@@ -1303,6 +1365,10 @@
         <Variable name="diabetes_type_2" />
       </Link>
       <Link directed="true">
+        <Variable name="PJQ9_Q10" />
+        <Variable name="CHAMPS_MVPA_Q9" />
+      </Link>
+      <Link directed="true">
         <Variable name="GAD7_Q1" />
         <Variable name="spondylitis_ankylosans" />
       </Link>
@@ -1355,12 +1421,52 @@
         <Variable name="CVD" />
       </Link>
       <Link directed="true">
+        <Variable name="ethnicity" />
+        <Variable name="CVD" />
+      </Link>
+      <Link directed="true">
+        <Variable name="ethnicity" />
+        <Variable name="household_size" />
+      </Link>
+      <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q9" />
         <Variable name="CHAMPS_MVPA_Q7" />
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q9" />
         <Variable name="CHAMPS_MVPA_Q8" />
+      </Link>
+      <Link directed="true">
+        <Variable name="difficulties_household_income" />
+        <Variable name="diabetes_type_1" />
+      </Link>
+      <Link directed="true">
+        <Variable name="difficulties_household_income" />
+        <Variable name="migraine_aura" />
+      </Link>
+      <Link directed="true">
+        <Variable name="household_size" />
+        <Variable name="net_household_income" />
+      </Link>
+      <Link directed="true">
+        <Variable name="net_household_income" />
+        <Variable name="ex_smoker_substance" />
+      </Link>
+      <Link directed="true">
+        <Variable name="net_household_income" />
+        <Variable name="CHAMPS_MVPA_Q3" />
+      </Link>
+      <Link directed="true">
+        <Variable name="net_household_income" />
+        <Variable name="difficulties_household_income" />
+      </Link>
+      <Link directed="true">
+        <Variable name="step_count" />
+        <Variable name="ex_smoker_substance" />
+      </Link>
+      <Link directed="true">
+        <Variable name="step_count" />
+        <Variable name="difficulties_household_income" />
       </Link>
     </Links>
     <Potentials>
@@ -1478,8 +1584,9 @@
           <Variable name="gout" />
           <Variable name="PJQ9_Q2" />
           <Variable name="ex_smoker_substance" />
+          <Variable name="ethnicity" />
         </Variables>
-        <Values>0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083</Values>
+        <Values>0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1516,6 +1623,7 @@
           <Variable name="diabetes_type_1" />
           <Variable name="HIV" />
           <Variable name="PJQ9_Q8" />
+          <Variable name="difficulties_household_income" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1644,8 +1752,9 @@
           <Variable name="migraine_aura" />
           <Variable name="cancer_treatment" />
           <Variable name="weight" />
+          <Variable name="difficulties_household_income" />
         </Variables>
-        <Values>0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59</Values>
+        <Values>0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1860,6 +1969,7 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_Q3" />
+          <Variable name="net_household_income" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1995,6 +2105,8 @@
           <Variable name="lipid_modifying_agents" />
           <Variable name="ex_smoker" />
           <Variable name="CHAMPS_MVPA_Q6" />
+          <Variable name="step_count" />
+          <Variable name="net_household_income" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -2006,6 +2118,30 @@
         <Variables>
           <Variable name="CHAMPS_MVPA_Q9" />
           <Variable name="PJQ9_Q10" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="difficulties_household_income" />
+          <Variable name="net_household_income" />
+          <Variable name="step_count" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="household_size" />
+          <Variable name="ethnicity" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="net_household_income" />
+          <Variable name="household_size" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="step_count" />
         </Variables>
       </Potential>
     </Potentials>

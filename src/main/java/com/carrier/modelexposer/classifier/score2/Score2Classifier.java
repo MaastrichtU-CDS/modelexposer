@@ -36,7 +36,7 @@ public class Score2Classifier extends Classifier {
         return result;
     }
 
-    @SuppressWarnings ("checkstyle:magicNumber")
+    @SuppressWarnings ("checkstyle:magicNumber") //ignore magic numbers in the score-function
     private double score2(Map<String, String> evidence)
             throws MissingAttributeException, InvalidIntegerException, InvalidDoubleException, UnknownStateException {
         //Collect relevant attributes
