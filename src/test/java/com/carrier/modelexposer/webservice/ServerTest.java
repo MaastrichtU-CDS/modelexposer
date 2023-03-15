@@ -25,6 +25,11 @@ public class ServerTest {
 
             Map<String, String> evidence = new HashMap<>();
             evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -52,6 +57,11 @@ public class ServerTest {
             evidence.put("current_smoker_substance", "cigarette");
             evidence.put("current_smoker_cigarette_years", "1");
             evidence.put("current_smoker_cigarette_number_per_day", "2");
+            evidence.put("current_smoker_cigarette", "yes");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -64,6 +74,11 @@ public class ServerTest {
             evidence2.put("current_smoker_substance", "cigar");
             evidence2.put("current_smoker_cigar_years", "2");
             evidence2.put("current_smoker_cigar_number_per_week", "20");
+            evidence2.put("current_smoker_cigarette", "no");
+            evidence2.put("current_smoker_cigar", "yes");
+            evidence2.put("current_smoker_pipe", "no");
+            evidence2.put("current_smoker_e_cigarrete", "no");
+            evidence2.put("current_smoker_other", "no");
 
             req.setInput(evidence2);
 
@@ -75,6 +90,11 @@ public class ServerTest {
             evidence3.put("current_smoker_substance", "pipe");
             evidence3.put("current_smoker_pipe_years", "3");
             evidence3.put("current_smoker_pipe_number_per_week", "30");
+            evidence3.put("current_smoker_cigarette", "no");
+            evidence3.put("current_smoker_cigar", "no");
+            evidence3.put("current_smoker_pipe", "yes");
+            evidence3.put("current_smoker_e_cigarrete", "no");
+            evidence3.put("current_smoker_other", "no");
 
             req.setInput(evidence3);
 
@@ -84,8 +104,13 @@ public class ServerTest {
             Map<String, String> evidence4 = new HashMap<>();
             evidence4.put("current_smoker", "yes");
             evidence4.put("current_smoker_substance", "e-cigarette");
-            evidence4.put("current_smoker_e-cigarette_years", "4");
-            evidence4.put("current_smoker_e-cigarette_number_per_day", "40");
+            evidence4.put("current_smoker_e_cigarette_years", "4");
+            evidence4.put("current_smoker_e_cigarette_number_per_day", "40");
+            evidence4.put("current_smoker_cigarette", "no");
+            evidence4.put("current_smoker_cigar", "no");
+            evidence4.put("current_smoker_pipe", "no");
+            evidence4.put("current_smoker_e_cigarrete", "yes");
+            evidence4.put("current_smoker_other", "no");
 
             req.setInput(evidence4);
 
@@ -99,6 +124,11 @@ public class ServerTest {
             evidence5.put("ex_smoker_substance", "cigarette");
             evidence5.put("ex_smoker_cigarette_years", "1");
             evidence5.put("ex_smoker_cigarette_number_per_day", "2");
+            evidence5.put("ex_smoker_cigarette", "yes");
+            evidence5.put("ex_smoker_cigar", "no");
+            evidence5.put("ex_smoker_pipe", "no");
+            evidence5.put("ex_smoker_e_cigarrete", "no");
+            evidence5.put("ex_smoker_other", "no");
 
             req.setInput(evidence5);
 
@@ -111,6 +141,11 @@ public class ServerTest {
             evidence6.put("ex_smoker_substance", "cigar");
             evidence6.put("ex_smoker_cigar_years", "6");
             evidence6.put("ex_smoker_cigar_number_per_week", "60");
+            evidence6.put("ex_smoker_cigarette", "no");
+            evidence6.put("ex_smoker_cigar", "yes");
+            evidence6.put("ex_smoker_pipe", "no");
+            evidence6.put("ex_smoker_e_cigarrete", "no");
+            evidence6.put("ex_smoker_other", "no");
 
             req.setInput(evidence6);
 
@@ -123,6 +158,11 @@ public class ServerTest {
             evidence7.put("ex_smoker_substance", "pipe");
             evidence7.put("ex_smoker_pipe_years", "7");
             evidence7.put("ex_smoker_pipe_number_per_week", "70");
+            evidence7.put("ex_smoker_cigarette", "no");
+            evidence7.put("ex_smoker_cigar", "no");
+            evidence7.put("ex_smoker_pipe", "yes");
+            evidence7.put("ex_smoker_e_cigarrete", "no");
+            evidence7.put("ex_smoker_other", "no");
 
             req.setInput(evidence7);
 
@@ -133,8 +173,13 @@ public class ServerTest {
             evidence8.put("current_smoker", "no");
             evidence8.put("ex_smoker", "yes");
             evidence8.put("ex_smoker_substance", "e-cigarette");
-            evidence8.put("ex_smoker_e-cigarette_years", "8");
-            evidence8.put("ex_smoker_e-cigarette_number_per_day", "80");
+            evidence8.put("ex_smoker_e_cigarette_years", "8");
+            evidence8.put("ex_smoker_e_cigarette_number_per_day", "80");
+            evidence8.put("ex_smoker_cigarette", "no");
+            evidence8.put("ex_smoker_cigar", "no");
+            evidence8.put("ex_smoker_pipe", "no");
+            evidence8.put("ex_smoker_e_cigarrete", "yes");
+            evidence8.put("ex_smoker_other", "no");
 
             req.setInput(evidence8);
 
@@ -143,8 +188,8 @@ public class ServerTest {
 
 
             assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
-            assertEquals(response2.getProbabilities().get("CVD"), 0.087, 0.001);
-            assertEquals(response3.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response2.getProbabilities().get("CVD"), 0.085, 0.001);
+            assertEquals(response3.getProbabilities().get("CVD"), 0.085, 0.001);
             assertEquals(response4.getProbabilities().get("CVD"), 0.087, 0.001);
             assertEquals(response5.getProbabilities().get("CVD"), 0.085, 0.001);
             assertEquals(response6.getProbabilities().get("CVD"), 0.087, 0.001);
@@ -167,6 +212,11 @@ public class ServerTest {
 
             evidence.put("current_smoker", "yes");
             evidence.put("current_smoker_substance", "cigarette");
+            evidence.put("current_smoker_cigarette", "yes");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
 
             ReducedRiskRequest req = new ReducedRiskRequest();
@@ -248,6 +298,11 @@ public class ServerTest {
             evidence.put("SBP", "140");
             evidence.put("TC", "6.3");
             evidence.put("HDL", "1.4");
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
             RiskRequest req = new RiskRequest();
             req.setInput(evidence);
@@ -271,7 +326,7 @@ public class ServerTest {
             Map<String, String> evidence = new HashMap<>();
             evidence.put("gender", "nonsense");
             evidence.put("age", "50");
-            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker", "no");
             evidence.put("SBP", "140");
             evidence.put("TC", "6.3");
             evidence.put("HDL", "1.4");
@@ -293,11 +348,23 @@ public class ServerTest {
 
             evidence.put("current_smoker", "yes");
             evidence.put("SBP", "nonsense");
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Attribute 'SBP' is expected to be an double value");
 
             evidence.remove("SBP");
+            //readd smoking variables due to unit-test passing along values, unlike the real world where i would be a
+            // new list
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Missing attribute 'SBP' is expected to be present");
@@ -315,6 +382,11 @@ public class ServerTest {
 
             Map<String, String> evidence = new HashMap<>();
             evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_other", "no");
 
 
             ReducedRiskRequest req = new ReducedRiskRequest();
@@ -322,6 +394,7 @@ public class ServerTest {
 
             Map<String, String> change1 = new HashMap<>();
             change1.put("current_smoker", "no");
+
             req.setChanges(change1);
 
             ReducedRiskResponse result = (ReducedRiskResponse) server.estimateReducedRisk(req);
@@ -335,7 +408,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("pack_years 0current_smoker yes"), 0.085, 0.01);
+            assertEquals(comparisons.get("pack_years 0current_smoker no"), 0.085, 0.01);
         }
     }
 

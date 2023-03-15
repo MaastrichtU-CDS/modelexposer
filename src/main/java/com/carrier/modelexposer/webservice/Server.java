@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.carrier.modelexposer.util.Util.getBooleanFromYesNoValue;
 import static com.carrier.modelexposer.util.Util.getIntValue;
 
 @RestController
@@ -66,7 +67,7 @@ public class Server {
         setClassifier(req);
         try {
             Map<String, String> updatedInput = cleanUpEvidence(req.getInput());
-            Map<String, String> updatedChanges = cleanUpEvidence(req.getInput());
+            Map<String, String> updatedChanges = cleanUpEvidence(req.getChanges());
             return classifier.compareClassifications(updatedInput, updatedChanges);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException e) {
@@ -75,7 +76,7 @@ public class Server {
     }
 
     private Map<String, String> cleanUpEvidence(Map<String, String> input)
-            throws InvalidIntegerException, MissingAttributeException {
+            throws InvalidIntegerException, MissingAttributeException, UnknownStateException {
         //This is a general cleanup of variables which are too specific but can be generalized.
         //E.g. adress is too unique, but can be used to derive if you live in a "bad" location
         input.remove("date_question_x_completed"); //why is this in the model?
@@ -95,49 +96,71 @@ public class Server {
         return input;
     }
 
+    @SuppressWarnings ("checkstyle:magicNumber") //ignore magic numbers in packyears function
     private Map<String, String> updatePackYears(Map<String, String> input)
-            throws InvalidIntegerException, MissingAttributeException {
+            throws InvalidIntegerException, MissingAttributeException, UnknownStateException {
         //replaces smoking values with a more general "pack_years"
         int packyears = 0;
 
         if ((input.computeIfPresent("current_smoker", (k, v) -> {
             return v;
         }) + "").equals("yes")) {
-            String substance = "" + input.computeIfPresent("current_smoker_substance", (k, v) -> {
-                return v;
-            });
-            if (substance.equals("cigarette")) {
+            boolean cigarette = getBooleanFromYesNoValue(input, "current_smoker_cigarette");
+            boolean cigar = getBooleanFromYesNoValue(input, "current_smoker_cigar");
+            boolean pipe = getBooleanFromYesNoValue(input, "current_smoker_pipe");
+            boolean eCigarette = getBooleanFromYesNoValue(input, "current_smoker_e_cigarrete");
+            boolean other = getBooleanFromYesNoValue(input, "current_smoker_other");
+
+            if (cigarette) {
                 packyears = createPackYears("current_smoker_cigarette_years",
                                             "current_smoker_cigarette_number_per_day", input);
-            } else if (substance.equals("cigar")) {
+            }
+            if (cigar) {
                 packyears += createPackYears("current_smoker_cigar_years",
                                              "current_smoker_cigar_number_per_week",
-                                             input);
-            } else if (substance.equals("pipe")) {
+                                             input) / 7;
+            }
+            if (pipe) {
                 packyears += createPackYears("current_smoker_pipe_years",
-                                             "current_smoker_pipe_number_per_week", input);
-            } else if (substance.equals("e-cigarette")) {
-                packyears += createPackYears("current_smoker_e-cigarette_years",
-                                             "current_smoker_e-cigarette_number_per_day", input);
+                                             "current_smoker_pipe_number_per_week", input) / 7;
+            }
+            if (eCigarette) {
+                packyears += createPackYears("current_smoker_e_cigarette_years",
+                                             "current_smoker_e_cigarette_number_per_day", input);
+            }
+            if (other) {
+                packyears += createPackYears("current_smoker_other_years",
+                                             "current_smoker_other_number_per_day", input);
             }
         } else if (("" + input.computeIfPresent("ex_smoker", (k, v) -> {
             return v;
         })).equals("yes")) {
-            String substance = "" + input.computeIfPresent("ex_smoker_substance", (k, v) -> {
-                return v;
-            });
-            if (substance.equals("cigarette")) {
-                packyears += createPackYears("ex_smoker_cigarette_years",
-                                             "ex_smoker_cigarette_number_per_day", input);
-            } else if (substance.equals("cigar")) {
+            boolean cigarette = getBooleanFromYesNoValue(input, "ex_smoker_cigarette");
+            boolean cigar = getBooleanFromYesNoValue(input, "ex_smoker_cigar");
+            boolean pipe = getBooleanFromYesNoValue(input, "ex_smoker_pipe");
+            boolean eCigarette = getBooleanFromYesNoValue(input, "ex_smoker_e_cigarrete");
+            boolean other = getBooleanFromYesNoValue(input, "ex_smoker_other");
+
+            if (cigarette) {
+                packyears = createPackYears("ex_smoker_cigarette_years",
+                                            "ex_smoker_cigarette_number_per_day", input);
+            }
+            if (cigar) {
                 packyears += createPackYears("ex_smoker_cigar_years",
-                                             "ex_smoker_cigar_number_per_week", input);
-            } else if (substance.equals("pipe")) {
+                                             "ex_smoker_cigar_number_per_week",
+                                             input) / 7;
+            }
+            if (pipe) {
                 packyears += createPackYears("ex_smoker_pipe_years",
-                                             "ex_smoker_pipe_number_per_week", input);
-            } else if (substance.equals("e-cigarette")) {
-                packyears += createPackYears("ex_smoker_e-cigarette_years",
-                                             "ex_smoker_e-cigarette_number_per_day", input);
+                                             "ex_smoker_pipe_number_per_week", input) / 7;
+            }
+            if (eCigarette) {
+                packyears += createPackYears("ex_smoker_e_cigarette_years",
+                                             "ex_smoker_e_cigarette_number_per_day", input);
+            }
+            if (other) {
+                packyears += createPackYears("ex_smoker_other_years",
+                                             "ex_smoker_other_number_per_day", input);
             }
         }
 
@@ -157,22 +180,32 @@ public class Server {
 
     private Map<String, String> cleanUpSmoking(Map<String, String> input) {
         List<String> toBeRemoved = new ArrayList<>();
+        toBeRemoved.add("current_smoker_cigarette");
+        toBeRemoved.add("current_smoker_cigar");
+        toBeRemoved.add("current_smoker_pipe");
+        toBeRemoved.add("current_smoker_e_cigarrete");
+        toBeRemoved.add("current_smoker_other");
         toBeRemoved.add("current_smoker_cigarette_years");
         toBeRemoved.add("current_smoker_cigarette_number_per_day");
         toBeRemoved.add("current_smoker_cigar_years");
         toBeRemoved.add("current_smoker_cigar_number_per_week");
         toBeRemoved.add("current_smoker_pipe_years");
         toBeRemoved.add("current_smoker_pipe_number_per_week");
-        toBeRemoved.add("current_smoker_e-cigarette_years");
-        toBeRemoved.add("current_smoker_e-cigarette_number_per_day");
+        toBeRemoved.add("current_smoker_e_cigarette_years");
+        toBeRemoved.add("current_smoker_e_cigarette_number_per_day");
+        toBeRemoved.add("ex_smoker_cigarette");
+        toBeRemoved.add("ex_smoker_cigar");
+        toBeRemoved.add("ex_smoker_pipe");
+        toBeRemoved.add("ex_smoker_e_cigarrete");
+        toBeRemoved.add("ex_smoker_other");
         toBeRemoved.add("ex_smoker_cigarette_years");
         toBeRemoved.add("ex_smoker_cigarette_number_per_day");
         toBeRemoved.add("ex_smoker_cigar_years");
         toBeRemoved.add("ex_smoker_cigar_number_per_week");
         toBeRemoved.add("ex_smoker_pipe_years");
         toBeRemoved.add("ex_smoker_pipe_number_per_week");
-        toBeRemoved.add("ex_smoker_e-cigarette_years");
-        toBeRemoved.add("ex_smoker_e-cigarette_number_per_day");
+        toBeRemoved.add("ex_smoker_e_cigarette_years");
+        toBeRemoved.add("ex_smoker_e_cigarette_number_per_day");
 
         for (String s : toBeRemoved) {
             if (input.get(s) != null) {
