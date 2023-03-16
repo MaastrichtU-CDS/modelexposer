@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.carrier.modelexposer.util.Util.getBooleanFromYesNoValue;
-import static com.carrier.modelexposer.util.Util.getIntValue;
+import static com.carrier.modelexposer.util.Util.*;
 
 @RestController
 public class Server {
@@ -53,12 +53,102 @@ public class Server {
     public Response estimateBaseLineRisk(@RequestBody RiskRequest req) throws Exception {
         setClassifier(req);
         try {
+            Map<String, String> changes = detectIntervention(req.getInput());
+            if (changes.size() > 0) {
+                ReducedRiskRequest r = new ReducedRiskRequest();
+                r.setInput(req.getInput());
+                r.setModelType(req.getModelType());
+                r.setChanges(changes);
+                return estimateReducedRisk(r);
+            }
             Map<String, String> updatedInput = cleanUpEvidence(req.getInput());
             return classifier.classify(updatedInput);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException | InvalidDoubleException e) {
             return new ExceptionResponse(e);
         }
+    }
+
+    private Map<String, String> cleanIntervention(Map<String, String> input) {
+        input = removeValue(input, "intervention_bmi");
+        input = removeValue(input, "intervention_diet");
+        input = removeValue(input, "intervention_excercise");
+        input = removeValue(input, "intervention_glucose");
+        input = removeValue(input, "intervention_ldl");
+        input = removeValue(input, "intervention_sbp");
+        input = removeValue(input, "intervention_smoking");
+        return input;
+    }
+
+    private Map<String, String> detectIntervention(Map<String, String> input)
+            throws MissingAttributeException, InvalidIntegerException, UnknownStateException {
+        Map<String, String> changes = new HashMap<>();
+        Integer bmi = getOptionalIntValue(input, "intervention_bmi");
+        Integer diet = getOptionalIntValue(input, "intervention_diet");
+        Integer exercise = getOptionalIntValue(input, "intervention_excercise");
+        Integer glucose = getOptionalIntValue(input, "intervention_glucose");
+        Integer ldl = getOptionalIntValue(input, "intervention_ldl");
+        Integer sbp = getOptionalIntValue(input, "intervention_sbp");
+        Boolean smoking = getOptionalBooleanValue(input, "intervention_smoking");
+
+        if (bmi != null) {
+            changes.put("BMI", String.valueOf(bmi));
+        }
+        if (diet != null) {
+            changes.put("eetscore", String.valueOf(diet));
+        }
+        if (exercise != null) {
+            changes.put("eetscore", String.valueOf(exercise));
+        }
+        if (glucose != null) {
+            changes.put("Glu", String.valueOf(glucose));
+        }
+        if (ldl != null) {
+            changes.put("LDL", String.valueOf(ldl));
+        }
+        if (sbp != null) {
+            changes.put("SBP", String.valueOf(sbp));
+        }
+        if (smoking != null) {
+            changes.put("current_smoker", "no");
+            changes.put("ex_smoker", "yes");
+
+            changes.put("ex_smoker_cigarette", input.get("current_smoker_cigarette"));
+            changes.put("ex_smoker_cigar", input.get("current_smoker_cigar"));
+            changes.put("ex_smoker_e_cigarette", input.get("current_smoker_e_cigarette"));
+            changes.put("ex_smoker_pipe", input.get("current_smoker_pipe"));
+            changes.put("ex_smoker_other", input.get("current_smoker_other"));
+
+
+            boolean cigarette = getBooleanFromYesNoValue(input, "current_smoker_cigarette");
+            boolean cigar = getBooleanFromYesNoValue(input, "current_smoker_cigar");
+            boolean pipe = getBooleanFromYesNoValue(input, "current_smoker_pipe");
+            boolean eCigarette = getBooleanFromYesNoValue(input, "current_smoker_e_cigarette");
+            boolean other = getBooleanFromYesNoValue(input, "current_smoker_other");
+
+            if (cigarette) {
+                changes.put("ex_smoker_cigarette_years", input.get("current_smoker_cigarette_years"));
+                changes.put("ex_smoker_cigarette_number_per_day", input.get("current_smoker_cigarette_number_per_day"));
+            }
+            if (cigar) {
+                changes.put("ex_smoker_cigar_years", input.get("current_smoker_cigar_years"));
+                changes.put("ex_smoker_cigar_number_per_week", input.get("current_smoker_cigar_number_per_week"));
+            }
+            if (pipe) {
+                changes.put("ex_smoker_pipe_years", input.get("current_smoker_pipe_years"));
+                changes.put("ex_smoker_pipe_number_per_week", input.get("current_smoker_pipe_number_per_week"));
+            }
+            if (eCigarette) {
+                changes.put("ex_smoker_e_cigarette_years", input.get("current_smoker_e_cigarette_years"));
+                changes.put("ex_smoker_e_cigarette_number_per_day",
+                            input.get("current_smoker_e_cigarette_number_per_day"));
+            }
+            if (other) {
+                changes.put("ex_smoker_other_years", input.get("current_smoker_other_years"));
+                changes.put("ex_smoker_other_number_per_day", input.get("current_smoker_other_number_per_day"));
+            }
+        }
+        return changes;
     }
 
     @PostMapping ("estimateReducedRisk")
@@ -79,20 +169,19 @@ public class Server {
             throws InvalidIntegerException, MissingAttributeException, UnknownStateException {
         //This is a general cleanup of variables which are too specific but can be generalized.
         //E.g. adress is too unique, but can be used to derive if you live in a "bad" location
-        input.remove("date_question_x_completed"); //why is this in the model?
+        input = removeValue(input, "date_baseline_consult");
+        input = removeValue(input, "date_question_x_completed");
+        input = removeValue(input, "birth_date");
+
         input = updateAdress(input);
+        input = cleanIntervention(input);
         return updatePackYears(input);
     }
 
     private Map<String, String> updateAdress(Map<String, String> input) {
         //ToDo: do something with adress
-
-        if (input.get("address_house_number") != null) {
-            input.remove("address_house_number");
-        }
-        if (input.get("address_postcode") != null) {
-            input.remove("address_postcode");
-        }
+        input = removeValue(input, "address_house_number");
+        input = removeValue(input, "address_postcode");
         return input;
     }
 
@@ -108,7 +197,7 @@ public class Server {
             boolean cigarette = getBooleanFromYesNoValue(input, "current_smoker_cigarette");
             boolean cigar = getBooleanFromYesNoValue(input, "current_smoker_cigar");
             boolean pipe = getBooleanFromYesNoValue(input, "current_smoker_pipe");
-            boolean eCigarette = getBooleanFromYesNoValue(input, "current_smoker_e_cigarrete");
+            boolean eCigarette = getBooleanFromYesNoValue(input, "current_smoker_e_cigarette");
             boolean other = getBooleanFromYesNoValue(input, "current_smoker_other");
 
             if (cigarette) {
@@ -138,7 +227,7 @@ public class Server {
             boolean cigarette = getBooleanFromYesNoValue(input, "ex_smoker_cigarette");
             boolean cigar = getBooleanFromYesNoValue(input, "ex_smoker_cigar");
             boolean pipe = getBooleanFromYesNoValue(input, "ex_smoker_pipe");
-            boolean eCigarette = getBooleanFromYesNoValue(input, "ex_smoker_e_cigarrete");
+            boolean eCigarette = getBooleanFromYesNoValue(input, "ex_smoker_e_cigarette");
             boolean other = getBooleanFromYesNoValue(input, "ex_smoker_other");
 
             if (cigarette) {
@@ -183,7 +272,7 @@ public class Server {
         toBeRemoved.add("current_smoker_cigarette");
         toBeRemoved.add("current_smoker_cigar");
         toBeRemoved.add("current_smoker_pipe");
-        toBeRemoved.add("current_smoker_e_cigarrete");
+        toBeRemoved.add("current_smoker_e_cigarette");
         toBeRemoved.add("current_smoker_other");
         toBeRemoved.add("current_smoker_cigarette_years");
         toBeRemoved.add("current_smoker_cigarette_number_per_day");
@@ -193,10 +282,12 @@ public class Server {
         toBeRemoved.add("current_smoker_pipe_number_per_week");
         toBeRemoved.add("current_smoker_e_cigarette_years");
         toBeRemoved.add("current_smoker_e_cigarette_number_per_day");
+        toBeRemoved.add("current_smoker_other_years");
+        toBeRemoved.add("current_smoker_other_number_per_day");
         toBeRemoved.add("ex_smoker_cigarette");
         toBeRemoved.add("ex_smoker_cigar");
         toBeRemoved.add("ex_smoker_pipe");
-        toBeRemoved.add("ex_smoker_e_cigarrete");
+        toBeRemoved.add("ex_smoker_e_cigarette");
         toBeRemoved.add("ex_smoker_other");
         toBeRemoved.add("ex_smoker_cigarette_years");
         toBeRemoved.add("ex_smoker_cigarette_number_per_day");
@@ -206,11 +297,11 @@ public class Server {
         toBeRemoved.add("ex_smoker_pipe_number_per_week");
         toBeRemoved.add("ex_smoker_e_cigarette_years");
         toBeRemoved.add("ex_smoker_e_cigarette_number_per_day");
+        toBeRemoved.add("ex_smoker_other_years");
+        toBeRemoved.add("ex_smoker_other_number_per_day");
 
         for (String s : toBeRemoved) {
-            if (input.get(s) != null) {
-                input.remove(s);
-            }
+            input = removeValue(input, s);
         }
         return input;
     }

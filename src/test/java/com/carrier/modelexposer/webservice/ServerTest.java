@@ -28,7 +28,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "no");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
@@ -38,6 +38,460 @@ public class ServerTest {
             assertEquals(response.getProbabilities().size(), 1);
 
             assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
+        }
+    }
+
+    @Test
+    public void testClassifyTestAllTheAttributesCorrect()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("date_baseline_consult", "2222-02-22");
+            evidence.put("gender", "male");
+            evidence.put("birth_date", "2222-02-22");
+            evidence.put("ACR", "1.0");
+            evidence.put("address_house_number", "33");
+            evidence.put("address_postcode", "1234AB");
+            evidence.put("alcohol", "12");
+            evidence.put("antihypertensives", "yes");
+            evidence.put("antithrombotic_agents", "yes");
+            evidence.put("anxiety_disorder", "yes");
+            evidence.put("arthritis_psoriatica", "yes");
+            evidence.put("atypical_antipsychotic_medicines", "yes");
+            evidence.put("beta_blocking_agents", "yes");
+            evidence.put("bipolar_disorder", "yes");
+            evidence.put("calcium_channel_blockers", "yes");
+            evidence.put("cancer", "yes");
+            evidence.put("cancer_treatment", "yes");
+            evidence.put("CHAMPS_MVPA_Q1", "0");
+            evidence.put("CHAMPS_MVPA_Q2", "0");
+            evidence.put("CHAMPS_MVPA_Q3", "0");
+            evidence.put("CHAMPS_MVPA_Q4", "0");
+            evidence.put("CHAMPS_MVPA_Q5", "0");
+            evidence.put("CHAMPS_MVPA_Q6", "0");
+            evidence.put("CHAMPS_MVPA_Q7", "0");
+            evidence.put("CHAMPS_MVPA_Q8", "0");
+            evidence.put("CHAMPS_MVPA_Q9", "0");
+            evidence.put("CHAMPS_MVPA_score", "12");
+            evidence.put("CKD", "yes");
+            evidence.put("COPD", "yes");
+            evidence.put("Cr", "1.2");
+            evidence.put("current_smoker_substance", "cigarette");
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "yes");
+            evidence.put("current_smoker_cigarette_years", "12");
+            evidence.put("current_smoker_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_cigar", "yes");
+            evidence.put("current_smoker_cigar_years", "12");
+            evidence.put("current_smoker_cigar_number_per_week", "12");
+            evidence.put("current_smoker_pipe", "yes");
+            evidence.put("current_smoker_pipe_years", "12");
+            evidence.put("current_smoker_pipe_number_per_week", "12");
+            evidence.put("current_smoker_e_cigarette", "yes");
+            evidence.put("current_smoker_e_cigarette_years", "12");
+            evidence.put("current_smoker_e_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_other", "yes");
+            evidence.put("current_smoker_other_years", "12");
+            evidence.put("current_smoker_other_number_per_day", "12");
+            evidence.put("currently_pregnant", "yes");
+            evidence.put("CVD", "yes");
+            evidence.put("CVD_family", "yes");
+            evidence.put("depressive_disorder", "yes");
+            evidence.put("diabetes_other", "yes");
+            evidence.put("diabetes_type_1", "yes");
+            evidence.put("diabetes_type_2", "yes");
+            evidence.put("difficulties_household_income", "very_difficult");
+            evidence.put("drugs_used_in_diabetes", "yes");
+            evidence.put("education", "level_1");
+            evidence.put("eetscore", "12");
+            evidence.put("eGFR", "1.0");
+            evidence.put("erectile_disfunction", "yes");
+            evidence.put("ethnicity", "NL");
+            evidence.put("difficulties_household_income", "very_difficult");
+            evidence.put("ex_smoker_substance", "cigarette");
+            evidence.put("ex_smoker", "yes");
+            evidence.put("ex_smoker_cigarette", "yes");
+            evidence.put("ex_smoker_cigarette_years", "12");
+            evidence.put("ex_smoker_cigarette_number_per_day", "12");
+            evidence.put("ex_smoker_cigar", "yes");
+            evidence.put("ex_smoker_cigar_years", "12");
+            evidence.put("ex_smoker_cigar_number_per_week", "12");
+            evidence.put("ex_smoker_pipe", "yes");
+            evidence.put("ex_smoker_pipe_years", "12");
+            evidence.put("ex_smoker_pipe_number_per_week", "12");
+            evidence.put("ex_smoker_e_cigarette", "yes");
+            evidence.put("ex_smoker_e_cigarette_years", "12");
+            evidence.put("ex_smoker_e_cigarette_number_per_day", "12");
+            evidence.put("ex_smoker_other", "yes");
+            evidence.put("ex_smoker_other_years", "12");
+            evidence.put("ex_smoker_other_number_per_day", "12");
+            evidence.put("familial_hypercholesterolemia", "yes");
+            evidence.put("Glu", "12.0");
+            evidence.put("gout", "yes");
+            evidence.put("HbA1c", "12.0");
+            evidence.put("HDL", "12.0");
+            evidence.put("HIV", "yes");
+            evidence.put("household_size", "12");
+            evidence.put("IBD", "yes");
+            evidence.put("intervention_bmi", "12");
+            evidence.put("intervention_diet", "12");
+            evidence.put("intervention_excercise", "12");
+            evidence.put("intervention_glucose", "12");
+            evidence.put("intervention_ldl", "12");
+            evidence.put("intervention_sbp", "12");
+            evidence.put("intervention_smoking", "yes");
+            evidence.put("LDL", "12.0");
+            evidence.put("lipid_modifying_agents", "yes");
+            evidence.put("menopause", "yes");
+            evidence.put("menopause_age", "12");
+            evidence.put("migraine", "yes");
+            evidence.put("migraine_aura", "yes");
+            evidence.put("net_household_income", "4750-4999");
+            evidence.put("obstructive_sleep_apnoea", "yes");
+            evidence.put("PCOS", "yes");
+            evidence.put("pregnancy_diabetes", "yes");
+            evidence.put("pregnancy_hypertension", "yes");
+            evidence.put("pregnancy_preeclampsia", "yes");
+            evidence.put("psychiatric_disorder_other", "yes");
+            evidence.put("psychotic_disorder", "yes");
+            evidence.put("RAS_inhibitors", "yes");
+            evidence.put("rheumatoid_arthritis", "yes");
+            evidence.put("SLE", "yes");
+            evidence.put("spondylitis_ankylosans", "yes");
+            evidence.put("step_count", "12");
+            evidence.put("steroid_tablets", "yes");
+            evidence.put("TC", "1.2");
+            evidence.put("trauma_stressor_disorder", "yes");
+            evidence.put("BMI", "1.2");
+            evidence.put("DBP", "1");
+            evidence.put("height", "1");
+            evidence.put("SBP", "1");
+            evidence.put("weight", "1");
+            evidence.put("date_question_x_completed", "1");
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            //just check it doesn't throw an error
+            ReducedRiskResponse response = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+        }
+    }
+
+    @Test
+    public void testClassifyTestAllTheAttributesNoInterventionCorrect()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("date_baseline_consult", "2222-02-22");
+            evidence.put("gender", "male");
+            evidence.put("birth_date", "2222-02-22");
+            evidence.put("ACR", "1.0");
+            evidence.put("address_house_number", "33");
+            evidence.put("address_postcode", "1234AB");
+            evidence.put("alcohol", "12");
+            evidence.put("antihypertensives", "yes");
+            evidence.put("antithrombotic_agents", "yes");
+            evidence.put("anxiety_disorder", "yes");
+            evidence.put("arthritis_psoriatica", "yes");
+            evidence.put("atypical_antipsychotic_medicines", "yes");
+            evidence.put("beta_blocking_agents", "yes");
+            evidence.put("bipolar_disorder", "yes");
+            evidence.put("calcium_channel_blockers", "yes");
+            evidence.put("cancer", "yes");
+            evidence.put("cancer_treatment", "yes");
+            evidence.put("CHAMPS_MVPA_Q1", "0");
+            evidence.put("CHAMPS_MVPA_Q2", "0");
+            evidence.put("CHAMPS_MVPA_Q3", "0");
+            evidence.put("CHAMPS_MVPA_Q4", "0");
+            evidence.put("CHAMPS_MVPA_Q5", "0");
+            evidence.put("CHAMPS_MVPA_Q6", "0");
+            evidence.put("CHAMPS_MVPA_Q7", "0");
+            evidence.put("CHAMPS_MVPA_Q8", "0");
+            evidence.put("CHAMPS_MVPA_Q9", "0");
+            evidence.put("CHAMPS_MVPA_score", "12");
+            evidence.put("CKD", "yes");
+            evidence.put("COPD", "yes");
+            evidence.put("Cr", "1.2");
+            evidence.put("current_smoker_substance", "cigarette");
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "yes");
+            evidence.put("current_smoker_cigarette_years", "12");
+            evidence.put("current_smoker_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_cigar", "yes");
+            evidence.put("current_smoker_cigar_years", "12");
+            evidence.put("current_smoker_cigar_number_per_week", "12");
+            evidence.put("current_smoker_pipe", "yes");
+            evidence.put("current_smoker_pipe_years", "12");
+            evidence.put("current_smoker_pipe_number_per_week", "12");
+            evidence.put("current_smoker_e_cigarette", "yes");
+            evidence.put("current_smoker_e_cigarette_years", "12");
+            evidence.put("current_smoker_e_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_other", "yes");
+            evidence.put("current_smoker_other_years", "12");
+            evidence.put("current_smoker_other_number_per_day", "12");
+            evidence.put("currently_pregnant", "yes");
+            evidence.put("CVD", "yes");
+            evidence.put("CVD_family", "yes");
+            evidence.put("depressive_disorder", "yes");
+            evidence.put("diabetes_other", "yes");
+            evidence.put("diabetes_type_1", "yes");
+            evidence.put("diabetes_type_2", "yes");
+            evidence.put("difficulties_household_income", "very_difficult");
+            evidence.put("drugs_used_in_diabetes", "yes");
+            evidence.put("education", "level_1");
+            evidence.put("eetscore", "12");
+            evidence.put("eGFR", "1.0");
+            evidence.put("erectile_disfunction", "yes");
+            evidence.put("ethnicity", "NL");
+            evidence.put("difficulties_household_income", "very_difficult");
+            evidence.put("ex_smoker_substance", "cigarette");
+            evidence.put("ex_smoker", "yes");
+            evidence.put("ex_smoker_cigarette", "yes");
+            evidence.put("ex_smoker_cigarette_years", "12");
+            evidence.put("ex_smoker_cigarette_number_per_day", "12");
+            evidence.put("ex_smoker_cigar", "yes");
+            evidence.put("ex_smoker_cigar_years", "12");
+            evidence.put("ex_smoker_cigar_number_per_week", "12");
+            evidence.put("ex_smoker_pipe", "yes");
+            evidence.put("ex_smoker_pipe_years", "12");
+            evidence.put("ex_smoker_pipe_number_per_week", "12");
+            evidence.put("ex_smoker_e_cigarette", "yes");
+            evidence.put("ex_smoker_e_cigarette_years", "12");
+            evidence.put("ex_smoker_e_cigarette_number_per_day", "12");
+            evidence.put("ex_smoker_other", "yes");
+            evidence.put("ex_smoker_other_years", "12");
+            evidence.put("ex_smoker_other_number_per_day", "12");
+            evidence.put("familial_hypercholesterolemia", "yes");
+            evidence.put("Glu", "12.0");
+            evidence.put("gout", "yes");
+            evidence.put("HbA1c", "12.0");
+            evidence.put("HDL", "12.0");
+            evidence.put("HIV", "yes");
+            evidence.put("household_size", "12");
+            evidence.put("IBD", "yes");
+            evidence.put("LDL", "12.0");
+            evidence.put("lipid_modifying_agents", "yes");
+            evidence.put("menopause", "yes");
+            evidence.put("menopause_age", "12");
+            evidence.put("migraine", "yes");
+            evidence.put("migraine_aura", "yes");
+            evidence.put("net_household_income", "4750-4999");
+            evidence.put("obstructive_sleep_apnoea", "yes");
+            evidence.put("PCOS", "yes");
+            evidence.put("pregnancy_diabetes", "yes");
+            evidence.put("pregnancy_hypertension", "yes");
+            evidence.put("pregnancy_preeclampsia", "yes");
+            evidence.put("psychiatric_disorder_other", "yes");
+            evidence.put("psychotic_disorder", "yes");
+            evidence.put("RAS_inhibitors", "yes");
+            evidence.put("rheumatoid_arthritis", "yes");
+            evidence.put("SLE", "yes");
+            evidence.put("spondylitis_ankylosans", "yes");
+            evidence.put("step_count", "12");
+            evidence.put("steroid_tablets", "yes");
+            evidence.put("TC", "1.2");
+            evidence.put("trauma_stressor_disorder", "yes");
+            evidence.put("BMI", "1.2");
+            evidence.put("DBP", "1");
+            evidence.put("height", "1");
+            evidence.put("SBP", "1");
+            evidence.put("weight", "1");
+            evidence.put("date_question_x_completed", "1");
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            //just check it doesn't throw an error
+            RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
+        }
+    }
+
+    @Test
+    public void testClassifyTestAllTheAttributesOfficialChangesCorrect()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("date_baseline_consult", "2222-02-22");
+            evidence.put("gender", "male");
+            evidence.put("birth_date", "2222-02-22");
+            evidence.put("ACR", "1.0");
+            evidence.put("address_house_number", "33");
+            evidence.put("address_postcode", "1234AB");
+            evidence.put("alcohol", "12");
+            evidence.put("antihypertensives", "yes");
+            evidence.put("antithrombotic_agents", "yes");
+            evidence.put("anxiety_disorder", "yes");
+            evidence.put("arthritis_psoriatica", "yes");
+            evidence.put("atypical_antipsychotic_medicines", "yes");
+            evidence.put("beta_blocking_agents", "yes");
+            evidence.put("bipolar_disorder", "yes");
+            evidence.put("calcium_channel_blockers", "yes");
+            evidence.put("cancer", "yes");
+            evidence.put("cancer_treatment", "yes");
+            evidence.put("CHAMPS_MVPA_Q1", "0");
+            evidence.put("CHAMPS_MVPA_Q2", "0");
+            evidence.put("CHAMPS_MVPA_Q3", "0");
+            evidence.put("CHAMPS_MVPA_Q4", "0");
+            evidence.put("CHAMPS_MVPA_Q5", "0");
+            evidence.put("CHAMPS_MVPA_Q6", "0");
+            evidence.put("CHAMPS_MVPA_Q7", "0");
+            evidence.put("CHAMPS_MVPA_Q8", "0");
+            evidence.put("CHAMPS_MVPA_Q9", "0");
+            evidence.put("CHAMPS_MVPA_score", "12");
+            evidence.put("CKD", "yes");
+            evidence.put("COPD", "yes");
+            evidence.put("Cr", "1.2");
+            evidence.put("current_smoker_substance", "cigarette");
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "yes");
+            evidence.put("current_smoker_cigarette_years", "12");
+            evidence.put("current_smoker_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_cigar", "yes");
+            evidence.put("current_smoker_cigar_years", "12");
+            evidence.put("current_smoker_cigar_number_per_week", "12");
+            evidence.put("current_smoker_pipe", "yes");
+            evidence.put("current_smoker_pipe_years", "12");
+            evidence.put("current_smoker_pipe_number_per_week", "12");
+            evidence.put("current_smoker_e_cigarette", "yes");
+            evidence.put("current_smoker_e_cigarette_years", "12");
+            evidence.put("current_smoker_e_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_other", "yes");
+            evidence.put("current_smoker_other_years", "12");
+            evidence.put("current_smoker_other_number_per_day", "12");
+            evidence.put("currently_pregnant", "yes");
+            evidence.put("CVD", "yes");
+            evidence.put("CVD_family", "yes");
+            evidence.put("depressive_disorder", "yes");
+            evidence.put("diabetes_other", "yes");
+            evidence.put("diabetes_type_1", "yes");
+            evidence.put("diabetes_type_2", "yes");
+            evidence.put("difficulties_household_income", "very_difficult");
+            evidence.put("drugs_used_in_diabetes", "yes");
+            evidence.put("education", "level_1");
+            evidence.put("eetscore", "12");
+            evidence.put("eGFR", "1.0");
+            evidence.put("erectile_disfunction", "yes");
+            evidence.put("ethnicity", "NL");
+            evidence.put("difficulties_household_income", "very_difficult");
+            evidence.put("ex_smoker_substance", "cigarette");
+            evidence.put("ex_smoker", "yes");
+            evidence.put("ex_smoker_cigarette", "yes");
+            evidence.put("ex_smoker_cigarette_years", "12");
+            evidence.put("ex_smoker_cigarette_number_per_day", "12");
+            evidence.put("ex_smoker_cigar", "yes");
+            evidence.put("ex_smoker_cigar_years", "12");
+            evidence.put("ex_smoker_cigar_number_per_week", "12");
+            evidence.put("ex_smoker_pipe", "yes");
+            evidence.put("ex_smoker_pipe_years", "12");
+            evidence.put("ex_smoker_pipe_number_per_week", "12");
+            evidence.put("ex_smoker_e_cigarette", "yes");
+            evidence.put("ex_smoker_e_cigarette_years", "12");
+            evidence.put("ex_smoker_e_cigarette_number_per_day", "12");
+            evidence.put("ex_smoker_other", "yes");
+            evidence.put("ex_smoker_other_years", "12");
+            evidence.put("ex_smoker_other_number_per_day", "12");
+            evidence.put("familial_hypercholesterolemia", "yes");
+            evidence.put("Glu", "12.0");
+            evidence.put("gout", "yes");
+            evidence.put("HbA1c", "12.0");
+            evidence.put("HDL", "12.0");
+            evidence.put("HIV", "yes");
+            evidence.put("household_size", "12");
+            evidence.put("IBD", "yes");
+            evidence.put("LDL", "12.0");
+            evidence.put("lipid_modifying_agents", "yes");
+            evidence.put("menopause", "yes");
+            evidence.put("menopause_age", "12");
+            evidence.put("migraine", "yes");
+            evidence.put("migraine_aura", "yes");
+            evidence.put("net_household_income", "4750-4999");
+            evidence.put("obstructive_sleep_apnoea", "yes");
+            evidence.put("PCOS", "yes");
+            evidence.put("pregnancy_diabetes", "yes");
+            evidence.put("pregnancy_hypertension", "yes");
+            evidence.put("pregnancy_preeclampsia", "yes");
+            evidence.put("psychiatric_disorder_other", "yes");
+            evidence.put("psychotic_disorder", "yes");
+            evidence.put("RAS_inhibitors", "yes");
+            evidence.put("rheumatoid_arthritis", "yes");
+            evidence.put("SLE", "yes");
+            evidence.put("spondylitis_ankylosans", "yes");
+            evidence.put("step_count", "12");
+            evidence.put("steroid_tablets", "yes");
+            evidence.put("TC", "1.2");
+            evidence.put("trauma_stressor_disorder", "yes");
+            evidence.put("BMI", "1.2");
+            evidence.put("DBP", "1");
+            evidence.put("height", "1");
+            evidence.put("SBP", "1");
+            evidence.put("weight", "1");
+            evidence.put("date_question_x_completed", "1");
+
+            Map<String, String> changes = new HashMap<>();
+            changes.put("weight", "2");
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            //just check it doesn't throw an error
+            ReducedRiskResponse response = (ReducedRiskResponse) server.estimateReducedRisk(req);
+        }
+    }
+
+    @Test
+    public void testClassifyTestInterventionCorrect()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "yes");
+            evidence.put("current_smoker_cigarette_years", "12");
+            evidence.put("current_smoker_cigarette_number_per_day", "12");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
+            evidence.put("current_smoker_other", "no");
+
+            evidence.put("intervention_smoking", "yes");
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            ReducedRiskResponse response = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : response.getChanges().getChanged().keySet()) {
+                name += s + " " + response.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, response.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(comparisons.get("ex_smoker yespack_years 144current_smoker no"), 0.08, 0.01);
         }
     }
 
@@ -60,7 +514,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "yes");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
@@ -77,7 +531,7 @@ public class ServerTest {
             evidence2.put("current_smoker_cigarette", "no");
             evidence2.put("current_smoker_cigar", "yes");
             evidence2.put("current_smoker_pipe", "no");
-            evidence2.put("current_smoker_e_cigarrete", "no");
+            evidence2.put("current_smoker_e_cigarette", "no");
             evidence2.put("current_smoker_other", "no");
 
             req.setInput(evidence2);
@@ -93,7 +547,7 @@ public class ServerTest {
             evidence3.put("current_smoker_cigarette", "no");
             evidence3.put("current_smoker_cigar", "no");
             evidence3.put("current_smoker_pipe", "yes");
-            evidence3.put("current_smoker_e_cigarrete", "no");
+            evidence3.put("current_smoker_e_cigarette", "no");
             evidence3.put("current_smoker_other", "no");
 
             req.setInput(evidence3);
@@ -109,7 +563,7 @@ public class ServerTest {
             evidence4.put("current_smoker_cigarette", "no");
             evidence4.put("current_smoker_cigar", "no");
             evidence4.put("current_smoker_pipe", "no");
-            evidence4.put("current_smoker_e_cigarrete", "yes");
+            evidence4.put("current_smoker_e_cigarette", "yes");
             evidence4.put("current_smoker_other", "no");
 
             req.setInput(evidence4);
@@ -127,7 +581,7 @@ public class ServerTest {
             evidence5.put("ex_smoker_cigarette", "yes");
             evidence5.put("ex_smoker_cigar", "no");
             evidence5.put("ex_smoker_pipe", "no");
-            evidence5.put("ex_smoker_e_cigarrete", "no");
+            evidence5.put("ex_smoker_e_cigarette", "no");
             evidence5.put("ex_smoker_other", "no");
 
             req.setInput(evidence5);
@@ -144,7 +598,7 @@ public class ServerTest {
             evidence6.put("ex_smoker_cigarette", "no");
             evidence6.put("ex_smoker_cigar", "yes");
             evidence6.put("ex_smoker_pipe", "no");
-            evidence6.put("ex_smoker_e_cigarrete", "no");
+            evidence6.put("ex_smoker_e_cigarette", "no");
             evidence6.put("ex_smoker_other", "no");
 
             req.setInput(evidence6);
@@ -161,7 +615,7 @@ public class ServerTest {
             evidence7.put("ex_smoker_cigarette", "no");
             evidence7.put("ex_smoker_cigar", "no");
             evidence7.put("ex_smoker_pipe", "yes");
-            evidence7.put("ex_smoker_e_cigarrete", "no");
+            evidence7.put("ex_smoker_e_cigarette", "no");
             evidence7.put("ex_smoker_other", "no");
 
             req.setInput(evidence7);
@@ -178,7 +632,7 @@ public class ServerTest {
             evidence8.put("ex_smoker_cigarette", "no");
             evidence8.put("ex_smoker_cigar", "no");
             evidence8.put("ex_smoker_pipe", "no");
-            evidence8.put("ex_smoker_e_cigarrete", "yes");
+            evidence8.put("ex_smoker_e_cigarette", "yes");
             evidence8.put("ex_smoker_other", "no");
 
             req.setInput(evidence8);
@@ -215,7 +669,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "yes");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
 
@@ -301,7 +755,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "no");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
             RiskRequest req = new RiskRequest();
@@ -351,7 +805,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "no");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
@@ -363,7 +817,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "no");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
@@ -385,7 +839,7 @@ public class ServerTest {
             evidence.put("current_smoker_cigarette", "no");
             evidence.put("current_smoker_cigar", "no");
             evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarrete", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
 
