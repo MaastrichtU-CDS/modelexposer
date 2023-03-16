@@ -175,7 +175,10 @@ public class Server {
 
         input = updateAdress(input);
         input = cleanIntervention(input);
-        return updatePackYears(input);
+        if (input.containsKey("current_smoker") || input.containsKey("ex_smoker")) {
+            input = updatePackYears(input);
+        }
+        return input;
     }
 
     private Map<String, String> updateAdress(Map<String, String> input) {
