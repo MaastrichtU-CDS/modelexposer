@@ -42,6 +42,34 @@ public class ServerTest {
     }
 
     @Test
+    public void testClassifyTestCorrectNullValue()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
+            evidence.put("current_smoker_other", "null");
+
+            ReducedRiskRequest req = new ReducedRiskRequest();
+            req.setInput(evidence);
+
+            RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
+            assertEquals(response.getProbabilities().size(), 1);
+
+            assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
+        }
+    }
+
+    @Test
     public void testClassifyTestAllTheAttributesCorrect()
             throws Exception {
         {

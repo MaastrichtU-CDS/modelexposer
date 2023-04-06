@@ -2,6 +2,7 @@ package com.carrier.modelexposer.classifier.openmarkov;
 
 
 import com.carrier.modelexposer.classifier.Classifier;
+import com.carrier.modelexposer.exception.MissingAttributeException;
 import com.carrier.modelexposer.exception.UnknownAttributeException;
 import com.carrier.modelexposer.exception.UnknownStateException;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.carrier.modelexposer.util.Util.checkForNull;
 
 public class OpenMarkovClassifier extends Classifier {
     private String path;
@@ -53,7 +56,7 @@ public class OpenMarkovClassifier extends Classifier {
                                                       Map<String, String> comparison)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException, UnknownStateException,
-                   UnknownAttributeException {
+                   UnknownAttributeException, MissingAttributeException {
 
         ReducedRiskResponse result = new ReducedRiskResponse();
         result.setBaseline(classify(evidence));
@@ -68,7 +71,7 @@ public class OpenMarkovClassifier extends Classifier {
 
     public RiskResponse classify(Map<String, String> evidence)
             throws UnknownAttributeException, UnknownStateException, IncompatibleEvidenceException,
-                   InvalidStateException, NotEvaluableNetworkException {
+                   InvalidStateException, NotEvaluableNetworkException, MissingAttributeException {
 
         VEPropagation vePropagation;
         EvidenceCase postResolutionEvidence = new EvidenceCase();
@@ -92,20 +95,25 @@ public class OpenMarkovClassifier extends Classifier {
             }
             if (v.getVariableType() == VariableType.FINITE_STATES) {
                 int index = 0;
-                try {
-                    index = v.getStateIndex(v.getState(evidence.get(key)));
-                } catch (InvalidStateException e) {
-                    String validStates = "";
-                    for (int i = 0; i < v.getNumStates(); i++) {
-                        if (validStates.length() > 0) {
-                            validStates += ", ";
+                if (!checkForNull(evidence, key)) {
+                    // only add attributes that don't have a null value
+                    try {
+
+                        index = v.getStateIndex(v.getState(evidence.get(key)));
+                    } catch (InvalidStateException e) {
+                        String validStates = "";
+                        for (int i = 0; i < v.getNumStates(); i++) {
+                            if (validStates.length() > 0) {
+                                validStates += ", ";
+                            }
+                            validStates += "'" + v.getStateName(i) + "'";
                         }
-                        validStates += "'" + v.getStateName(i) + "'";
+                        throw new UnknownStateException(evidence.get(key), key, validStates);
                     }
-                    throw new UnknownStateException(evidence.get(key), key, validStates);
+
+                    Finding f = new Finding(v, index);
+                    postResolutionEvidence.addFinding(f);
                 }
-                Finding f = new Finding(v, index);
-                postResolutionEvidence.addFinding(f);
             } else if (v.getVariableType() == VariableType.DISCRETIZED) {
                 Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
                 postResolutionEvidence.addFinding(f);

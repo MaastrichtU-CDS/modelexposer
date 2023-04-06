@@ -12,16 +12,24 @@ public final class Util {
     private Util() {
     }
 
+    public static Boolean checkForNull(Map<String, String> evidence, String key) throws MissingAttributeException {
+        return evidence.get(key) != null && evidence.get(key).toLowerCase().equals("null");
+    }
+
     public static String getOptionalStringValue(Map<String, String> evidence, String key) {
         try {
-            return getStringValue(evidence, key);
+            if (!checkForNull(evidence, key)) {
+                return getStringValue(evidence, key);
+            } else {
+                return null;
+            }
         } catch (MissingAttributeException e) {
             return null;
         }
     }
 
     public static String getStringValue(Map<String, String> evidence, String key) throws MissingAttributeException {
-        if (evidence.get(key) == null) {
+        if (evidence.get(key) == null || checkForNull(evidence, key)) {
             throw new MissingAttributeException(key);
         } else {
             return evidence.get(key);
@@ -31,7 +39,11 @@ public final class Util {
     public static Boolean getOptionalBooleanValue(Map<String, String> evidence, String key)
             throws UnknownStateException {
         try {
-            return getBooleanFromYesNoValue(evidence, key);
+            if (!checkForNull(evidence, key)) {
+                return getBooleanFromYesNoValue(evidence, key);
+            } else {
+                return null;
+            }
         } catch (MissingAttributeException e) {
             return null;
         }
@@ -42,8 +54,10 @@ public final class Util {
         if (evidence.get(key) == null) {
             throw new MissingAttributeException(key);
         } else {
-            if (!(evidence.get(key).equals("yes") || evidence.get(key).equals("no"))) {
-                throw new UnknownStateException(evidence.get(key), key, "'yes', 'no'");
+            if (!checkForNull(evidence, key)) {
+                if (!(evidence.get(key).equals("yes") || evidence.get(key).equals("no"))) {
+                    throw new UnknownStateException(evidence.get(key), key, "'yes', 'no'");
+                }
             }
             return evidence.get(key).equals("yes");
         }
@@ -52,7 +66,11 @@ public final class Util {
     public static Double getOptionalDoubleValue(Map<String, String> evidence, String key)
             throws InvalidDoubleException {
         try {
-            return getDoubleValue(evidence, key);
+            if (!checkForNull(evidence, key)) {
+                return getDoubleValue(evidence, key);
+            } else {
+                return null;
+            }
         } catch (MissingAttributeException e) {
             return null;
         }
@@ -60,7 +78,7 @@ public final class Util {
 
     public static Double getDoubleValue(Map<String, String> evidence, String key)
             throws MissingAttributeException, InvalidDoubleException {
-        if (evidence.get(key) == null) {
+        if (evidence.get(key) == null || checkForNull(evidence, key)) {
             throw new MissingAttributeException(key);
         } else {
             try {
@@ -74,7 +92,11 @@ public final class Util {
     public static Integer getOptionalIntValue(Map<String, String> evidence, String key)
             throws InvalidIntegerException {
         try {
-            return getIntValue(evidence, key);
+            if (!checkForNull(evidence, key)) {
+                return getIntValue(evidence, key);
+            } else {
+                return null;
+            }
         } catch (MissingAttributeException e) {
             return null;
         }
@@ -82,7 +104,7 @@ public final class Util {
 
     public static Integer getIntValue(Map<String, String> evidence, String key)
             throws MissingAttributeException, InvalidIntegerException {
-        if (evidence.get(key) == null) {
+        if (evidence.get(key) == null || checkForNull(evidence, key)) {
             throw new MissingAttributeException(key);
         } else {
             try {

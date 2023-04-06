@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Score2ClassifierTest {
     @Test
@@ -48,6 +49,25 @@ public class Score2ClassifierTest {
             assertEquals(reduced.getChanges().getProbabilities().get("CVD"), 0.0433, 0.001);
 
 
+        }
+    }
+
+    @Test
+    public void testClassifyTestSanaNetExampleNull()
+            throws InvalidIntegerException, InvalidDoubleException,
+                   MissingAttributeException, UnknownStateException {
+        {
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("gender", "null");
+            evidence.put("age", "50");
+            evidence.put("current_smoker", "yes");
+            evidence.put("SBP", "140");
+            evidence.put("TC", "6.3");
+            evidence.put("HDL", "1.4");
+
+            Score2Classifier classifier = new Score2Classifier();
+            assertThrows(MissingAttributeException.class, () -> classifier.classify(evidence),
+                         "Missing attribute 'gender' is expected to be present");
         }
     }
 
