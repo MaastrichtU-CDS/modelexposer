@@ -58,6 +58,7 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "null");
+            evidence.put("weight", "null");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);

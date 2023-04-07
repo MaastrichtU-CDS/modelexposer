@@ -93,10 +93,11 @@ public class OpenMarkovClassifier extends Classifier {
             } catch (NodeNotFoundException e) {
                 throw new UnknownAttributeException(key);
             }
-            if (v.getVariableType() == VariableType.FINITE_STATES) {
-                int index = 0;
-                if (!checkForNull(evidence, key)) {
-                    // only add attributes that don't have a null value
+            if (!checkForNull(evidence, key)) {
+                // only add attributes that don't have a null value
+                if (v.getVariableType() == VariableType.FINITE_STATES) {
+                    int index = 0;
+
                     try {
 
                         index = v.getStateIndex(v.getState(evidence.get(key)));
@@ -113,10 +114,11 @@ public class OpenMarkovClassifier extends Classifier {
 
                     Finding f = new Finding(v, index);
                     postResolutionEvidence.addFinding(f);
+
+                } else if (v.getVariableType() == VariableType.DISCRETIZED) {
+                    Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
+                    postResolutionEvidence.addFinding(f);
                 }
-            } else if (v.getVariableType() == VariableType.DISCRETIZED) {
-                Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
-                postResolutionEvidence.addFinding(f);
             }
         }
 
