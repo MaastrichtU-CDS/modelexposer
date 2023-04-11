@@ -919,25 +919,12 @@
       <Variable name="net_household_income" type="finiteStates" role="chance">
         <Coordinates x="1463" y="675" />
         <States>
-          <State name="4750-4999" />
           <State name="&gt;5000" />
-          <State name="4500-4749" />
-          <State name="4250-4499" />
-          <State name="4000-4249" />
-          <State name="3750-3999" />
-          <State name="3500-3749" />
-          <State name="3250-3499" />
-          <State name="3000-3249" />
-          <State name="2750-2999" />
-          <State name="2500-2749" />
-          <State name="2250-2499" />
-          <State name="2000-2249" />
-          <State name="1750-1999" />
-          <State name="1500-1749" />
-          <State name="1250-1499" />
-          <State name="1000-1249" />
-          <State name="750-999" />
-          <State name="&lt;750" />
+          <State name="4000-4999" />
+          <State name="3000-3999" />
+          <State name="2000-2999" />
+          <State name="1000-1999" />
+          <State name="&lt;1000" />
         </States>
       </Variable>
       <Variable name="step_count" type="discretized" role="chance">
@@ -2125,11 +2112,11 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="ex_smoker_substance" />
-          <Variable name="lipid_modifying_agents" />
           <Variable name="ex_smoker" />
+          <Variable name="lipid_modifying_agents" />
           <Variable name="CHAMPS_MVPA_Q6" />
-          <Variable name="step_count" />
           <Variable name="net_household_income" />
+          <Variable name="step_count" />
           <Variable name="CHAMPS_MVPA_score" />
         </Variables>
       </Potential>
