@@ -2,6 +2,7 @@ package com.carrier.modelexposer.classifier.openmarkov;
 
 
 import com.carrier.modelexposer.classifier.Classifier;
+import com.carrier.modelexposer.exception.InvalidDoubleException;
 import com.carrier.modelexposer.exception.MissingAttributeException;
 import com.carrier.modelexposer.exception.UnknownAttributeException;
 import com.carrier.modelexposer.exception.UnknownStateException;
@@ -56,7 +57,7 @@ public class OpenMarkovClassifier extends Classifier {
                                                       Map<String, String> comparison)
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException, UnknownStateException,
-                   UnknownAttributeException, MissingAttributeException {
+                   UnknownAttributeException, MissingAttributeException, InvalidDoubleException {
 
         ReducedRiskResponse result = new ReducedRiskResponse();
         result.setBaseline(classify(evidence));
@@ -71,7 +72,8 @@ public class OpenMarkovClassifier extends Classifier {
 
     public RiskResponse classify(Map<String, String> evidence)
             throws UnknownAttributeException, UnknownStateException, IncompatibleEvidenceException,
-                   InvalidStateException, NotEvaluableNetworkException, MissingAttributeException {
+                   InvalidStateException, NotEvaluableNetworkException, MissingAttributeException,
+                   InvalidDoubleException {
 
         VEPropagation vePropagation;
         EvidenceCase postResolutionEvidence = new EvidenceCase();
@@ -116,8 +118,12 @@ public class OpenMarkovClassifier extends Classifier {
                     postResolutionEvidence.addFinding(f);
 
                 } else if (v.getVariableType() == VariableType.DISCRETIZED) {
-                    Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
-                    postResolutionEvidence.addFinding(f);
+                    try {
+                        Finding f = new Finding(v, Double.valueOf(evidence.get(key)));
+                        postResolutionEvidence.addFinding(f);
+                    } catch (NumberFormatException e) {
+                        throw new InvalidDoubleException(key);
+                    }
                 }
             }
         }

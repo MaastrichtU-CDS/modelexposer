@@ -181,7 +181,7 @@ public class ServerTest {
             evidence.put("menopause_age", "12");
             evidence.put("migraine", "yes");
             evidence.put("migraine_aura", "yes");
-            evidence.put("net_household_income", "4750-4999");
+            evidence.put("net_household_income", "4000-4999");
             evidence.put("obstructive_sleep_apnoea", "yes");
             evidence.put("PCOS", "yes");
             evidence.put("pregnancy_diabetes", "yes");
@@ -316,7 +316,7 @@ public class ServerTest {
             evidence.put("menopause_age", "12");
             evidence.put("migraine", "yes");
             evidence.put("migraine_aura", "yes");
-            evidence.put("net_household_income", "4750-4999");
+            evidence.put("net_household_income", "4000-4999");
             evidence.put("obstructive_sleep_apnoea", "yes");
             evidence.put("PCOS", "yes");
             evidence.put("pregnancy_diabetes", "yes");
@@ -451,7 +451,7 @@ public class ServerTest {
             evidence.put("menopause_age", "12");
             evidence.put("migraine", "yes");
             evidence.put("migraine_aura", "yes");
-            evidence.put("net_household_income", "4750-4999");
+            evidence.put("net_household_income", "4000-4999");
             evidence.put("obstructive_sleep_apnoea", "yes");
             evidence.put("PCOS", "yes");
             evidence.put("pregnancy_diabetes", "yes");

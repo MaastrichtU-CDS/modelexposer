@@ -1,5 +1,6 @@
 package com.carrier.modelexposer.classifier.openmarkov;
 
+import com.carrier.modelexposer.exception.InvalidDoubleException;
 import com.carrier.modelexposer.exception.MissingAttributeException;
 import com.carrier.modelexposer.exception.UnknownAttributeException;
 import com.carrier.modelexposer.exception.UnknownStateException;
@@ -12,13 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OpenMarkovClassifierTest {
     @Test
     public void testClassifyTestSanaNetExample()
             throws NodeNotFoundException, NotEvaluableNetworkException, IncompatibleEvidenceException,
                    InvalidStateException, UnexpectedInferenceException, UnknownStateException,
-                   UnknownAttributeException, MissingAttributeException {
+                   UnknownAttributeException, MissingAttributeException, InvalidDoubleException {
         {
             OpenMarkovClassifier classifier = new OpenMarkovClassifier(
                     "resources/", "model.pgmx", "CVD", "yes");
@@ -31,6 +33,7 @@ public class OpenMarkovClassifierTest {
 
         }
     }
+
 
     @Test
     public void testComparisons() throws Exception {
@@ -72,6 +75,20 @@ public class OpenMarkovClassifierTest {
             evidence.put("A", "101");
             RiskResponse result2 = classifier.classify(evidence);
             assertEquals(result2.getProbabilities().get("B"), 0.1, 0.01);
+        }
+    }
+
+    @Test
+    public void testInvalidNumber() throws Exception {
+        {
+            OpenMarkovClassifier classifier = new OpenMarkovClassifier(
+                    "resources/", "discretized.pgmx", "B", "present");
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("A", "99,0");
+
+            assertThrows(InvalidDoubleException.class, () -> classifier.classify(evidence),
+                         " Attribute 'A' is expected to be an double value");
+
         }
     }
 }
