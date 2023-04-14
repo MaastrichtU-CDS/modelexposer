@@ -29,7 +29,7 @@
         </Thresholds>
       </Variable>
       <Variable name="education" type="finiteStates" role="chance">
-        <Coordinates x="249" y="46" />
+        <Coordinates x="279" y="26" />
         <States>
           <State name="level_5" />
           <State name="level_4" />
@@ -106,7 +106,7 @@
         </Thresholds>
       </Variable>
       <Variable name="currently_pregnant" type="finiteStates" role="chance">
-        <Coordinates x="567" y="59" />
+        <Coordinates x="499" y="97" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -137,7 +137,7 @@
         </States>
       </Variable>
       <Variable name="CVD" type="finiteStates" role="chance">
-        <Coordinates x="1158" y="613" />
+        <Coordinates x="2372" y="333" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -256,7 +256,7 @@
         </States>
       </Variable>
       <Variable name="gout" type="finiteStates" role="chance">
-        <Coordinates x="935" y="586" />
+        <Coordinates x="2233" y="404" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -305,21 +305,21 @@
         </States>
       </Variable>
       <Variable name="erectile_disfunction" type="finiteStates" role="chance">
-        <Coordinates x="905" y="648" />
+        <Coordinates x="2049" y="520" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="PCOS" type="finiteStates" role="chance">
-        <Coordinates x="728" y="129" />
+        <Coordinates x="1076" y="27" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="antihypertensives" type="finiteStates" role="chance">
-        <Coordinates x="358" y="135" />
+        <Coordinates x="264" y="111" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -354,14 +354,14 @@
         </States>
       </Variable>
       <Variable name="lipid_modifying_agents" type="finiteStates" role="chance">
-        <Coordinates x="1444" y="433" />
+        <Coordinates x="1802" y="347" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="drugs_used_in_diabetes" type="finiteStates" role="chance">
-        <Coordinates x="361" y="80" />
+        <Coordinates x="633" y="18" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -382,7 +382,7 @@
         </States>
       </Variable>
       <Variable name="height" type="discretized" role="chance">
-        <Coordinates x="580" y="117" />
+        <Coordinates x="910" y="23" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -719,7 +719,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q2" type="finiteStates" role="chance">
-        <Coordinates x="835" y="978" />
+        <Coordinates x="2423" y="534" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -849,7 +849,7 @@
         </States>
       </Variable>
       <Variable name="ex_smoker_substance" type="finiteStates" role="chance">
-        <Coordinates x="1493" y="558" />
+        <Coordinates x="2041" y="1046" />
         <States>
           <State name="cigar" />
           <State name="cigarette" />
@@ -859,7 +859,7 @@
         </States>
       </Variable>
       <Variable name="ethnicity" type="finiteStates" role="chance">
-        <Coordinates x="1531" y="648" />
+        <Coordinates x="2105" y="256" />
         <States>
           <State name="S-EU" />
           <State name="NL" />
@@ -903,7 +903,7 @@
         </States>
       </Variable>
       <Variable name="household_size" type="discretized" role="chance">
-        <Coordinates x="1510" y="728" />
+        <Coordinates x="1806" y="484" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -917,7 +917,7 @@
         </Thresholds>
       </Variable>
       <Variable name="net_household_income" type="finiteStates" role="chance">
-        <Coordinates x="1463" y="675" />
+        <Coordinates x="917" y="1187" />
         <States>
           <State name="&gt;5000" />
           <State name="4000-4999" />
@@ -950,8 +950,8 @@
           <State name="hoog" />
         </States>
         <Thresholds>
-          <Threshold value="0.0" belongsTo="left" />
-          <Threshold value="10.0" belongsTo="right" />
+          <Threshold value="-Infinity" belongsTo="left" />
+          <Threshold value="10.0" belongsTo="left" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>

@@ -109,7 +109,7 @@ public class Server {
         if (sbp != null) {
             changes.put("SBP", String.valueOf(sbp));
         }
-        if (smoking != null) {
+        if (smoking != null && smoking) {
             changes.put("current_smoker", "no");
             changes.put("ex_smoker", "yes");
 
@@ -167,6 +167,9 @@ public class Server {
 
     private Map<String, String> cleanUpEvidence(Map<String, String> input)
             throws InvalidIntegerException, MissingAttributeException, UnknownStateException {
+        //Remove CVD,
+        input = removeValue(input, "CVD");
+
         //This is a general cleanup of variables which are too specific but can be generalized.
         //E.g. adress is too unique, but can be used to derive if you live in a "bad" location
         input = removeValue(input, "date_baseline_consult");
