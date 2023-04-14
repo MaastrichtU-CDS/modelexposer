@@ -72,7 +72,7 @@ public class Server {
     private Map<String, String> cleanIntervention(Map<String, String> input) {
         input = removeValue(input, "intervention_bmi");
         input = removeValue(input, "intervention_diet");
-        input = removeValue(input, "intervention_excercise");
+        input = removeValue(input, "intervention_exercise");
         input = removeValue(input, "intervention_glucose");
         input = removeValue(input, "intervention_ldl");
         input = removeValue(input, "intervention_sbp");

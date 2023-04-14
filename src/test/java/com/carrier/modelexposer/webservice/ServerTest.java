@@ -122,7 +122,7 @@ public class ServerTest {
             evidence.put("rheumatoid_arthritis", "yes");
             evidence.put("net_household_income", "4000-4999");
             evidence.put("migraine", "yes");
-            evidence.put("intervention_excercise", "12");
+            evidence.put("intervention_exercise", "12");
             evidence.put("beta_blocking_agents", "yes");
             evidence.put("TC", "1.2");
             evidence.put("ACR", "1.0");
