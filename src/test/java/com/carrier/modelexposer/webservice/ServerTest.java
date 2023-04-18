@@ -1,6 +1,8 @@
 package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.webservice.domain.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +39,7 @@ public class ServerTest {
             RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
             assertEquals(response.getProbabilities().size(), 1);
 
-            assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
+            assertEquals(response.getProbabilities().get("CVD"), 0.217, 0.001);
         }
     }
 
@@ -66,7 +68,7 @@ public class ServerTest {
             RiskResponse response = (RiskResponse) server.estimateBaseLineRisk(req);
             assertEquals(response.getProbabilities().size(), 1);
 
-            assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
+            assertEquals(response.getProbabilities().get("CVD"), 0.217, 0.001);
         }
     }
 
@@ -236,7 +238,7 @@ public class ServerTest {
             evidence.put("COPD", "yes");
             evidence.put("Cr", "1.2");
             evidence.put("current_smoker_substance", "cigarette");
-            evidence.put("current_smoker", "yes");
+            evidence.put("current_smoker", "no");
             evidence.put("current_smoker_cigarette", "yes");
             evidence.put("current_smoker_cigarette_years", "12");
             evidence.put("current_smoker_cigarette_number_per_day", "12");
@@ -370,23 +372,7 @@ public class ServerTest {
             evidence.put("CKD", "yes");
             evidence.put("COPD", "yes");
             evidence.put("Cr", "1.2");
-            evidence.put("current_smoker_substance", "cigarette");
             evidence.put("current_smoker", "yes");
-            evidence.put("current_smoker_cigarette", "yes");
-            evidence.put("current_smoker_cigarette_years", "12");
-            evidence.put("current_smoker_cigarette_number_per_day", "12");
-            evidence.put("current_smoker_cigar", "yes");
-            evidence.put("current_smoker_cigar_years", "12");
-            evidence.put("current_smoker_cigar_number_per_week", "12");
-            evidence.put("current_smoker_pipe", "yes");
-            evidence.put("current_smoker_pipe_years", "12");
-            evidence.put("current_smoker_pipe_number_per_week", "12");
-            evidence.put("current_smoker_e_cigarette", "yes");
-            evidence.put("current_smoker_e_cigarette_years", "12");
-            evidence.put("current_smoker_e_cigarette_number_per_day", "12");
-            evidence.put("current_smoker_other", "yes");
-            evidence.put("current_smoker_other_years", "12");
-            evidence.put("current_smoker_other_number_per_day", "12");
             evidence.put("currently_pregnant", "yes");
             evidence.put("CVD", "yes");
             evidence.put("CVD_family", "yes");
@@ -402,23 +388,7 @@ public class ServerTest {
             evidence.put("erectile_disfunction", "yes");
             evidence.put("ethnicity", "NL");
             evidence.put("difficulties_household_income", "very_difficult");
-            evidence.put("ex_smoker_substance", "cigarette");
-            evidence.put("ex_smoker", "yes");
-            evidence.put("ex_smoker_cigarette", "yes");
-            evidence.put("ex_smoker_cigarette_years", "12");
-            evidence.put("ex_smoker_cigarette_number_per_day", "12");
-            evidence.put("ex_smoker_cigar", "yes");
-            evidence.put("ex_smoker_cigar_years", "12");
-            evidence.put("ex_smoker_cigar_number_per_week", "12");
-            evidence.put("ex_smoker_pipe", "yes");
-            evidence.put("ex_smoker_pipe_years", "12");
-            evidence.put("ex_smoker_pipe_number_per_week", "12");
-            evidence.put("ex_smoker_e_cigarette", "yes");
-            evidence.put("ex_smoker_e_cigarette_years", "12");
-            evidence.put("ex_smoker_e_cigarette_number_per_day", "12");
-            evidence.put("ex_smoker_other", "yes");
-            evidence.put("ex_smoker_other_years", "12");
-            evidence.put("ex_smoker_other_number_per_day", "12");
+            evidence.put("ex_smoker", "no");
             evidence.put("familial_hypercholesterolemia", "yes");
             evidence.put("Glu", "12.0");
             evidence.put("gout", "yes");
@@ -652,14 +622,14 @@ public class ServerTest {
             assertEquals(response8.getProbabilities().size(), 1);
 
 
-            assertEquals(response.getProbabilities().get("CVD"), 0.085, 0.001);
-            assertEquals(response2.getProbabilities().get("CVD"), 0.085, 0.001);
-            assertEquals(response3.getProbabilities().get("CVD"), 0.085, 0.001);
-            assertEquals(response4.getProbabilities().get("CVD"), 0.087, 0.001);
-            assertEquals(response5.getProbabilities().get("CVD"), 0.085, 0.001);
-            assertEquals(response6.getProbabilities().get("CVD"), 0.087, 0.001);
-            assertEquals(response7.getProbabilities().get("CVD"), 0.087, 0.001);
-            assertEquals(response8.getProbabilities().get("CVD"), 0.087, 0.001);
+            assertEquals(response.getProbabilities().get("CVD"), 0.217, 0.001);
+            assertEquals(response2.getProbabilities().get("CVD"), 0.217, 0.001);
+            assertEquals(response3.getProbabilities().get("CVD"), 0.217, 0.001);
+            assertEquals(response4.getProbabilities().get("CVD"), 0.217, 0.001);
+            assertEquals(response5.getProbabilities().get("CVD"), 0.081, 0.001);
+            assertEquals(response6.getProbabilities().get("CVD"), 0.081, 0.001);
+            assertEquals(response7.getProbabilities().get("CVD"), 0.081, 0.001);
+            assertEquals(response8.getProbabilities().get("CVD"), 0.081, 0.001);
         }
     }
 
@@ -875,6 +845,136 @@ public class ServerTest {
 
             assertEquals(comparisons.get("pack_years 0current_smoker no"), 0.085, 0.01);
         }
+    }
+
+    @Test
+    public void testExample1()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example1.txt");
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get(
+                                 "SBP 12ex_smoker yespack_years 0LDL 12current_smoker noeetscore 12CHAMPS_MVPA_score " +
+                                         "12"), 0.12,
+                         0.01);
+        }
+    }
+
+    @Test
+    public void testExample2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            RiskRequest req = readJSONRiskRequest(path + "examples/example2.txt");
+
+            RiskResponse result = (RiskResponse) server.estimateBaseLineRisk(req);
+
+            assertEquals(result.getProbabilities().get("CVD"), 0.21, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample3()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example3.txt");
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("ex_smoker yespack_years 0current_smoker noeetscore 120CHAMPS_MVPA_score 4"),
+                         0.036, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample4()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            RiskRequest req = readJSONRiskRequest(path + "examples/example4.txt");
+
+            RiskResponse result = (RiskResponse) server.estimateBaseLineRisk(req);
+
+            assertEquals(result.getProbabilities().get("CVD"), 0.21, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample1_Changes()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example1_changes.txt");
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateReducedRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get(
+                    "weight 2"), 0.21, 0.01);
+        }
+    }
+
+
+    private ReducedRiskRequest readJSONReducedRisk(String path) throws IOException {
+        FileInputStream fis = new FileInputStream(path);
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(IOUtils.toString(fis, "UTF-8"), ReducedRiskRequest.class);
+    }
+
+    private RiskRequest readJSONRiskRequest(String path) throws IOException {
+        FileInputStream fis = new FileInputStream(path);
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(IOUtils.toString(fis, "UTF-8"), ReducedRiskRequest.class);
     }
 
     private String expectedModel(String path) throws IOException {

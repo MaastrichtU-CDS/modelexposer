@@ -8,14 +8,14 @@
     <Properties />
     <Variables>
       <Variable name="gender" type="finiteStates" role="chance">
-        <Coordinates x="125" y="23" />
+        <Coordinates x="1955" y="995" />
         <States>
           <State name="female" />
           <State name="male" />
         </States>
       </Variable>
       <Variable name="age" type="discretized" role="chance">
-        <Coordinates x="106" y="108" />
+        <Coordinates x="1956" y="1050" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -29,7 +29,7 @@
         </Thresholds>
       </Variable>
       <Variable name="education" type="finiteStates" role="chance">
-        <Coordinates x="279" y="26" />
+        <Coordinates x="1631" y="592" />
         <States>
           <State name="level_5" />
           <State name="level_4" />
@@ -39,28 +39,28 @@
         </States>
       </Variable>
       <Variable name="current_smoker" type="finiteStates" role="chance">
-        <Coordinates x="121" y="292" />
+        <Coordinates x="2095" y="1192" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="ex_smoker" type="finiteStates" role="chance">
-        <Coordinates x="344" y="294" />
+        <Coordinates x="2086" y="1106" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="ex_smoker_6m" type="finiteStates" role="chance">
-        <Coordinates x="614" y="331" />
+        <Coordinates x="2450" y="529" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="current_smoker_substance" type="finiteStates" role="chance">
-        <Coordinates x="515" y="422" />
+        <Coordinates x="1733" y="454" />
         <States>
           <State name="cigar" />
           <State name="cigarette" />
@@ -70,7 +70,7 @@
         </States>
       </Variable>
       <Variable name="CVD_family" type="finiteStates" role="chance">
-        <Coordinates x="1276" y="10" />
+        <Coordinates x="2398" y="254" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -78,21 +78,21 @@
         </States>
       </Variable>
       <Variable name="cancer_treatment" type="finiteStates" role="chance">
-        <Coordinates x="890" y="251" />
+        <Coordinates x="2332" y="1077" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="menopause" type="finiteStates" role="chance">
-        <Coordinates x="773" y="351" />
+        <Coordinates x="2493" y="985" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="menopause_age" type="discretized" role="chance">
-        <Coordinates x="1277" y="143" />
+        <Coordinates x="2283" y="383" />
         <Unit />
         <Precision>1.0</Precision>
         <States>
@@ -106,14 +106,14 @@
         </Thresholds>
       </Variable>
       <Variable name="currently_pregnant" type="finiteStates" role="chance">
-        <Coordinates x="499" y="97" />
+        <Coordinates x="1467" y="545" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="pregnancy_preeclampsia" type="finiteStates" role="chance">
-        <Coordinates x="1315" y="80" />
+        <Coordinates x="2087" y="400" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -121,7 +121,7 @@
         </States>
       </Variable>
       <Variable name="pregnancy_hypertension" type="finiteStates" role="chance">
-        <Coordinates x="816" y="495" />
+        <Coordinates x="1086" y="161" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -129,7 +129,7 @@
         </States>
       </Variable>
       <Variable name="pregnancy_diabetes" type="finiteStates" role="chance">
-        <Coordinates x="1337" y="410" />
+        <Coordinates x="2599" y="1154" />
         <States>
           <State name="no" />
           <State name="yes" />
@@ -137,252 +137,252 @@
         </States>
       </Variable>
       <Variable name="CVD" type="finiteStates" role="chance">
-        <Coordinates x="2372" y="333" />
+        <Coordinates x="1936" y="1263" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="cancer" type="finiteStates" role="chance">
-        <Coordinates x="245" y="510" />
+        <Coordinates x="943" y="794" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="familial_hypercholesterolemia" type="finiteStates" role="chance">
-        <Coordinates x="929" y="54" />
+        <Coordinates x="1473" y="800" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="CKD" type="finiteStates" role="chance">
-        <Coordinates x="741" y="533" />
+        <Coordinates x="883" y="245" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="diabetes_type_2" type="finiteStates" role="chance">
-        <Coordinates x="1492" y="148" />
+        <Coordinates x="2368" y="446" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="diabetes_type_1" type="finiteStates" role="chance">
-        <Coordinates x="1487" y="234" />
+        <Coordinates x="2541" y="412" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="diabetes_other" type="finiteStates" role="chance">
-        <Coordinates x="377" y="490" />
+        <Coordinates x="791" y="800" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="COPD" type="finiteStates" role="chance">
-        <Coordinates x="404" y="17" />
+        <Coordinates x="1742" y="631" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="IBD" type="finiteStates" role="chance">
-        <Coordinates x="687" y="443" />
+        <Coordinates x="867" y="315" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="psychotic_disorder" type="finiteStates" role="chance">
-        <Coordinates x="957" y="413" />
+        <Coordinates x="381" y="643" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="bipolar_disorder" type="finiteStates" role="chance">
-        <Coordinates x="784" y="594" />
+        <Coordinates x="664" y="130" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="depressive_disorder" type="finiteStates" role="chance">
-        <Coordinates x="933" y="189" />
+        <Coordinates x="679" y="191" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="anxiety_disorder" type="finiteStates" role="chance">
-        <Coordinates x="240" y="447" />
+        <Coordinates x="844" y="727" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="trauma_stressor_disorder" type="finiteStates" role="chance">
-        <Coordinates x="937" y="126" />
+        <Coordinates x="1471" y="902" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="psychiatric_disorder_other" type="finiteStates" role="chance">
-        <Coordinates x="477" y="559" />
+        <Coordinates x="1141" y="1041" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="rheumatoid_arthritis" type="finiteStates" role="chance">
-        <Coordinates x="645" y="657" />
+        <Coordinates x="1181" y="797" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="arthritis_psoriatica" type="finiteStates" role="chance">
-        <Coordinates x="258" y="554" />
+        <Coordinates x="750" y="1016" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="gout" type="finiteStates" role="chance">
-        <Coordinates x="2233" y="404" />
+        <Coordinates x="553" y="826" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="obstructive_sleep_apnoea" type="finiteStates" role="chance">
-        <Coordinates x="1022" y="525" />
+        <Coordinates x="2424" y="1279" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="HIV" type="finiteStates" role="chance">
-        <Coordinates x="1488" y="94" />
+        <Coordinates x="2416" y="328" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="spondylitis_ankylosans" type="finiteStates" role="chance">
-        <Coordinates x="323" y="615" />
+        <Coordinates x="1387" y="1159" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="SLE" type="finiteStates" role="chance">
-        <Coordinates x="644" y="551" />
+        <Coordinates x="1138" y="555" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="migraine" type="finiteStates" role="chance">
-        <Coordinates x="779" y="440" />
+        <Coordinates x="1331" y="218" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="migraine_aura" type="finiteStates" role="chance">
-        <Coordinates x="1235" y="357" />
+        <Coordinates x="403" y="547" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="erectile_disfunction" type="finiteStates" role="chance">
-        <Coordinates x="2049" y="520" />
+        <Coordinates x="551" y="1008" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="PCOS" type="finiteStates" role="chance">
-        <Coordinates x="1076" y="27" />
+        <Coordinates x="1758" y="859" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="antihypertensives" type="finiteStates" role="chance">
-        <Coordinates x="264" y="111" />
+        <Coordinates x="2060" y="585" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="beta_blocking_agents" type="finiteStates" role="chance">
-        <Coordinates x="479" y="469" />
+        <Coordinates x="1219" y="495" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="calcium_channel_blockers" type="finiteStates" role="chance">
-        <Coordinates x="672" y="224" />
+        <Coordinates x="2156" y="970" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="RAS_inhibitors" type="finiteStates" role="chance">
-        <Coordinates x="294" y="404" />
+        <Coordinates x="1304" y="728" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="antithrombotic_agents" type="finiteStates" role="chance">
-        <Coordinates x="576" y="640" />
+        <Coordinates x="918" y="1098" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="lipid_modifying_agents" type="finiteStates" role="chance">
-        <Coordinates x="1802" y="347" />
+        <Coordinates x="558" y="709" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="drugs_used_in_diabetes" type="finiteStates" role="chance">
-        <Coordinates x="633" y="18" />
+        <Coordinates x="1773" y="700" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="atypical_antipsychotic_medicines" type="finiteStates" role="chance">
-        <Coordinates x="826" y="400" />
+        <Coordinates x="2364" y="1158" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="steroid_tablets" type="finiteStates" role="chance">
-        <Coordinates x="513" y="583" />
+        <Coordinates x="1257" y="875" />
         <States>
           <State name="no" />
           <State name="yes" />
         </States>
       </Variable>
       <Variable name="height" type="discretized" role="chance">
-        <Coordinates x="910" y="23" />
+        <Coordinates x="1760" y="773" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -396,7 +396,7 @@
         </Thresholds>
       </Variable>
       <Variable name="weight" type="discretized" role="chance">
-        <Coordinates x="1324" y="214" />
+        <Coordinates x="424" y="468" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -410,35 +410,39 @@
         </Thresholds>
       </Variable>
       <Variable name="BMI" type="discretized" role="chance">
-        <Coordinates x="1080" y="251" />
+        <Coordinates x="778" y="233" />
         <Unit />
         <Precision>0.1</Precision>
         <States>
-          <State name="absent" />
-          <State name="present" />
+          <State name="low" />
+          <State name="normal" />
+          <State name="High" />
         </States>
         <Thresholds>
           <Threshold value="-Infinity" belongsTo="left" />
-          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="18.0" belongsTo="right" />
+          <Threshold value="25.0" belongsTo="right" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
       <Variable name="SBP" type="discretized" role="chance">
-        <Coordinates x="720" y="58" />
+        <Coordinates x="1472" y="678" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
-          <State name="absent" />
-          <State name="present" />
+          <State name="low" />
+          <State name="medium" />
+          <State name="high" />
         </States>
         <Thresholds>
           <Threshold value="-Infinity" belongsTo="left" />
-          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="10.0" belongsTo="right" />
+          <Threshold value="15.0" belongsTo="right" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
       <Variable name="DBP" type="discretized" role="chance">
-        <Coordinates x="42" y="343" />
+        <Coordinates x="858" y="647" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -452,7 +456,7 @@
         </Thresholds>
       </Variable>
       <Variable name="TC" type="discretized" role="chance">
-        <Coordinates x="646" y="183" />
+        <Coordinates x="2154" y="917" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -466,7 +470,7 @@
         </Thresholds>
       </Variable>
       <Variable name="HDL" type="discretized" role="chance">
-        <Coordinates x="1171" y="485" />
+        <Coordinates x="1365" y="285" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -480,35 +484,39 @@
         </Thresholds>
       </Variable>
       <Variable name="LDL" type="discretized" role="chance">
-        <Coordinates x="144" y="350" />
+        <Coordinates x="866" y="596" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
-          <State name="absent" />
-          <State name="present" />
+          <State name="laag" />
+          <State name="Medium" />
+          <State name="Hoog" />
         </States>
         <Thresholds>
           <Threshold value="-Infinity" belongsTo="left" />
-          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="5.0" belongsTo="right" />
+          <Threshold value="15.0" belongsTo="right" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
       <Variable name="Glu" type="discretized" role="chance">
-        <Coordinates x="1422" y="26" />
+        <Coordinates x="1924" y="1208" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
-          <State name="absent" />
-          <State name="present" />
+          <State name="low" />
+          <State name="medium" />
+          <State name="high" />
         </States>
         <Thresholds>
           <Threshold value="-Infinity" belongsTo="left" />
-          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="10.0" belongsTo="right" />
+          <Threshold value="15.0" belongsTo="right" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
       <Variable name="HbA1c" type="discretized" role="chance">
-        <Coordinates x="559" y="187" />
+        <Coordinates x="2113" y="755" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -522,7 +530,7 @@
         </Thresholds>
       </Variable>
       <Variable name="Cr" type="discretized" role="chance">
-        <Coordinates x="116" y="443" />
+        <Coordinates x="764" y="893" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -536,7 +544,7 @@
         </Thresholds>
       </Variable>
       <Variable name="eGFR" type="discretized" role="chance">
-        <Coordinates x="126" y="510" />
+        <Coordinates x="762" y="936" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -550,7 +558,7 @@
         </Thresholds>
       </Variable>
       <Variable name="ACR" type="discretized" role="chance">
-        <Coordinates x="137" y="591" />
+        <Coordinates x="943" y="893" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -564,7 +572,7 @@
         </Thresholds>
       </Variable>
       <Variable name="pack_years" type="discretized" role="chance">
-        <Coordinates x="795" y="865" />
+        <Coordinates x="993" y="1165" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -578,21 +586,23 @@
         </Thresholds>
       </Variable>
       <Variable name="eetscore" type="discretized" role="chance">
-        <Coordinates x="1011" y="701" />
+        <Coordinates x="2311" y="1225" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
-          <State name="te weinig" />
-          <State name="te veel" />
+          <State name="laag" />
+          <State name="normaal" />
+          <State name="hoog" />
         </States>
         <Thresholds>
           <Threshold value="-Infinity" belongsTo="left" />
-          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="64.99" belongsTo="right" />
+          <Threshold value="85.0" belongsTo="right" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
       <Variable name="alcohol" type="discretized" role="chance">
-        <Coordinates x="1027" y="759" />
+        <Coordinates x="1983" y="159" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -606,7 +616,7 @@
         </Thresholds>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q1" type="finiteStates" role="chance">
-        <Coordinates x="1156" y="730" />
+        <Coordinates x="1576" y="150" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -619,7 +629,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q2" type="finiteStates" role="chance">
-        <Coordinates x="1162" y="803" />
+        <Coordinates x="186" y="735" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -632,7 +642,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q3" type="finiteStates" role="chance">
-        <Coordinates x="1361" y="742" />
+        <Coordinates x="193" y="638" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -645,7 +655,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q4" type="finiteStates" role="chance">
-        <Coordinates x="1383" y="796" />
+        <Coordinates x="1635" y="46" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -658,7 +668,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q6" type="finiteStates" role="chance">
-        <Coordinates x="1147" y="894" />
+        <Coordinates x="1717" y="334" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -671,7 +681,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q5" type="finiteStates" role="chance">
-        <Coordinates x="1327" y="845" />
+        <Coordinates x="2103" y="77" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -684,7 +694,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q7" type="finiteStates" role="chance">
-        <Coordinates x="1353" y="914" />
+        <Coordinates x="1701" y="1124" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -697,7 +707,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q8" type="finiteStates" role="chance">
-        <Coordinates x="1158" y="944" />
+        <Coordinates x="1430" y="994" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -710,7 +720,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q1" type="finiteStates" role="chance">
-        <Coordinates x="717" y="966" />
+        <Coordinates x="1149" y="58" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -719,7 +729,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q2" type="finiteStates" role="chance">
-        <Coordinates x="2423" y="534" />
+        <Coordinates x="733" y="1362" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -728,7 +738,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q3" type="finiteStates" role="chance">
-        <Coordinates x="724" y="1040" />
+        <Coordinates x="1246" y="1292" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -737,7 +747,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q6" type="finiteStates" role="chance">
-        <Coordinates x="849" y="1096" />
+        <Coordinates x="379" y="1286" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -746,7 +756,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q4" type="finiteStates" role="chance">
-        <Coordinates x="840" y="1044" />
+        <Coordinates x="562" y="596" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -755,7 +765,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q5" type="finiteStates" role="chance">
-        <Coordinates x="727" y="1102" />
+        <Coordinates x="301" y="832" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -764,7 +774,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q7" type="finiteStates" role="chance">
-        <Coordinates x="724" y="1146" />
+        <Coordinates x="1086" y="898" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -773,7 +783,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q8" type="finiteStates" role="chance">
-        <Coordinates x="865" y="1136" />
+        <Coordinates x="2527" y="300" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -782,7 +792,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q9" type="finiteStates" role="chance">
-        <Coordinates x="715" y="1202" />
+        <Coordinates x="1007" y="698" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -791,7 +801,7 @@
         </States>
       </Variable>
       <Variable name="PJQ9_Q10" type="finiteStates" role="chance">
-        <Coordinates x="882" y="1198" />
+        <Coordinates x="1640" y="920" />
         <States>
           <State name="absent" />
           <State name="not_at_all" />
@@ -800,56 +810,56 @@
         </States>
       </Variable>
       <Variable name="GAD7_Q1" type="finiteStates" role="chance">
-        <Coordinates x="297" y="771" />
+        <Coordinates x="1127" y="1103" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="GAD7_Q2" type="finiteStates" role="chance">
-        <Coordinates x="454" y="780" />
+        <Coordinates x="910" y="934" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="GAD7_Q3" type="finiteStates" role="chance">
-        <Coordinates x="298" y="821" />
+        <Coordinates x="920" y="1035" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="GAD7_Q4" type="finiteStates" role="chance">
-        <Coordinates x="451" y="845" />
+        <Coordinates x="729" y="1311" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="GAD7_Q5" type="finiteStates" role="chance">
-        <Coordinates x="282" y="874" />
+        <Coordinates x="1074" y="600" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="GAD7_Q6" type="finiteStates" role="chance">
-        <Coordinates x="435" y="891" />
+        <Coordinates x="379" y="723" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="GAD7_Q7" type="finiteStates" role="chance">
-        <Coordinates x="294" y="957" />
+        <Coordinates x="448" y="869" />
         <States>
           <State name="absent" />
           <State name="present" />
         </States>
       </Variable>
       <Variable name="ex_smoker_substance" type="finiteStates" role="chance">
-        <Coordinates x="2041" y="1046" />
+        <Coordinates x="969" y="428" />
         <States>
           <State name="cigar" />
           <State name="cigarette" />
@@ -859,7 +869,7 @@
         </States>
       </Variable>
       <Variable name="ethnicity" type="finiteStates" role="chance">
-        <Coordinates x="2105" y="256" />
+        <Coordinates x="497" y="174" />
         <States>
           <State name="S-EU" />
           <State name="NL" />
@@ -880,7 +890,7 @@
         </States>
       </Variable>
       <Variable name="CHAMPS_MVPA_Q9" type="finiteStates" role="chance">
-        <Coordinates x="1157" y="1024" />
+        <Coordinates x="1647" y="1000" />
         <States>
           <State name="4-6" />
           <State name="0" />
@@ -893,7 +903,7 @@
         </States>
       </Variable>
       <Variable name="difficulties_household_income" type="finiteStates" role="chance">
-        <Coordinates x="1470" y="368" />
+        <Coordinates x="672" y="498" />
         <States>
           <State name="very_difficult" />
           <State name="difficult" />
@@ -903,7 +913,7 @@
         </States>
       </Variable>
       <Variable name="household_size" type="discretized" role="chance">
-        <Coordinates x="1806" y="484" />
+        <Coordinates x="480" y="232" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -917,7 +927,7 @@
         </Thresholds>
       </Variable>
       <Variable name="net_household_income" type="finiteStates" role="chance">
-        <Coordinates x="917" y="1187" />
+        <Coordinates x="473" y="289" />
         <States>
           <State name="&gt;5000" />
           <State name="4000-4999" />
@@ -928,7 +938,7 @@
         </States>
       </Variable>
       <Variable name="step_count" type="discretized" role="chance">
-        <Coordinates x="1518" y="468" />
+        <Coordinates x="694" y="392" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
@@ -942,16 +952,18 @@
         </Thresholds>
       </Variable>
       <Variable name="CHAMPS_MVPA_score" type="discretized" role="chance">
-        <Coordinates x="1748" y="838" />
+        <Coordinates x="1726" y="1218" />
         <Unit />
         <Precision>0.01</Precision>
         <States>
           <State name="laag" />
-          <State name="hoog" />
+          <State name="medium" />
+          <State name="High" />
         </States>
         <Thresholds>
           <Threshold value="-Infinity" belongsTo="left" />
-          <Threshold value="10.0" belongsTo="left" />
+          <Threshold value="100.0" belongsTo="left" />
+          <Threshold value="200.0" belongsTo="right" />
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
@@ -959,15 +971,7 @@
     <Links>
       <Link directed="true">
         <Variable name="gender" />
-        <Variable name="education" />
-      </Link>
-      <Link directed="true">
-        <Variable name="gender" />
         <Variable name="age" />
-      </Link>
-      <Link directed="true">
-        <Variable name="age" />
-        <Variable name="current_smoker" />
       </Link>
       <Link directed="true">
         <Variable name="age" />
@@ -979,23 +983,7 @@
       </Link>
       <Link directed="true">
         <Variable name="current_smoker" />
-        <Variable name="ex_smoker" />
-      </Link>
-      <Link directed="true">
-        <Variable name="current_smoker" />
-        <Variable name="Cr" />
-      </Link>
-      <Link directed="true">
-        <Variable name="ex_smoker" />
-        <Variable name="current_smoker_substance" />
-      </Link>
-      <Link directed="true">
-        <Variable name="ex_smoker" />
-        <Variable name="LDL" />
-      </Link>
-      <Link directed="true">
-        <Variable name="ex_smoker" />
-        <Variable name="ex_smoker_substance" />
+        <Variable name="CVD" />
       </Link>
       <Link directed="true">
         <Variable name="ex_smoker_6m" />
@@ -1008,10 +996,6 @@
       <Link directed="true">
         <Variable name="current_smoker_substance" />
         <Variable name="beta_blocking_agents" />
-      </Link>
-      <Link directed="true">
-        <Variable name="CVD_family" />
-        <Variable name="Glu" />
       </Link>
       <Link directed="true">
         <Variable name="CVD_family" />
@@ -1030,16 +1014,8 @@
         <Variable name="diabetes_type_2" />
       </Link>
       <Link directed="true">
-        <Variable name="CVD_family" />
-        <Variable name="depressive_disorder" />
-      </Link>
-      <Link directed="true">
         <Variable name="cancer_treatment" />
         <Variable name="atypical_antipsychotic_medicines" />
-      </Link>
-      <Link directed="true">
-        <Variable name="cancer_treatment" />
-        <Variable name="migraine_aura" />
       </Link>
       <Link directed="true">
         <Variable name="menopause" />
@@ -1063,10 +1039,6 @@
       </Link>
       <Link directed="true">
         <Variable name="pregnancy_diabetes" />
-        <Variable name="lipid_modifying_agents" />
-      </Link>
-      <Link directed="true">
-        <Variable name="pregnancy_diabetes" />
         <Variable name="obstructive_sleep_apnoea" />
       </Link>
       <Link directed="true">
@@ -1076,10 +1048,6 @@
       <Link directed="true">
         <Variable name="familial_hypercholesterolemia" />
         <Variable name="trauma_stressor_disorder" />
-      </Link>
-      <Link directed="true">
-        <Variable name="familial_hypercholesterolemia" />
-        <Variable name="pregnancy_preeclampsia" />
       </Link>
       <Link directed="true">
         <Variable name="CKD" />
@@ -1103,10 +1071,6 @@
       </Link>
       <Link directed="true">
         <Variable name="depressive_disorder" />
-        <Variable name="cancer_treatment" />
-      </Link>
-      <Link directed="true">
-        <Variable name="depressive_disorder" />
         <Variable name="BMI" />
       </Link>
       <Link directed="true">
@@ -1118,16 +1082,8 @@
         <Variable name="diabetes_other" />
       </Link>
       <Link directed="true">
-        <Variable name="anxiety_disorder" />
-        <Variable name="beta_blocking_agents" />
-      </Link>
-      <Link directed="true">
         <Variable name="arthritis_psoriatica" />
         <Variable name="antithrombotic_agents" />
-      </Link>
-      <Link directed="true">
-        <Variable name="gout" />
-        <Variable name="CVD" />
       </Link>
       <Link directed="true">
         <Variable name="gout" />
@@ -1138,15 +1094,7 @@
         <Variable name="diabetes_type_1" />
       </Link>
       <Link directed="true">
-        <Variable name="SLE" />
-        <Variable name="bipolar_disorder" />
-      </Link>
-      <Link directed="true">
         <Variable name="migraine" />
-        <Variable name="HDL" />
-      </Link>
-      <Link directed="true">
-        <Variable name="migraine_aura" />
         <Variable name="HDL" />
       </Link>
       <Link directed="true">
@@ -1175,10 +1123,6 @@
       </Link>
       <Link directed="true">
         <Variable name="calcium_channel_blockers" />
-        <Variable name="ex_smoker" />
-      </Link>
-      <Link directed="true">
-        <Variable name="calcium_channel_blockers" />
         <Variable name="cancer_treatment" />
       </Link>
       <Link directed="true">
@@ -1198,10 +1142,6 @@
         <Variable name="gout" />
       </Link>
       <Link directed="true">
-        <Variable name="lipid_modifying_agents" />
-        <Variable name="ex_smoker_substance" />
-      </Link>
-      <Link directed="true">
         <Variable name="drugs_used_in_diabetes" />
         <Variable name="height" />
       </Link>
@@ -1219,19 +1159,11 @@
       </Link>
       <Link directed="true">
         <Variable name="height" />
-        <Variable name="currently_pregnant" />
-      </Link>
-      <Link directed="true">
-        <Variable name="height" />
         <Variable name="PCOS" />
       </Link>
       <Link directed="true">
         <Variable name="weight" />
         <Variable name="migraine_aura" />
-      </Link>
-      <Link directed="true">
-        <Variable name="BMI" />
-        <Variable name="weight" />
       </Link>
       <Link directed="true">
         <Variable name="SBP" />
@@ -1246,8 +1178,16 @@
         <Variable name="calcium_channel_blockers" />
       </Link>
       <Link directed="true">
+        <Variable name="HDL" />
+        <Variable name="CHAMPS_MVPA_Q6" />
+      </Link>
+      <Link directed="true">
         <Variable name="LDL" />
         <Variable name="DBP" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Glu" />
+        <Variable name="CVD" />
       </Link>
       <Link directed="true">
         <Variable name="HbA1c" />
@@ -1263,15 +1203,11 @@
       </Link>
       <Link directed="true">
         <Variable name="eetscore" />
-        <Variable name="alcohol" />
+        <Variable name="CVD" />
       </Link>
       <Link directed="true">
         <Variable name="alcohol" />
         <Variable name="CHAMPS_MVPA_Q1" />
-      </Link>
-      <Link directed="true">
-        <Variable name="alcohol" />
-        <Variable name="HDL" />
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q1" />
@@ -1295,15 +1231,7 @@
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q6" />
-        <Variable name="weight" />
-      </Link>
-      <Link directed="true">
-        <Variable name="CHAMPS_MVPA_Q6" />
         <Variable name="ex_smoker_substance" />
-      </Link>
-      <Link directed="true">
-        <Variable name="CHAMPS_MVPA_Q5" />
-        <Variable name="pregnancy_diabetes" />
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q5" />
@@ -1311,11 +1239,7 @@
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q7" />
-        <Variable name="CHAMPS_MVPA_Q6" />
-      </Link>
-      <Link directed="true">
-        <Variable name="CHAMPS_MVPA_Q8" />
-        <Variable name="antihypertensives" />
+        <Variable name="CHAMPS_MVPA_score" />
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q8" />
@@ -1324,10 +1248,6 @@
       <Link directed="true">
         <Variable name="PJQ9_Q1" />
         <Variable name="pregnancy_hypertension" />
-      </Link>
-      <Link directed="true">
-        <Variable name="PJQ9_Q2" />
-        <Variable name="CVD" />
       </Link>
       <Link directed="true">
         <Variable name="PJQ9_Q3" />
@@ -1363,10 +1283,6 @@
       </Link>
       <Link directed="true">
         <Variable name="PJQ9_Q10" />
-        <Variable name="diabetes_type_2" />
-      </Link>
-      <Link directed="true">
-        <Variable name="PJQ9_Q10" />
         <Variable name="CHAMPS_MVPA_Q9" />
       </Link>
       <Link directed="true">
@@ -1386,20 +1302,12 @@
         <Variable name="antithrombotic_agents" />
       </Link>
       <Link directed="true">
-        <Variable name="GAD7_Q3" />
-        <Variable name="PJQ9_Q1" />
-      </Link>
-      <Link directed="true">
         <Variable name="GAD7_Q4" />
         <Variable name="PJQ9_Q2" />
       </Link>
       <Link directed="true">
         <Variable name="GAD7_Q4" />
         <Variable name="PJQ9_Q3" />
-      </Link>
-      <Link directed="true">
-        <Variable name="GAD7_Q4" />
-        <Variable name="rheumatoid_arthritis" />
       </Link>
       <Link directed="true">
         <Variable name="GAD7_Q5" />
@@ -1419,23 +1327,11 @@
       </Link>
       <Link directed="true">
         <Variable name="ethnicity" />
-        <Variable name="CVD" />
-      </Link>
-      <Link directed="true">
-        <Variable name="ethnicity" />
         <Variable name="household_size" />
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_Q9" />
         <Variable name="CHAMPS_MVPA_Q7" />
-      </Link>
-      <Link directed="true">
-        <Variable name="CHAMPS_MVPA_Q9" />
-        <Variable name="CHAMPS_MVPA_Q8" />
-      </Link>
-      <Link directed="true">
-        <Variable name="difficulties_household_income" />
-        <Variable name="diabetes_type_1" />
       </Link>
       <Link directed="true">
         <Variable name="difficulties_household_income" />
@@ -1467,11 +1363,7 @@
       </Link>
       <Link directed="true">
         <Variable name="CHAMPS_MVPA_score" />
-        <Variable name="CHAMPS_MVPA_Q7" />
-      </Link>
-      <Link directed="true">
-        <Variable name="CHAMPS_MVPA_score" />
-        <Variable name="ex_smoker_substance" />
+        <Variable name="CVD" />
       </Link>
     </Links>
     <Potentials>
@@ -1491,25 +1383,21 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="education" />
-          <Variable name="gender" />
         </Variables>
-        <Values>0.567 0.083 0.01 0.24 0.1 0.1 0.03 0.3 0.34 0.23</Values>
+        <Values>0.567 0.083 0.01 0.24 0.1</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="current_smoker" />
-          <Variable name="age" />
         </Variables>
-        <Values>0.675 0.325 0.675 0.325</Values>
+        <Values>0.675 0.325</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="ex_smoker" />
-          <Variable name="current_smoker" />
-          <Variable name="calcium_channel_blockers" />
           <Variable name="age" />
         </Variables>
-        <Values>0.55 0.45 0.676 0.324 1.0 0.0 0.6757576 0.3242424 0.55 0.45 0.676 0.324 1.0 0.0 0.6757576 0.3242424</Values>
+        <Values>0.55 0.45 0.55 0.45</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1521,7 +1409,6 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="current_smoker_substance" />
-          <Variable name="ex_smoker" />
           <Variable name="CHAMPS_MVPA_Q6" />
         </Variables>
       </Potential>
@@ -1534,10 +1421,9 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="cancer_treatment" />
-          <Variable name="depressive_disorder" />
           <Variable name="calcium_channel_blockers" />
         </Variables>
-        <Values>0.1 0.9 0.66 0.34 0.77 0.23 0.47 0.53</Values>
+        <Values>0.1 0.9 0.77 0.23</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1556,17 +1442,15 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="currently_pregnant" />
-          <Variable name="height" />
         </Variables>
-        <Values>0.4675 0.5325 0.676 0.324</Values>
+        <Values>0.4675 0.5325</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="pregnancy_preeclampsia" />
-          <Variable name="familial_hypercholesterolemia" />
           <Variable name="CVD_family" />
         </Variables>
-        <Values>0.4326666667 0.234 0.3333333333333333 0.5666666667 0.1 0.3333333333333333 0.4666666667 0.2 0.3333333333333333 0.2666666667 0.4 0.3333333333333333 0.1666666667 0.5 0.3333333333333333 0.4266666667 0.24 0.3333333333333333</Values>
+        <Values>0.4326666667 0.234 0.3333333333333333 0.4666666667 0.2 0.3333333333333333 0.1666666667 0.5 0.3333333333333333</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1580,17 +1464,17 @@
         <Variables>
           <Variable name="pregnancy_diabetes" />
           <Variable name="diabetes_type_1" />
-          <Variable name="CHAMPS_MVPA_Q5" />
         </Variables>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="CVD" />
-          <Variable name="gout" />
-          <Variable name="PJQ9_Q2" />
-          <Variable name="ethnicity" />
+          <Variable name="CHAMPS_MVPA_score" />
+          <Variable name="Glu" />
+          <Variable name="eetscore" />
+          <Variable name="current_smoker" />
         </Variables>
-        <Values>0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083 0.91 0.09 0.917 0.083</Values>
+        <Values>0.88 0.12 0.88 0.12 0.88 0.12 0.9 0.1 0.9 0.1 0.9 0.1 0.86 0.14 0.86 0.14 0.86 0.14 0.78 0.22 0.93 0.07 0.93 0.07 0.95 0.05 0.95 0.05 0.95 0.05 0.91 0.09 0.91 0.09 0.91 0.09 0.96 0.04 0.96 0.04 0.96 0.04 0.97 0.03 0.97 0.03 0.97 0.03 0.96 0.04 0.96 0.04 0.96 0.04 0.73 0.27 0.73 0.27 0.73 0.27 0.75 0.25 0.75 0.25 0.75 0.25 0.71 0.29 0.71 0.29 0.71 0.29 0.78 0.22 0.78 0.22 0.78 0.22 0.8 0.2 0.8 0.2 0.8 0.2 0.77 0.23 0.77 0.23 0.77 0.23 0.83 0.17 0.83 0.17 0.83 0.17 0.85 0.15 0.85 0.15 0.85 0.15 0.82 0.18 0.82 0.18 0.82 0.18</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1600,12 +1484,11 @@
         </Variables>
         <Values>0.03 0.97 0.366 0.634 0.03 0.97 0.366 0.634 0.03 0.97 0.366 0.634 0.03 0.97 0.366 0.634</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="familial_hypercholesterolemia" />
           <Variable name="SBP" />
         </Variables>
-        <Values>0.1 0.9 0.7 0.3</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1618,16 +1501,14 @@
         <Variables>
           <Variable name="diabetes_type_2" />
           <Variable name="CVD_family" />
-          <Variable name="PJQ9_Q10" />
         </Variables>
-        <Values>0.578 0.422 0.0435 0.9565 0.324 0.676 0.578 0.422 0.0435 0.9565 0.324 0.676 0.578 0.422 0.0435 0.9565 0.324 0.676 0.578 0.422 0.0435 0.9565 0.324 0.676</Values>
+        <Values>0.578 0.422 0.0435 0.9565 0.324 0.676</Values>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="diabetes_type_1" />
           <Variable name="HIV" />
           <Variable name="PJQ9_Q8" />
-          <Variable name="difficulties_household_income" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1660,16 +1541,14 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="bipolar_disorder" />
-          <Variable name="SLE" />
         </Variables>
-        <Values>0.1 0.9 0.44 0.56</Values>
+        <Values>0.1 0.9</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="depressive_disorder" />
-          <Variable name="CVD_family" />
         </Variables>
-        <Values>0.1 0.9 0.3 0.7 0.77 0.23</Values>
+        <Values>0.1 0.9</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1697,9 +1576,8 @@
         <Variables>
           <Variable name="rheumatoid_arthritis" />
           <Variable name="RAS_inhibitors" />
-          <Variable name="GAD7_Q4" />
         </Variables>
-        <Values>0.22 0.78 0.8 0.2 0.22 0.78 0.8 0.2</Values>
+        <Values>0.22 0.78 0.8 0.2</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1754,11 +1632,10 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="migraine_aura" />
-          <Variable name="cancer_treatment" />
           <Variable name="weight" />
           <Variable name="difficulties_household_income" />
         </Variables>
-        <Values>0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59 0.676 0.324 0.48 0.52 0.565 0.435 0.41 0.59</Values>
+        <Values>0.676 0.324 0.565 0.435 0.676 0.324 0.565 0.435 0.676 0.324 0.565 0.435 0.676 0.324 0.565 0.435 0.676 0.324 0.565 0.435</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1779,16 +1656,14 @@
         <Variables>
           <Variable name="antihypertensives" />
           <Variable name="currently_pregnant" />
-          <Variable name="CHAMPS_MVPA_Q8" />
         </Variables>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="beta_blocking_agents" />
-          <Variable name="anxiety_disorder" />
           <Variable name="current_smoker_substance" />
         </Variables>
-        <Values>0.1 0.9 0.6754 0.3246 0.565 0.435 0.43 0.57 0.6755 0.3245 0.45 0.55 0.676 0.324 0.88 0.12 0.676 0.324 0.87 0.13</Values>
+        <Values>0.1 0.9 0.565 0.435 0.6755 0.3245 0.676 0.324 0.676 0.324</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1816,10 +1691,9 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="lipid_modifying_agents" />
-          <Variable name="pregnancy_diabetes" />
           <Variable name="PJQ9_Q4" />
         </Variables>
-        <Values>0.21 0.79 0.324 0.676 0.9 0.1 0.21 0.79 0.324 0.676 0.9 0.1 0.21 0.79 0.324 0.676 0.9 0.1 0.21 0.79 0.324 0.676 0.9 0.1</Values>
+        <Values>0.21 0.79 0.21 0.79 0.21 0.79 0.21 0.79</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1853,30 +1727,25 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="weight" />
-          <Variable name="BMI" />
-          <Variable name="CHAMPS_MVPA_Q6" />
         </Variables>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="BMI" />
           <Variable name="depressive_disorder" />
         </Variables>
-        <Values>0.25 0.75 0.66 0.34</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="SBP" />
           <Variable name="currently_pregnant" />
         </Variables>
-        <Values>0.22 0.78 0.55 0.45</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="DBP" />
           <Variable name="LDL" />
         </Variables>
-        <Values>0.542 0.458 0.14 0.86</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1889,24 +1758,18 @@
         <Variables>
           <Variable name="HDL" />
           <Variable name="migraine" />
-          <Variable name="migraine_aura" />
-          <Variable name="alcohol" />
         </Variables>
-        <Values>0.456 0.544 0.32 0.68 0.435 0.565 0.2 0.8 0.456 0.544 0.32 0.68 0.435 0.565 0.2 0.8</Values>
+        <Values>0.456 0.544 0.32 0.68</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="LDL" />
-          <Variable name="ex_smoker" />
         </Variables>
-        <Values>0.343 0.657 0.64 0.36</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="Glu" />
-          <Variable name="CVD_family" />
         </Variables>
-        <Values>0.324 0.676 0.3 0.7 0.56 0.44</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1918,9 +1781,8 @@
       <Potential type="Table" role="conditionalProbability">
         <Variables>
           <Variable name="Cr" />
-          <Variable name="current_smoker" />
         </Variables>
-        <Values>0.14 0.86 0.4655 0.5345</Values>
+        <Values>0.14 0.86</Values>
       </Potential>
       <Potential type="Table" role="conditionalProbability">
         <Variables>
@@ -1945,16 +1807,14 @@
         </Variables>
         <Values>0.2 0.8 0.7 0.3 0.4 0.6 0.1 0.9 0.2 0.8 0.7 0.3 0.4 0.6 0.1 0.9</Values>
       </Potential>
-      <Potential type="Table" role="conditionalProbability">
+      <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="eetscore" />
         </Variables>
-        <Values>0.5 0.5</Values>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="alcohol" />
-          <Variable name="eetscore" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1985,7 +1845,7 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_Q6" />
-          <Variable name="CHAMPS_MVPA_Q7" />
+          <Variable name="HDL" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -1997,21 +1857,18 @@
         <Variables>
           <Variable name="CHAMPS_MVPA_Q7" />
           <Variable name="CHAMPS_MVPA_Q9" />
-          <Variable name="CHAMPS_MVPA_score" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_Q8" />
           <Variable name="PJQ9_Q10" />
-          <Variable name="CHAMPS_MVPA_Q9" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="PJQ9_Q1" />
           <Variable name="CHAMPS_MVPA_Q1" />
-          <Variable name="GAD7_Q3" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -2107,12 +1964,9 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="ex_smoker_substance" />
-          <Variable name="ex_smoker" />
-          <Variable name="lipid_modifying_agents" />
           <Variable name="CHAMPS_MVPA_Q6" />
           <Variable name="net_household_income" />
           <Variable name="step_count" />
-          <Variable name="CHAMPS_MVPA_score" />
         </Variables>
       </Potential>
       <Potential type="Uniform" role="conditionalProbability">
@@ -2153,6 +2007,7 @@
       <Potential type="Uniform" role="conditionalProbability">
         <Variables>
           <Variable name="CHAMPS_MVPA_score" />
+          <Variable name="CHAMPS_MVPA_Q7" />
         </Variables>
       </Potential>
     </Potentials>

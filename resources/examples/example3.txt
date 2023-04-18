@@ -1,0 +1,11 @@
+{
+  "input" : {
+    "eetscore" : "66",
+    "alcohol" : "18",
+    "intervention_exercise" : "4",
+    "intervention_smoking" : "yes",
+    "current_smoker" : "yes",
+    "CHAMPS_MVPA_score" : "0",
+    "intervention_diet" : "120"
+  }
+}

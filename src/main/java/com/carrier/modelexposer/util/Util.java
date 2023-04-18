@@ -42,10 +42,10 @@ public final class Util {
             if (!checkForNull(evidence, key)) {
                 return getBooleanFromYesNoValue(evidence, key);
             } else {
-                return null;
+                return false;
             }
         } catch (MissingAttributeException e) {
-            return null;
+            return false;
         }
     }
 

@@ -85,7 +85,7 @@ public class Server {
         Map<String, String> changes = new HashMap<>();
         Integer bmi = getOptionalIntValue(input, "intervention_bmi");
         Integer diet = getOptionalIntValue(input, "intervention_diet");
-        Integer exercise = getOptionalIntValue(input, "intervention_excercise");
+        Integer exercise = getOptionalIntValue(input, "intervention_exercise");
         Integer glucose = getOptionalIntValue(input, "intervention_glucose");
         Integer ldl = getOptionalIntValue(input, "intervention_ldl");
         Integer sbp = getOptionalIntValue(input, "intervention_sbp");
@@ -98,7 +98,7 @@ public class Server {
             changes.put("eetscore", String.valueOf(diet));
         }
         if (exercise != null) {
-            changes.put("eetscore", String.valueOf(exercise));
+            changes.put("CHAMPS_MVPA_score", String.valueOf(exercise));
         }
         if (glucose != null) {
             changes.put("Glu", String.valueOf(glucose));
@@ -113,37 +113,35 @@ public class Server {
             changes.put("current_smoker", "no");
             changes.put("ex_smoker", "yes");
 
-            changes.put("ex_smoker_cigarette", input.get("current_smoker_cigarette"));
-            changes.put("ex_smoker_cigar", input.get("current_smoker_cigar"));
-            changes.put("ex_smoker_e_cigarette", input.get("current_smoker_e_cigarette"));
-            changes.put("ex_smoker_pipe", input.get("current_smoker_pipe"));
-            changes.put("ex_smoker_other", input.get("current_smoker_other"));
-
-
-            boolean cigarette = getBooleanFromYesNoValue(input, "current_smoker_cigarette");
-            boolean cigar = getBooleanFromYesNoValue(input, "current_smoker_cigar");
-            boolean pipe = getBooleanFromYesNoValue(input, "current_smoker_pipe");
-            boolean eCigarette = getBooleanFromYesNoValue(input, "current_smoker_e_cigarette");
-            boolean other = getBooleanFromYesNoValue(input, "current_smoker_other");
+            boolean cigarette = getOptionalBooleanValue(input, "current_smoker_cigarette");
+            boolean cigar = getOptionalBooleanValue(input, "current_smoker_cigar");
+            boolean pipe = getOptionalBooleanValue(input, "current_smoker_pipe");
+            boolean eCigarette = getOptionalBooleanValue(input, "current_smoker_e_cigarette");
+            boolean other = getOptionalBooleanValue(input, "current_smoker_other");
 
             if (cigarette) {
+                changes.put("ex_smoker_cigarette", input.get("current_smoker_cigarette"));
                 changes.put("ex_smoker_cigarette_years", input.get("current_smoker_cigarette_years"));
                 changes.put("ex_smoker_cigarette_number_per_day", input.get("current_smoker_cigarette_number_per_day"));
             }
             if (cigar) {
+                changes.put("ex_smoker_cigar", input.get("current_smoker_cigar"));
                 changes.put("ex_smoker_cigar_years", input.get("current_smoker_cigar_years"));
                 changes.put("ex_smoker_cigar_number_per_week", input.get("current_smoker_cigar_number_per_week"));
             }
             if (pipe) {
+                changes.put("ex_smoker_pipe", input.get("current_smoker_pipe"));
                 changes.put("ex_smoker_pipe_years", input.get("current_smoker_pipe_years"));
                 changes.put("ex_smoker_pipe_number_per_week", input.get("current_smoker_pipe_number_per_week"));
             }
             if (eCigarette) {
+                changes.put("ex_smoker_e_cigarette", input.get("current_smoker_e_cigarette"));
                 changes.put("ex_smoker_e_cigarette_years", input.get("current_smoker_e_cigarette_years"));
                 changes.put("ex_smoker_e_cigarette_number_per_day",
                             input.get("current_smoker_e_cigarette_number_per_day"));
             }
             if (other) {
+                changes.put("ex_smoker_other", input.get("current_smoker_other"));
                 changes.put("ex_smoker_other_years", input.get("current_smoker_other_years"));
                 changes.put("ex_smoker_other_number_per_day", input.get("current_smoker_other_number_per_day"));
             }
@@ -200,11 +198,11 @@ public class Server {
         if ((input.computeIfPresent("current_smoker", (k, v) -> {
             return v;
         }) + "").equals("yes")) {
-            boolean cigarette = getBooleanFromYesNoValue(input, "current_smoker_cigarette");
-            boolean cigar = getBooleanFromYesNoValue(input, "current_smoker_cigar");
-            boolean pipe = getBooleanFromYesNoValue(input, "current_smoker_pipe");
-            boolean eCigarette = getBooleanFromYesNoValue(input, "current_smoker_e_cigarette");
-            boolean other = getBooleanFromYesNoValue(input, "current_smoker_other");
+            boolean cigarette = getOptionalBooleanValue(input, "current_smoker_cigarette");
+            boolean cigar = getOptionalBooleanValue(input, "current_smoker_cigar");
+            boolean pipe = getOptionalBooleanValue(input, "current_smoker_pipe");
+            boolean eCigarette = getOptionalBooleanValue(input, "current_smoker_e_cigarette");
+            boolean other = getOptionalBooleanValue(input, "current_smoker_other");
 
             if (cigarette) {
                 packyears = createPackYears("current_smoker_cigarette_years",
@@ -230,11 +228,11 @@ public class Server {
         } else if (("" + input.computeIfPresent("ex_smoker", (k, v) -> {
             return v;
         })).equals("yes")) {
-            boolean cigarette = getBooleanFromYesNoValue(input, "ex_smoker_cigarette");
-            boolean cigar = getBooleanFromYesNoValue(input, "ex_smoker_cigar");
-            boolean pipe = getBooleanFromYesNoValue(input, "ex_smoker_pipe");
-            boolean eCigarette = getBooleanFromYesNoValue(input, "ex_smoker_e_cigarette");
-            boolean other = getBooleanFromYesNoValue(input, "ex_smoker_other");
+            boolean cigarette = getOptionalBooleanValue(input, "ex_smoker_cigarette");
+            boolean cigar = getOptionalBooleanValue(input, "ex_smoker_cigar");
+            boolean pipe = getOptionalBooleanValue(input, "ex_smoker_pipe");
+            boolean eCigarette = getOptionalBooleanValue(input, "ex_smoker_e_cigarette");
+            boolean other = getOptionalBooleanValue(input, "ex_smoker_other");
 
             if (cigarette) {
                 packyears = createPackYears("ex_smoker_cigarette_years",

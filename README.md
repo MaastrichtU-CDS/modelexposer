@@ -28,7 +28,7 @@ This docker image has been tested on a system with the following:
 
 A docker container can be found at fvandaalen/carrier on dockerhub.
 
-Execute: `docker run -p 8080:8080 fvandaalen/carrier:modelexposer_bayesian`
+Execute: `docker run -p 8080:8080 fvandaalen/carrier:modelexposer<version>`
 This allows for the following webservice call:
 
 - http://localhost:8080/estimateBaseLineRisk
@@ -63,7 +63,9 @@ If modelType is left empty we will default to the docker image.
 ```
 
 #### Input estimateReducedRisk-endpoint
+
 Similar to estimateBaseLineRisk the field modelType is optional
+
 ```
 {
   "input" : {
@@ -76,6 +78,7 @@ Similar to estimateBaseLineRisk the field modelType is optional
 	"modelType" : "bayesian"
 }
 ```
+
 #### Output estimateReducedRisk-endpoint
 
 ```
@@ -93,7 +96,6 @@ Similar to estimateBaseLineRisk the field modelType is optional
    "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
 }
 ```
-
 
 #### Model:
 
@@ -223,6 +225,7 @@ output:
 
 Example 1:
 Input:
+
 ```
 {
   "input" : {
@@ -237,6 +240,7 @@ Input:
 ```
 
 Output:
+
 ```
 {
    "changes":    [
@@ -252,9 +256,11 @@ Output:
    "baseline": {"probabilities": {"CVD": 0.08650000000000001}}
 }
 ```
+
 ---
 Example 2:
 Input:
+
 ```
 {
   "input" : {
@@ -268,6 +274,7 @@ Input:
 ```
 
 Output:
+
 ```
 {
    "changes":    {

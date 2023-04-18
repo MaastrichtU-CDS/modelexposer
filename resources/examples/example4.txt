@@ -1,0 +1,8 @@
+{
+  "input" : {
+    "eetscore" : "66",
+    "alcohol" : "18",
+    "current_smoker" : "yes",
+    "CHAMPS_MVPA_score" : "0"
+  }
+}

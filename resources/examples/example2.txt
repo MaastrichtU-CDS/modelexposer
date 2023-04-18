@@ -1,0 +1,27 @@
+{
+  "input" : {
+    "TC" : "1.2",
+    "HDL" : "12.0",
+	"age" : "67",
+    "antihypertensives" : "yes",
+    "beta_blocking_agents" : "yes",
+    "calcium_channel_blockers" : "yes",
+    "RAS_inhibitors" : "yes",
+    "lipid_modifying_agents" : "yes",
+    "address_postcode" : "1234AB",
+    "address_house_number" : "33",
+    "CHAMPS_MVPA_score" : "0",
+	"CHAMPS_MVPA_Q1" : "0",
+    "CHAMPS_MVPA_Q2" : "0",
+	"CHAMPS_MVPA_Q3" : "0",
+    "CHAMPS_MVPA_Q4" : "0",
+    "CHAMPS_MVPA_Q5" : "0",
+    "CHAMPS_MVPA_Q6" : "0",
+	"CHAMPS_MVPA_Q7" : "0",
+    "CHAMPS_MVPA_Q8" : "0",
+    "CHAMPS_MVPA_Q9" : "0",
+    "current_smoker" : "yes",
+    "gender" : "male",
+    "SBP" : "1"
+  }
+}
