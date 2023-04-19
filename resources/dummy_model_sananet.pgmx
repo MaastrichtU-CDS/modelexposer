@@ -967,6 +967,20 @@
           <Threshold value="Infinity" belongsTo="right" />
         </Thresholds>
       </Variable>
+      <Variable name="ldl" type="discretized" role="chance">
+        <Coordinates x="926" y="46" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <States>
+          <State name="absent" />
+          <State name="present" />
+        </States>
+        <Thresholds>
+          <Threshold value="-Infinity" belongsTo="left" />
+          <Threshold value="0.0" belongsTo="right" />
+          <Threshold value="Infinity" belongsTo="right" />
+        </Thresholds>
+      </Variable>
     </Variables>
     <Links>
       <Link directed="true">
@@ -2008,6 +2022,11 @@
         <Variables>
           <Variable name="CHAMPS_MVPA_score" />
           <Variable name="CHAMPS_MVPA_Q7" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="ldl" />
         </Variables>
       </Potential>
     </Potentials>

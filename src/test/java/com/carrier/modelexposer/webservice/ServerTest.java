@@ -124,7 +124,7 @@ public class ServerTest {
             evidence.put("rheumatoid_arthritis", "yes");
             evidence.put("net_household_income", "4000-4999");
             evidence.put("migraine", "yes");
-            evidence.put("intervention_exercise", "12");
+            evidence.put("intervention_exercise", "<30");
             evidence.put("beta_blocking_agents", "yes");
             evidence.put("TC", "1.2");
             evidence.put("ACR", "1.0");
@@ -160,7 +160,7 @@ public class ServerTest {
             evidence.put("drugs_used_in_diabetes", "yes");
             evidence.put("intervention_ldl", "12");
             evidence.put("intervention_glucose", "12");
-            evidence.put("intervention_diet", "12");
+            evidence.put("intervention_diet", "<60");
             evidence.put("psychotic_disorder", "yes");
             evidence.put("current_smoker_substance", "cigarette");
             evidence.put("HDL", "12.0");
@@ -472,7 +472,7 @@ public class ServerTest {
             }
             comparisons.put(name, response.getChanges().getProbabilities().get("CVD"));
 
-            assertEquals(comparisons.get("ex_smoker yespack_years 144current_smoker no"), 0.08, 0.01);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.08, 0.01);
         }
     }
 
@@ -744,7 +744,49 @@ public class ServerTest {
             req.setModelType(RiskRequest.ModelType.score2);
 
             RiskResponse r = (RiskResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getProbabilities().get("CVD"), 0.0631, 0.001);
+            assertEquals(r.getProbabilities().get("CVD"), 0.075, 0.001);
+        }
+    }
+
+    @Test
+    public void testScore2ClassifierWithIntervention()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "model.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+
+            Map<String, String> evidence = new HashMap<>();
+            evidence.put("gender", "male");
+            evidence.put("age", "50");
+            evidence.put("current_smoker", "yes");
+            evidence.put("SBP", "140");
+            evidence.put("TC", "6.3");
+            evidence.put("HDL", "1.4");
+            evidence.put("current_smoker_cigarette", "no");
+            evidence.put("current_smoker_cigar", "no");
+            evidence.put("current_smoker_pipe", "no");
+            evidence.put("current_smoker_e_cigarette", "no");
+            evidence.put("current_smoker_other", "no");
+            evidence.put("intervention_smoking", "yes");
+
+            RiskRequest req = new RiskRequest();
+            req.setInput(evidence);
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse r = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : r.getChanges().getChanged().keySet()) {
+                name += s + " " + r.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, r.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.048, 0.01);
         }
     }
 
@@ -843,7 +885,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("pack_years 0current_smoker no"), 0.085, 0.01);
+            assertEquals(comparisons.get("current_smoker no"), 0.085, 0.01);
         }
     }
 
@@ -869,10 +911,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get(
-                                 "SBP 12ex_smoker yespack_years 0LDL 12current_smoker noeetscore 12CHAMPS_MVPA_score " +
-                                         "12"), 0.12,
-                         0.01);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.12, 0.01);
         }
     }
 
@@ -887,9 +926,10 @@ public class ServerTest {
 
             RiskRequest req = readJSONRiskRequest(path + "examples/example2.txt");
 
-            RiskResponse result = (RiskResponse) server.estimateBaseLineRisk(req);
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
 
-            assertEquals(result.getProbabilities().get("CVD"), 0.21, 0.01);
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.21, 0.01);
         }
     }
 
@@ -915,8 +955,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ex_smoker yespack_years 0current_smoker noeetscore 120CHAMPS_MVPA_score 4"),
-                         0.036, 0.01);
+            assertEquals(comparisons.get("eetscore 110"), 0.16, 0.01);
         }
     }
 
@@ -931,9 +970,18 @@ public class ServerTest {
 
             RiskRequest req = readJSONRiskRequest(path + "examples/example4.txt");
 
-            RiskResponse result = (RiskResponse) server.estimateBaseLineRisk(req);
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
 
-            assertEquals(result.getProbabilities().get("CVD"), 0.21, 0.01);
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.21, 0.01);
         }
     }
 
@@ -964,6 +1012,140 @@ public class ServerTest {
         }
     }
 
+    @Test
+    public void testExample1Score2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example1.txt");
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.35, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample2Score2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example2.txt");
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("ldl 6.0"), 0.35, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample3Score2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example3.txt");
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("eetscore 110"), 0.42, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample4Score2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example4.txt");
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.31, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample5Score2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example5.txt");
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("SBP 130"), 0.39, 0.01);
+        }
+    }
 
     private ReducedRiskRequest readJSONReducedRisk(String path) throws IOException {
         FileInputStream fis = new FileInputStream(path);

@@ -121,4 +121,108 @@ public final class Util {
         }
         return input;
     }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    public static double calcChampScore(Map<String, String> evidence)
+            throws InvalidDoubleException, UnknownStateException {
+        Double cHAMPSMVPAScore = getOptionalDoubleValue(evidence, "CHAMPS_MVPA_score");
+
+        if (cHAMPSMVPAScore == null) {
+            cHAMPSMVPAScore = 0.0;
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q1");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q2");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q3");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q4");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q5");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q6");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q7");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q8");
+            cHAMPSMVPAScore += getChampsValueFromRange(evidence, "CHAMPS_MVPA_Q9");
+        }
+        //transform to minutes
+        cHAMPSMVPAScore *= 60;
+        return cHAMPSMVPAScore;
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    public static Double calcChampScoreIntervention(Map<String, String> evidence)
+            throws InvalidDoubleException, UnknownStateException {
+        String intervention = getOptionalStringValue(evidence, "intervention_exercise");
+        if (intervention == null) {
+            return null;
+        }
+
+        if (intervention.equals("<30")) {
+            return 15.0;
+        } else if (intervention.equals("30_90")) {
+            return 60.0;
+        } else if (intervention.equals("90_150")) {
+            return 120.0;
+        } else if (intervention.equals("150_300")) {
+            return 225.0;
+        } else if (intervention.equals(">300")) {
+            return 350.0;
+        } else {
+            throw new UnknownStateException(intervention, "intervention_exercise",
+                                            "'<30', '30_90', '90_150', '150_300', '>300'");
+        }
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    public static Integer calcDiet(Map<String, String> evidence)
+            throws InvalidDoubleException, UnknownStateException {
+        String diet = getOptionalStringValue(evidence, "intervention_diet");
+        if (diet == null) {
+            return null;
+        }
+
+        if (diet.equals("<60")) {
+            return 30;
+        } else if (diet.equals("60_70")) {
+            return 65;
+        } else if (diet.equals("70_80")) {
+            return 75;
+        } else if (diet.equals("80_90")) {
+            return 85;
+        } else if (diet.equals(">90")) {
+            return 110;
+        } else {
+            throw new UnknownStateException(diet, "intervention_diet",
+                                            "'<60', '60_70', '70_80', '80_90', '>90'");
+        }
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    private static double getChampsValueFromRange(Map<String, String> evidence, String key)
+            throws UnknownStateException {
+        String value = getOptionalStringValue(evidence, key);
+        if (value == null) {
+            return 0;
+        }
+        if (value.equals("0")) {
+            return 0;
+        } else if (value.equals("<0.5")) {
+            return 0.25;
+        }
+        if (value.equals("0.5-1")) {
+            return 0.75;
+        }
+        if (value.equals("1-2")) {
+            return 1.5;
+        }
+        if (value.equals("2-4")) {
+            return 3.0;
+        }
+        if (value.equals("4-6")) {
+            return 5.0;
+        }
+        if (value.equals("6-8")) {
+            return 7.0;
+        }
+        if (value.equals(">8")) {
+            return 8.5;
+        } else {
+            throw new UnknownStateException(value, key, "'0', '<0.5', '0.5-1', '1-2', '2-4', '4-6', '6-8', '>8'");
+        }
+    }
 }

@@ -61,6 +61,12 @@
             <version>2.9.1</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.renjin</groupId>
+            <artifactId>renjin-script-engine</artifactId>
+            <version>3.5-beta76</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -179,6 +185,7 @@
                                         <!--Exclude gui and main package from testcoverage -->
                                         <exclude>com.WebserviceDtApplication</exclude>
                                         <exclude>com.carrier.modelexposer</exclude>
+                                        <exclude>com.carrier.modelexposer.classifier.r</exclude>
                                     </excludes>
                                     <element>PACKAGE</element>
                                     <limits>
@@ -208,6 +215,16 @@
             <id>ProjectRepo</id>
             <name>ProjectRepo</name>
             <url>file://${project.basedir}/openmarkov</url>
+        </repository>
+        <repository>
+            <id>mulesoft</id>
+            <name>Mulesoft Repository</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
+        </repository>
+        <repository>
+            <id>bedatadriven</id>
+            <name>bedatadriven public repo</name>
+            <url>https://nexus.bedatadriven.com/content/groups/public/</url>
         </repository>
     </repositories>
 </project>

@@ -17,8 +17,71 @@ public class Score2Classifier extends Classifier {
 
     public RiskResponse classify(Map<String, String> evidence)
             throws MissingAttributeException, InvalidIntegerException, InvalidDoubleException, UnknownStateException {
-        RiskResponse response = createRiskResponse(score2(evidence));
+        double score2 = score2(evidence);
+
+        score2 = manipulateScore2(evidence, score2);
+
+        RiskResponse response = createRiskResponse(score2);
         return response;
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    private double manipulateScore2(Map<String, String> evidence, double score2)
+            throws UnknownStateException, InvalidIntegerException, InvalidDoubleException {
+        //random nonsense to give the attributes not yet included an effect for testing purposes.
+        Boolean exSmoker = getOptionalBooleanValue(evidence, "ex_smoker");
+        Boolean antihypertensives = getOptionalBooleanValue(evidence, "antihypertensives");
+        Boolean betaBlockingAgents = getOptionalBooleanValue(evidence, "beta_blocking_agents");
+        Boolean calciumChannelBlockers = getOptionalBooleanValue(evidence, "calcium_channel_blockers");
+        Boolean rASInhibitors = getOptionalBooleanValue(evidence, "RAS_inhibitors");
+        Boolean lipidModifyingAgents = getOptionalBooleanValue(evidence, "lipid_modifying_agents");
+        Double champScore = calcChampScore(evidence);
+        Integer eetscore = getOptionalIntValue(evidence, "eetscore");
+        Double ldl = getOptionalDoubleValue(evidence, "ldl");
+
+        if (exSmoker != null && exSmoker) {
+            score2 *= 1.1;
+        }
+        if (antihypertensives != null && antihypertensives) {
+            score2 *= 1.2;
+        }
+        if (betaBlockingAgents != null && betaBlockingAgents) {
+            score2 *= 1.3;
+        }
+        if (calciumChannelBlockers != null && calciumChannelBlockers) {
+            score2 *= 1.15;
+        }
+        if (rASInhibitors != null && rASInhibitors) {
+            score2 *= 1.25;
+        }
+        if (lipidModifyingAgents != null && lipidModifyingAgents) {
+            score2 *= 1.35;
+        }
+        if (champScore != null) {
+            if (champScore > 200) {
+                score2 *= 0.8;
+            } else if (champScore < 100) {
+                score2 *= 1.2;
+            }
+        }
+        if (eetscore != null) {
+            if (eetscore > 85) {
+                score2 *= 0.9;
+            } else if (eetscore < 65) {
+                score2 *= 1.2;
+            }
+        }
+        if (ldl != null) {
+            if (ldl < 6.5) {
+                score2 *= 0.9;
+            } else if (ldl > 8.5) {
+                score2 *= 1.2;
+            }
+        }
+
+
+        return score2;
+
     }
 
     @Override
@@ -37,7 +100,7 @@ public class Score2Classifier extends Classifier {
     }
 
     @SuppressWarnings ("checkstyle:magicNumber") //ignore magic numbers in the score-function
-    private double score2(Map<String, String> evidence)
+    public double score2(Map<String, String> evidence)
             throws MissingAttributeException, InvalidIntegerException, InvalidDoubleException, UnknownStateException {
         //Collect relevant attributes
         //Score function in the following DOI: 10.1093/eurheartj/ehab309
@@ -49,9 +112,9 @@ public class Score2Classifier extends Classifier {
         double tc = getDoubleValue(evidence, "TC");
         double hdl = getDoubleValue(evidence, "HDL");
 
-        if (smoking == "yes") {
+        if (smoking.equals("yes")) {
             smokingYes = 1;
-        } else if (smoking == "no") {
+        } else if (smoking.equals("no")) {
             smokingYes = 0;
         } else {
             throw new UnknownStateException(smoking, "current_smoker", "'yes', 'no'");

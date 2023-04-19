@@ -1,16 +1,16 @@
 {
   "input" : {
-    "TC" : "1.2",
-    "HDL" : "12.0",
-	"age" : "67",
+	"TC" : "5",
+	"HDL" : "1.5",
+	"age" : "65",
     "antihypertensives" : "yes",
-    "beta_blocking_agents" : "yes",
+	"beta_blocking_agents" : "yes",
     "calcium_channel_blockers" : "yes",
     "RAS_inhibitors" : "yes",
     "lipid_modifying_agents" : "yes",
-    "address_postcode" : "1234AB",
+	"address_postcode" : "1234AB",
     "address_house_number" : "33",
-    "CHAMPS_MVPA_score" : "0",
+	"CHAMPS_MVPA_score" : "0",
 	"CHAMPS_MVPA_Q1" : "0",
     "CHAMPS_MVPA_Q2" : "0",
 	"CHAMPS_MVPA_Q3" : "0",
@@ -21,7 +21,11 @@
     "CHAMPS_MVPA_Q8" : "0",
     "CHAMPS_MVPA_Q9" : "0",
     "current_smoker" : "yes",
+    "eetscore" : "66",
+	"ex_smoker" : "no",
     "gender" : "male",
-    "SBP" : "1"
+    "SBP" : "150",
+    "ldl":"9",
+    "intervention_ldl" : "6"
   }
 }

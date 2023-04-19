@@ -81,70 +81,30 @@ public class Server {
     }
 
     private Map<String, String> detectIntervention(Map<String, String> input)
-            throws MissingAttributeException, InvalidIntegerException, UnknownStateException {
+            throws MissingAttributeException, InvalidIntegerException, UnknownStateException, InvalidDoubleException {
         Map<String, String> changes = new HashMap<>();
-        Integer bmi = getOptionalIntValue(input, "intervention_bmi");
-        Integer diet = getOptionalIntValue(input, "intervention_diet");
-        Integer exercise = getOptionalIntValue(input, "intervention_exercise");
-        Integer glucose = getOptionalIntValue(input, "intervention_glucose");
-        Integer ldl = getOptionalIntValue(input, "intervention_ldl");
+        Integer diet = calcDiet(input);
+        Double interventionCHAMPS = calcChampScoreIntervention(input);
+        Double ldl = getOptionalDoubleValue(input, "intervention_ldl");
         Integer sbp = getOptionalIntValue(input, "intervention_sbp");
-        Boolean smoking = getOptionalBooleanValue(input, "intervention_smoking");
+        String smoking = getOptionalStringValue(input, "intervention_smoking");
 
-        if (bmi != null) {
-            changes.put("BMI", String.valueOf(bmi));
-        }
         if (diet != null) {
             changes.put("eetscore", String.valueOf(diet));
         }
-        if (exercise != null) {
-            changes.put("CHAMPS_MVPA_score", String.valueOf(exercise));
+        if (interventionCHAMPS != null) {
+            changes.put("CHAMPS_MVPA_score", String.valueOf(interventionCHAMPS));
         }
-        if (glucose != null) {
-            changes.put("Glu", String.valueOf(glucose));
-        }
+
         if (ldl != null) {
-            changes.put("LDL", String.valueOf(ldl));
+            changes.put("ldl", String.valueOf(ldl));
         }
         if (sbp != null) {
             changes.put("SBP", String.valueOf(sbp));
         }
-        if (smoking != null && smoking) {
+        if (smoking != null) {
             changes.put("current_smoker", "no");
             changes.put("ex_smoker", "yes");
-
-            boolean cigarette = getOptionalBooleanValue(input, "current_smoker_cigarette");
-            boolean cigar = getOptionalBooleanValue(input, "current_smoker_cigar");
-            boolean pipe = getOptionalBooleanValue(input, "current_smoker_pipe");
-            boolean eCigarette = getOptionalBooleanValue(input, "current_smoker_e_cigarette");
-            boolean other = getOptionalBooleanValue(input, "current_smoker_other");
-
-            if (cigarette) {
-                changes.put("ex_smoker_cigarette", input.get("current_smoker_cigarette"));
-                changes.put("ex_smoker_cigarette_years", input.get("current_smoker_cigarette_years"));
-                changes.put("ex_smoker_cigarette_number_per_day", input.get("current_smoker_cigarette_number_per_day"));
-            }
-            if (cigar) {
-                changes.put("ex_smoker_cigar", input.get("current_smoker_cigar"));
-                changes.put("ex_smoker_cigar_years", input.get("current_smoker_cigar_years"));
-                changes.put("ex_smoker_cigar_number_per_week", input.get("current_smoker_cigar_number_per_week"));
-            }
-            if (pipe) {
-                changes.put("ex_smoker_pipe", input.get("current_smoker_pipe"));
-                changes.put("ex_smoker_pipe_years", input.get("current_smoker_pipe_years"));
-                changes.put("ex_smoker_pipe_number_per_week", input.get("current_smoker_pipe_number_per_week"));
-            }
-            if (eCigarette) {
-                changes.put("ex_smoker_e_cigarette", input.get("current_smoker_e_cigarette"));
-                changes.put("ex_smoker_e_cigarette_years", input.get("current_smoker_e_cigarette_years"));
-                changes.put("ex_smoker_e_cigarette_number_per_day",
-                            input.get("current_smoker_e_cigarette_number_per_day"));
-            }
-            if (other) {
-                changes.put("ex_smoker_other", input.get("current_smoker_other"));
-                changes.put("ex_smoker_other_years", input.get("current_smoker_other_years"));
-                changes.put("ex_smoker_other_number_per_day", input.get("current_smoker_other_number_per_day"));
-            }
         }
         return changes;
     }
@@ -258,9 +218,10 @@ public class Server {
         }
 
         input = cleanUpSmoking(input);
-        input.put("pack_years", String.valueOf(packyears));
+//        input.put("pack_years", String.valueOf(packyears));
         return input;
     }
+
 
     private int createPackYears(String years, String count, Map<String, String> input)
             throws MissingAttributeException, InvalidIntegerException {
