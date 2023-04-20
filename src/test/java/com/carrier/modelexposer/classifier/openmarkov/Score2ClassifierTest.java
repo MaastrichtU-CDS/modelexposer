@@ -31,7 +31,7 @@ public class Score2ClassifierTest {
 
             Score2Classifier classifier = new Score2Classifier();
             RiskResponse response = classifier.classify(evidence);
-            assertEquals(response.getProbabilities().get("CVD"), 0.075, 0.001);
+            assertEquals(response.getProbabilities().get("CVD"), 0.05, 0.001);
 
             Map<String, String> evidence2 = new HashMap<>();
             evidence2.put("gender", "female");
@@ -42,11 +42,11 @@ public class Score2ClassifierTest {
             evidence2.put("HDL", "1.4");
 
             response = classifier.classify(evidence2);
-            assertEquals(response.getProbabilities().get("CVD"), 0.051, 0.001);
+            assertEquals(response.getProbabilities().get("CVD"), 0.034, 0.001);
 
             ReducedRiskResponse reduced = classifier.compareClassifications(evidence, evidence2);
-            assertEquals(reduced.getBaseline().getProbabilities().get("CVD"), 0.075, 0.001);
-            assertEquals(reduced.getChanges().getProbabilities().get("CVD"), 0.051, 0.001);
+            assertEquals(reduced.getBaseline().getProbabilities().get("CVD"), 0.050, 0.001);
+            assertEquals(reduced.getChanges().getProbabilities().get("CVD"), 0.034, 0.001);
         }
     }
 

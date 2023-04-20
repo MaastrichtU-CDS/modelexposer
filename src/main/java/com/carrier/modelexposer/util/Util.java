@@ -169,6 +169,58 @@ public final class Util {
     }
 
     @SuppressWarnings ("checkstyle:magicNumber")
+    public static Double calcLDLIntervention(Map<String, String> evidence)
+            throws UnknownStateException {
+        String intervention = getOptionalStringValue(evidence, "intervention_ldl");
+        if (intervention == null) {
+            return null;
+        }
+
+        if (intervention.equals("<1.0")) {
+            return 0.5;
+        } else if (intervention.equals("1.0_1.4")) {
+            return 1.2;
+        } else if (intervention.equals("1.4_1.8")) {
+            return 1.6;
+        } else if (intervention.equals("1.8_2.6")) {
+            return 2.2;
+        } else if (intervention.equals("2.6_3.0")) {
+            return 2.8;
+        } else if (intervention.equals(">3.0")) {
+            return 3.5;
+        } else {
+            throw new UnknownStateException(intervention, "intervention_ldl",
+                                            "'<1.0', '1.0_1.4', '1.4_1.8', '1.8_2.6', '2.6_3.0', '>3.0'");
+        }
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    public static Integer calcSBPIntervention(Map<String, String> evidence)
+            throws UnknownStateException {
+        String intervention = getOptionalStringValue(evidence, "intervention_sbp");
+        if (intervention == null) {
+            return null;
+        }
+
+        if (intervention.equals("<120")) {
+            return 115;
+        } else if (intervention.equals("120_130")) {
+            return 125;
+        } else if (intervention.equals("130_140")) {
+            return 135;
+        } else if (intervention.equals("140_150")) {
+            return 145;
+        } else if (intervention.equals("150_160")) {
+            return 155;
+        } else if (intervention.equals(">160")) {
+            return 165;
+        } else {
+            throw new UnknownStateException(intervention, "intervention_sbp",
+                                            "'<120', '120_130', '130_140', '140_150', '150_160', '>160'");
+        }
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
     public static Integer calcDiet(Map<String, String> evidence)
             throws InvalidDoubleException, UnknownStateException {
         String diet = getOptionalStringValue(evidence, "intervention_diet");

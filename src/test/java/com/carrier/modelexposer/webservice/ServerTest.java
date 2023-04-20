@@ -158,7 +158,7 @@ public class ServerTest {
             evidence.put("current_smoker_other_number_per_day", "12");
             evidence.put("familial_hypercholesterolemia", "yes");
             evidence.put("drugs_used_in_diabetes", "yes");
-            evidence.put("intervention_ldl", "12");
+            evidence.put("intervention_ldl", ">3.0");
             evidence.put("intervention_glucose", "12");
             evidence.put("intervention_diet", "<60");
             evidence.put("psychotic_disorder", "yes");
@@ -166,7 +166,7 @@ public class ServerTest {
             evidence.put("HDL", "12.0");
             evidence.put("current_smoker_other", "yes");
             evidence.put("LDL", "12.0");
-            evidence.put("intervention_sbp", "12");
+            evidence.put("intervention_sbp", "<120");
             evidence.put("CHAMPS_MVPA_Q3", "0");
             evidence.put("CHAMPS_MVPA_Q4", "0");
             evidence.put("CHAMPS_MVPA_Q5", "0");
@@ -744,7 +744,7 @@ public class ServerTest {
             req.setModelType(RiskRequest.ModelType.score2);
 
             RiskResponse r = (RiskResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getProbabilities().get("CVD"), 0.075, 0.001);
+            assertEquals(r.getProbabilities().get("CVD"), 0.05, 0.001);
         }
     }
 
@@ -786,7 +786,7 @@ public class ServerTest {
             comparisons.put(name, r.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.048, 0.01);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.029, 0.01);
         }
     }
 
@@ -1035,7 +1035,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.35, 0.01);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.07, 0.01);
         }
     }
 
@@ -1062,7 +1062,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ldl 6.0"), 0.35, 0.01);
+            assertEquals(comparisons.get("ldl 3.5"), 0.05, 0.01);
         }
     }
 
@@ -1089,7 +1089,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("eetscore 110"), 0.42, 0.01);
+            assertEquals(comparisons.get("eetscore 110"), 0.09, 0.01);
         }
     }
 
@@ -1116,7 +1116,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.31, 0.01);
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.08, 0.01);
         }
     }
 
@@ -1143,7 +1143,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("SBP 130"), 0.39, 0.01);
+            assertEquals(comparisons.get("SBP 135"), 0.09, 0.01);
         }
     }
 

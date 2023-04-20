@@ -40,44 +40,45 @@ public class Score2Classifier extends Classifier {
         Double ldl = getOptionalDoubleValue(evidence, "ldl");
 
         if (exSmoker != null && exSmoker) {
-            score2 *= 1.1;
+            score2 *= 1.01;
         }
         if (antihypertensives != null && antihypertensives) {
-            score2 *= 1.2;
+            score2 *= 1.02;
         }
         if (betaBlockingAgents != null && betaBlockingAgents) {
-            score2 *= 1.3;
+            score2 *= 1.03;
         }
         if (calciumChannelBlockers != null && calciumChannelBlockers) {
-            score2 *= 1.15;
+            score2 *= 1.04;
         }
         if (rASInhibitors != null && rASInhibitors) {
-            score2 *= 1.25;
+            score2 *= 1.05;
         }
         if (lipidModifyingAgents != null && lipidModifyingAgents) {
-            score2 *= 1.35;
+            score2 *= 1.06;
         }
         if (champScore != null) {
             if (champScore > 200) {
                 score2 *= 0.8;
             } else if (champScore < 100) {
-                score2 *= 1.2;
+                score2 *= 1.02;
             }
         }
         if (eetscore != null) {
             if (eetscore > 85) {
                 score2 *= 0.9;
             } else if (eetscore < 65) {
-                score2 *= 1.2;
+                score2 *= 1.02;
             }
         }
         if (ldl != null) {
-            if (ldl < 6.5) {
-                score2 *= 0.9;
-            } else if (ldl > 8.5) {
-                score2 *= 1.2;
-            }
+            score2 *= 1 - (ldl / 7); // 3.5 is max value, so max reduction of 50% based on ldl
         }
+
+        //max score if all modifiers active:
+        // 1.01 * 1.02 * 1.03 * 1.04 * 1.05 * 1.06 * 1.02 * 1.02 = 1.27
+        // so normalize
+        score2 /= 1.27;
 
 
         return score2;

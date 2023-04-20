@@ -85,8 +85,8 @@ public class Server {
         Map<String, String> changes = new HashMap<>();
         Integer diet = calcDiet(input);
         Double interventionCHAMPS = calcChampScoreIntervention(input);
-        Double ldl = getOptionalDoubleValue(input, "intervention_ldl");
-        Integer sbp = getOptionalIntValue(input, "intervention_sbp");
+        Double interventionLdl = calcLDLIntervention(input);
+        Integer sbp = calcSBPIntervention(input);
         String smoking = getOptionalStringValue(input, "intervention_smoking");
 
         if (diet != null) {
@@ -96,8 +96,8 @@ public class Server {
             changes.put("CHAMPS_MVPA_score", String.valueOf(interventionCHAMPS));
         }
 
-        if (ldl != null) {
-            changes.put("ldl", String.valueOf(ldl));
+        if (interventionLdl != null) {
+            changes.put("ldl", String.valueOf(interventionLdl));
         }
         if (sbp != null) {
             changes.put("SBP", String.valueOf(sbp));

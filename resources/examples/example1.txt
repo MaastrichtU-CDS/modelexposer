@@ -3,7 +3,6 @@
 	"TC" : "5",
 	"HDL" : "1.5",
 	"age" : "65",
-	"ldl":"9",
     "antihypertensives" : "yes",
 	"beta_blocking_agents" : "yes",
     "calcium_channel_blockers" : "yes",
