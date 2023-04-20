@@ -25,6 +25,6 @@
 	"ex_smoker" : "no",
     "gender" : "male",
     "SBP" : "150",
-    "intervention_smoking" : "yes"
+    "intervention_smoking" : "no"
   }
 }

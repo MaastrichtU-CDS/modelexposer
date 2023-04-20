@@ -42,10 +42,10 @@ public final class Util {
             if (!checkForNull(evidence, key)) {
                 return getBooleanFromYesNoValue(evidence, key);
             } else {
-                return false;
+                return null;
             }
         } catch (MissingAttributeException e) {
-            return false;
+            return null;
         }
     }
 
@@ -228,20 +228,35 @@ public final class Util {
             return null;
         }
 
-        if (diet.equals("<60")) {
+        if (diet.equals("very_low")) {
             return 30;
-        } else if (diet.equals("60_70")) {
+        } else if (diet.equals("low")) {
             return 65;
-        } else if (diet.equals("70_80")) {
+        } else if (diet.equals("average")) {
             return 75;
-        } else if (diet.equals("80_90")) {
+        } else if (diet.equals("high")) {
             return 85;
-        } else if (diet.equals(">90")) {
+        } else if (diet.equals("very_high")) {
             return 110;
         } else {
             throw new UnknownStateException(diet, "intervention_diet",
-                                            "'<60', '60_70', '70_80', '80_90', '>90'");
+                                            "'very_low', 'low', 'average', 'high', 'very_high'");
         }
+
+//        if (diet.equals("<60")) {
+//            return 30;
+//        } else if (diet.equals("60_70")) {
+//            return 65;
+//        } else if (diet.equals("70_80")) {
+//            return 75;
+//        } else if (diet.equals("80_90")) {
+//            return 85;
+//        } else if (diet.equals(">90")) {
+//            return 110;
+//        } else {
+//            throw new UnknownStateException(diet, "intervention_diet",
+//                                            "'<60', '60_70', '70_80', '80_90', '>90'");
+//        }
     }
 
     @SuppressWarnings ("checkstyle:magicNumber")

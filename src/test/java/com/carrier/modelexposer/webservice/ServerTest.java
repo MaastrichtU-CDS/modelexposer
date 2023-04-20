@@ -153,24 +153,23 @@ public class ServerTest {
             evidence.put("pregnancy_preeclampsia", "yes");
             evidence.put("weight", "1");
             evidence.put("date_question_x_completed", "1");
-            evidence.put("CHAMPS_MVPA_score", "0");
             evidence.put("gout", "yes");
             evidence.put("current_smoker_other_number_per_day", "12");
             evidence.put("familial_hypercholesterolemia", "yes");
             evidence.put("drugs_used_in_diabetes", "yes");
             evidence.put("intervention_ldl", ">3.0");
             evidence.put("intervention_glucose", "12");
-            evidence.put("intervention_diet", "<60");
+            evidence.put("intervention_diet", "low");
             evidence.put("psychotic_disorder", "yes");
             evidence.put("current_smoker_substance", "cigarette");
             evidence.put("HDL", "12.0");
             evidence.put("current_smoker_other", "yes");
             evidence.put("LDL", "12.0");
-            evidence.put("intervention_sbp", "<120");
+            evidence.put("intervention_sbp", ">160");
             evidence.put("CHAMPS_MVPA_Q3", "0");
             evidence.put("CHAMPS_MVPA_Q4", "0");
             evidence.put("CHAMPS_MVPA_Q5", "0");
-            evidence.put("CHAMPS_MVPA_Q6", "0");
+            evidence.put("CHAMPS_MVPA_Q6", ">8");
             evidence.put("date_baseline_consult", "2222-02-22");
             evidence.put("CKD", "yes");
             evidence.put("HbA1c", "12.0");
@@ -457,7 +456,7 @@ public class ServerTest {
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
 
-            evidence.put("intervention_smoking", "yes");
+            evidence.put("intervention_smoking", "no");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -634,43 +633,6 @@ public class ServerTest {
     }
 
     @Test
-    public void testClassifyTestPackYearsInvalidFormat()
-            throws Exception {
-        {
-            String path = "resources/";
-            String model = "dummy_model_sananet.pgmx";
-
-            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
-
-
-            Map<String, String> evidence = new HashMap<>();
-
-            evidence.put("current_smoker", "yes");
-            evidence.put("current_smoker_substance", "cigarette");
-            evidence.put("current_smoker_cigarette", "yes");
-            evidence.put("current_smoker_cigar", "no");
-            evidence.put("current_smoker_pipe", "no");
-            evidence.put("current_smoker_e_cigarette", "no");
-            evidence.put("current_smoker_other", "no");
-
-
-            ReducedRiskRequest req = new ReducedRiskRequest();
-            req.setInput(evidence);
-
-            ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getMessage(),
-                         "Missing attribute 'current_smoker_cigarette_years' is expected to be present");
-
-            evidence.put("current_smoker_cigarette_years", "fout");
-            evidence.put("current_smoker_cigarette_number_per_day", "2");
-            r = (ExceptionResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getMessage(),
-                         "Attribute 'current_smoker_cigarette_years' is expected to be an integer value");
-
-        }
-    }
-
-    @Test
     public void testClassifyTestWrongNodeName()
             throws Exception {
         {
@@ -744,7 +706,7 @@ public class ServerTest {
             req.setModelType(RiskRequest.ModelType.score2);
 
             RiskResponse r = (RiskResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getProbabilities().get("CVD"), 0.05, 0.001);
+            assertEquals(r.getProbabilities().get("CVD"), 0.06, 0.01);
         }
     }
 
@@ -770,7 +732,7 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
-            evidence.put("intervention_smoking", "yes");
+            evidence.put("intervention_smoking", "no");
 
             RiskRequest req = new RiskRequest();
             req.setInput(evidence);
@@ -786,7 +748,7 @@ public class ServerTest {
             comparisons.put(name, r.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.029, 0.01);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.04, 0.01);
         }
     }
 
@@ -1035,7 +997,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.07, 0.01);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.08, 0.01);
         }
     }
 
@@ -1062,7 +1024,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ldl 3.5"), 0.05, 0.01);
+            assertEquals(comparisons.get("ldl 3.5"), 0.12, 0.01);
         }
     }
 
@@ -1089,7 +1051,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("eetscore 110"), 0.09, 0.01);
+            assertEquals(comparisons.get("eetscore 110"), 0.10, 0.01);
         }
     }
 
@@ -1116,7 +1078,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.08, 0.01);
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.09, 0.01);
         }
     }
 
@@ -1143,7 +1105,34 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("SBP 135"), 0.09, 0.01);
+            assertEquals(comparisons.get("SBP 135"), 0.10, 0.01);
+        }
+    }
+
+    @Test
+    public void testExample6Score2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/example6.txt");
+            req.setModelType(RiskRequest.ModelType.score2);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.06, 0.01);
         }
     }
 

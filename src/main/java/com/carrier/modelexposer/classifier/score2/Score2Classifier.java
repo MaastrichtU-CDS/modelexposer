@@ -39,23 +39,10 @@ public class Score2Classifier extends Classifier {
         Integer eetscore = getOptionalIntValue(evidence, "eetscore");
         Double ldl = getOptionalDoubleValue(evidence, "ldl");
 
-        if (exSmoker != null && exSmoker) {
-            score2 *= 1.01;
-        }
-        if (antihypertensives != null && antihypertensives) {
-            score2 *= 1.02;
-        }
-        if (betaBlockingAgents != null && betaBlockingAgents) {
-            score2 *= 1.03;
-        }
-        if (calciumChannelBlockers != null && calciumChannelBlockers) {
-            score2 *= 1.04;
-        }
-        if (rASInhibitors != null && rASInhibitors) {
-            score2 *= 1.05;
-        }
-        if (lipidModifyingAgents != null && lipidModifyingAgents) {
-            score2 *= 1.06;
+        if ((exSmoker != null && exSmoker) || (antihypertensives != null && antihypertensives) || (betaBlockingAgents
+                != null && betaBlockingAgents) || (calciumChannelBlockers != null && calciumChannelBlockers)
+                || (rASInhibitors != null && rASInhibitors) || (lipidModifyingAgents != null && lipidModifyingAgents)) {
+            score2 *= 1.1;
         }
         if (champScore != null) {
             if (champScore > 200) {
@@ -72,17 +59,14 @@ public class Score2Classifier extends Classifier {
             }
         }
         if (ldl != null) {
-            score2 *= 1 - (ldl / 7); // 3.5 is max value, so max reduction of 50% based on ldl
+            score2 *= ((7 - ldl) / 3.5); // 3.5 is max value at 3.5 no reduction, at an ldl of 0 there is a
+            // reduction of 50%
         }
 
-        //max score if all modifiers active:
-        // 1.01 * 1.02 * 1.03 * 1.04 * 1.05 * 1.06 * 1.02 * 1.02 = 1.27
-        // so normalize
-        score2 /= 1.27;
-
+        //cap score at 1 in case the modifiers screw things up
+        score2 = Math.min(1, score2);
 
         return score2;
-
     }
 
     @Override

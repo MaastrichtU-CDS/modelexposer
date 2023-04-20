@@ -10,7 +10,6 @@
     "lipid_modifying_agents" : "yes",
 	"address_postcode" : "1234AB",
     "address_house_number" : "33",
-	"CHAMPS_MVPA_score" : "0",
 	"CHAMPS_MVPA_Q1" : "0",
     "CHAMPS_MVPA_Q2" : "0",
 	"CHAMPS_MVPA_Q3" : "0",
@@ -19,12 +18,12 @@
     "CHAMPS_MVPA_Q6" : "0",
 	"CHAMPS_MVPA_Q7" : "0",
     "CHAMPS_MVPA_Q8" : "0",
-    "CHAMPS_MVPA_Q9" : "0",
+    "CHAMPS_MVPA_Q9" : ">8",
     "current_smoker" : "yes",
     "eetscore" : "66",
 	"ex_smoker" : "no",
     "gender" : "male",
     "SBP" : "150",
-    "intervention_diet" : "very_high"
+    "intervention_smoking" : "no"
   }
 }
