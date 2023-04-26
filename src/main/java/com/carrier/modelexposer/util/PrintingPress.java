@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PrintingPress {
+public final class PrintingPress {
+
+    private PrintingPress() {
+    }
 
     public static void printCSV(List<String> data, String path) {
         File csvOutputFile = new File(path);
