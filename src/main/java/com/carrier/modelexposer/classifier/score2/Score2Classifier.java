@@ -59,7 +59,7 @@ public class Score2Classifier extends Classifier {
             }
         }
         if (ldl != null) {
-            score2 *= ((7 - ldl) / 3.5); // 3.5 is max value at 3.5 no reduction, at an ldl of 0 there is a
+            score2 *= 1 / ((7 - ldl) / 3.5); // 3.5 is max value at 3.5 no reduction, at an ldl of 0 there is a
             // reduction of 50%
         }
 

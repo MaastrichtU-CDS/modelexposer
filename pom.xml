@@ -67,6 +67,12 @@
             <artifactId>renjin-script-engine</artifactId>
             <version>3.5-beta76</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.3</version>
+        </dependency>
     </dependencies>
 
     <build>

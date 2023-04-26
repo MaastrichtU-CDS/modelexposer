@@ -4,6 +4,7 @@ import com.carrier.modelexposer.classifier.Classifier;
 import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.classifier.score2.Score2Classifier;
 import com.carrier.modelexposer.exception.*;
+import com.carrier.modelexposer.util.SESWOAMapper;
 import com.carrier.modelexposer.webservice.domain.ExceptionResponse;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskRequest;
 import com.carrier.modelexposer.webservice.domain.Response;
@@ -34,11 +35,14 @@ public class Server {
     private String target;
     @Value ("${targetValue}")
     private String targetValue;
+    @Value ("${SESWOAPath}")
+    private List<String> seswoa;
 
 
     private Classifier classifier;
 
     public Server() {
+        SESWOAMapper x = new SESWOAMapper(seswoa);
     }
 
     public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model) {
