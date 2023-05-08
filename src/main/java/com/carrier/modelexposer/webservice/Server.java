@@ -1,6 +1,7 @@
 package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.classifier.Classifier;
+import com.carrier.modelexposer.classifier.finegray.FineGrayClassifier;
 import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.classifier.score2.Score2Classifier;
 import com.carrier.modelexposer.exception.*;
@@ -37,12 +38,12 @@ public class Server {
     private String targetValue;
     @Value ("${SESWOAPath}")
     private List<String> seswoa;
+    private SESWOAMapper seswaoMapper;
 
 
     private Classifier classifier;
 
     public Server() {
-        SESWOAMapper x = new SESWOAMapper(seswoa);
     }
 
     public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model) {
@@ -53,8 +54,19 @@ public class Server {
         this.model = model;
     }
 
+    public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model,
+                  List<String> seswoa) {
+        this.target = target;
+        this.targetValue = targetValue;
+        this.defaultClassifier = def;
+        this.path = path;
+        this.model = model;
+        this.seswoa = seswoa;
+    }
+
     @PostMapping ("estimateBaseLineRisk")
     public Response estimateBaseLineRisk(@RequestBody RiskRequest req) throws Exception {
+        init();
         setClassifier(req);
         try {
             Map<String, String> changes = detectIntervention(req.getInput());
@@ -65,7 +77,7 @@ public class Server {
                 r.setChanges(changes);
                 return estimateReducedRisk(r);
             }
-            Map<String, String> updatedInput = cleanUpEvidence(req.getInput());
+            Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
             return classifier.classify(updatedInput);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException | InvalidDoubleException e) {
@@ -86,6 +98,7 @@ public class Server {
 
     private Map<String, String> detectIntervention(Map<String, String> input)
             throws MissingAttributeException, InvalidIntegerException, UnknownStateException, InvalidDoubleException {
+        init();
         Map<String, String> changes = new HashMap<>();
         Integer diet = calcDiet(input);
         Double interventionCHAMPS = calcChampScoreIntervention(input);
@@ -101,7 +114,7 @@ public class Server {
         }
 
         if (interventionLdl != null) {
-            changes.put("ldl", String.valueOf(interventionLdl));
+            changes.put("LDL", String.valueOf(interventionLdl));
         }
         if (sbp != null) {
             changes.put("SBP", String.valueOf(sbp));
@@ -122,7 +135,7 @@ public class Server {
             @RequestBody ReducedRiskRequest req) throws Exception {
         setClassifier(req);
         try {
-            Map<String, String> updatedInput = cleanUpEvidence(req.getInput());
+            Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
             Map<String, String> updatedChanges = cleanUpEvidence(req.getChanges());
             return classifier.compareClassifications(updatedInput, updatedChanges);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
@@ -142,7 +155,7 @@ public class Server {
         input = removeValue(input, "date_question_x_completed");
         input = removeValue(input, "birth_date");
 
-        input = updateAdress(input);
+
         input = cleanIntervention(input);
         if (input.containsKey("current_smoker") || input.containsKey("ex_smoker")) {
             input = updatePackYears(input);
@@ -150,10 +163,21 @@ public class Server {
         return input;
     }
 
-    private Map<String, String> updateAdress(Map<String, String> input) {
-        //ToDo: do something with adress
+    private Map<String, String> updateAdress(Map<String, String> input) throws MissingAttributeException {
+        if (!input.containsKey("address_house_number")) {
+            throw new MissingAttributeException("address_house_number");
+        } else if (!input.containsKey("address_postcode")) {
+            throw new MissingAttributeException("address_postcode");
+        }
+
+        if (seswaoMapper != null) {
+            input.put("seswoa", String.valueOf(
+                    seswaoMapper.findSESWOA(input.get("address_postcode"), input.get("address_house_number"))));
+        }
+
         input = removeValue(input, "address_house_number");
         input = removeValue(input, "address_postcode");
+
         return input;
     }
 
@@ -219,6 +243,8 @@ public class Server {
             classifier = new OpenMarkovClassifier(path, model, target, targetValue);
         } else if (req.getModelType() == RiskRequest.ModelType.score2) {
             classifier = new Score2Classifier();
+        } else if (req.getModelType() == RiskRequest.ModelType.fineGray) {
+            classifier = new FineGrayClassifier();
         }
     }
 
@@ -226,6 +252,12 @@ public class Server {
     private void checkDefault(RiskRequest req) {
         if (req.getModelType() == null) {
             req.setModelType(defaultClassifier);
+        }
+    }
+
+    private void init() {
+        if (seswoa != null) {
+            seswaoMapper = new SESWOAMapper(seswoa);
         }
     }
 }

@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,6 +34,9 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
+
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -61,6 +66,9 @@ public class ServerTest {
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "null");
             evidence.put("weight", "null");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
+
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -457,6 +465,9 @@ public class ServerTest {
             evidence.put("current_smoker_other", "no");
 
             evidence.put("intervention_smoking", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
+
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -496,6 +507,9 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
+
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -513,6 +527,9 @@ public class ServerTest {
             evidence2.put("current_smoker_pipe", "no");
             evidence2.put("current_smoker_e_cigarette", "no");
             evidence2.put("current_smoker_other", "no");
+            evidence2.put("address_house_number", "50");
+            evidence2.put("address_postcode", "50");
+
 
             req.setInput(evidence2);
 
@@ -529,6 +546,9 @@ public class ServerTest {
             evidence3.put("current_smoker_pipe", "yes");
             evidence3.put("current_smoker_e_cigarette", "no");
             evidence3.put("current_smoker_other", "no");
+            evidence3.put("address_house_number", "50");
+            evidence3.put("address_postcode", "50");
+
 
             req.setInput(evidence3);
 
@@ -545,6 +565,9 @@ public class ServerTest {
             evidence4.put("current_smoker_pipe", "no");
             evidence4.put("current_smoker_e_cigarette", "yes");
             evidence4.put("current_smoker_other", "no");
+            evidence4.put("address_house_number", "50");
+            evidence4.put("address_postcode", "50");
+
 
             req.setInput(evidence4);
 
@@ -563,6 +586,9 @@ public class ServerTest {
             evidence5.put("ex_smoker_pipe", "no");
             evidence5.put("ex_smoker_e_cigarette", "no");
             evidence5.put("ex_smoker_other", "no");
+            evidence5.put("address_house_number", "50");
+            evidence5.put("address_postcode", "50");
+
 
             req.setInput(evidence5);
 
@@ -580,6 +606,9 @@ public class ServerTest {
             evidence6.put("ex_smoker_pipe", "no");
             evidence6.put("ex_smoker_e_cigarette", "no");
             evidence6.put("ex_smoker_other", "no");
+            evidence6.put("address_house_number", "50");
+            evidence6.put("address_postcode", "50");
+
 
             req.setInput(evidence6);
 
@@ -597,6 +626,9 @@ public class ServerTest {
             evidence7.put("ex_smoker_pipe", "yes");
             evidence7.put("ex_smoker_e_cigarette", "no");
             evidence7.put("ex_smoker_other", "no");
+            evidence7.put("address_house_number", "50");
+            evidence7.put("address_postcode", "50");
+
 
             req.setInput(evidence7);
 
@@ -614,6 +646,9 @@ public class ServerTest {
             evidence8.put("ex_smoker_pipe", "no");
             evidence8.put("ex_smoker_e_cigarette", "yes");
             evidence8.put("ex_smoker_other", "no");
+            evidence8.put("address_house_number", "50");
+            evidence8.put("address_postcode", "50");
+
 
             req.setInput(evidence8);
 
@@ -645,6 +680,8 @@ public class ServerTest {
 
             Map<String, String> evidence = new HashMap<>();
             evidence.put("nonsense", "current_smoker");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -667,6 +704,9 @@ public class ServerTest {
 
             Map<String, String> evidence = new HashMap<>();
             evidence.put("smoking_status", "nonsense");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
 
             ReducedRiskRequest req = new ReducedRiskRequest();
             req.setInput(evidence);
@@ -700,6 +740,9 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
+
 
             RiskRequest req = new RiskRequest();
             req.setInput(evidence);
@@ -733,6 +776,9 @@ public class ServerTest {
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
             evidence.put("intervention_smoking", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
+
 
             RiskRequest req = new RiskRequest();
             req.setInput(evidence);
@@ -765,6 +811,8 @@ public class ServerTest {
             Map<String, String> evidence = new HashMap<>();
             evidence.put("gender", "nonsense");
             evidence.put("age", "50");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
             evidence.put("current_smoker", "no");
             evidence.put("SBP", "140");
             evidence.put("TC", "6.3");
@@ -780,6 +828,8 @@ public class ServerTest {
 
             evidence.put("gender", "male");
             evidence.put("current_smoker", "nonsense");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
@@ -792,6 +842,8 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Attribute 'SBP' is expected to be an double value");
@@ -804,6 +856,9 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
+
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Missing attribute 'SBP' is expected to be present");
@@ -826,6 +881,8 @@ public class ServerTest {
             evidence.put("current_smoker_pipe", "no");
             evidence.put("current_smoker_e_cigarette", "no");
             evidence.put("current_smoker_other", "no");
+            evidence.put("address_house_number", "50");
+            evidence.put("address_postcode", "50");
 
 
             ReducedRiskRequest req = new ReducedRiskRequest();
@@ -943,7 +1000,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.21, 0.01);
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 5.833333333333333"), 0.21, 0.01);
         }
     }
 
@@ -1024,7 +1081,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("ldl 3.5"), 0.12, 0.01);
+            assertEquals(comparisons.get("LDL 3.5"), 0.12, 0.01);
         }
     }
 
@@ -1078,7 +1135,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("CHAMPS_MVPA_score 350.0"), 0.09, 0.01);
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 5.833333333333333"), 0.09, 0.01);
         }
     }
 
@@ -1133,6 +1190,255 @@ public class ServerTest {
 
 
             assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.06, 0.01);
+        }
+    }
+
+
+    @Test
+    public void testFineGrayExample_1()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray1.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker no"), 0.0423, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_2()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray2.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
+            assertEquals(comparisons.get("eetscore 110"), 0.0686, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_3()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray3.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
+            assertEquals(comparisons.get("ex_smoker yescurrent_smoker noeetscore 110"), 0.0388, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_4()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray4.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
+            assertEquals(comparisons.get("CHAMPS_MVPA_score 3.75"), 0.0222, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_5()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray5.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
+            assertEquals(comparisons.get("eetscore 110"), 0.0200, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_6()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray6.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
+            assertEquals(comparisons.get("eetscore 110CHAMPS_MVPA_score 3.75"), 0.0197, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_7()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray7.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
+            assertEquals(comparisons.get("SBP 125"), 0.016, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_8()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            List<String> seswoa = new ArrayList<>();
+            seswoa.add("resources/seswoa_1.csv");
+            seswoa.add("resources/seswoa_2.csv");
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.bayesian, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray8.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
+            assertEquals(comparisons.get("ex_smoker yesLDL 2.2current_smoker noeetscore 110"), 0.0171, 0.001);
         }
     }
 

@@ -125,6 +125,8 @@ public final class Util {
     @SuppressWarnings ("checkstyle:magicNumber")
     public static double calcChampScore(Map<String, String> evidence)
             throws InvalidDoubleException, UnknownStateException {
+        //RETURNS THE SCORE IN MINUTES
+        //INPUT IT SCORE IN HOURS
         Double cHAMPSMVPAScore = getOptionalDoubleValue(evidence, "CHAMPS_MVPA_score");
 
         if (cHAMPSMVPAScore == null) {
@@ -151,17 +153,17 @@ public final class Util {
         if (intervention == null) {
             return null;
         }
-
+        //CHAMPS original score is in hours, intervention is in minute, normalize to hours
         if (intervention.equals("<30")) {
-            return 15.0;
+            return 15.0 / 60;
         } else if (intervention.equals("30_90")) {
-            return 60.0;
+            return 60.0 / 60;
         } else if (intervention.equals("90_150")) {
-            return 120.0;
+            return 120.0 / 60;
         } else if (intervention.equals("150_300")) {
-            return 225.0;
+            return 225.0 / 60;
         } else if (intervention.equals(">300")) {
-            return 350.0;
+            return 350.0 / 60;
         } else {
             throw new UnknownStateException(intervention, "intervention_exercise",
                                             "'<30', '30_90', '90_150', '150_300', '>300'");
@@ -242,21 +244,6 @@ public final class Util {
             throw new UnknownStateException(diet, "intervention_diet",
                                             "'very_low', 'low', 'average', 'high', 'very_high'");
         }
-
-//        if (diet.equals("<60")) {
-//            return 30;
-//        } else if (diet.equals("60_70")) {
-//            return 65;
-//        } else if (diet.equals("70_80")) {
-//            return 75;
-//        } else if (diet.equals("80_90")) {
-//            return 85;
-//        } else if (diet.equals(">90")) {
-//            return 110;
-//        } else {
-//            throw new UnknownStateException(diet, "intervention_diet",
-//                                            "'<60', '60_70', '70_80', '80_90', '>90'");
-//        }
     }
 
     @SuppressWarnings ("checkstyle:magicNumber")
