@@ -2,7 +2,6 @@ package com.carrier.modelexposer.webservice;
 
 import com.carrier.modelexposer.classifier.Classifier;
 import com.carrier.modelexposer.classifier.finegray.FineGrayClassifier;
-import com.carrier.modelexposer.classifier.openmarkov.OpenMarkovClassifier;
 import com.carrier.modelexposer.classifier.score2.Score2Classifier;
 import com.carrier.modelexposer.exception.*;
 import com.carrier.modelexposer.util.SESWOAMapper;
@@ -80,7 +79,7 @@ public class Server {
             Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
             return classifier.classify(updatedInput);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
-                | MissingAttributeException | InvalidDoubleException e) {
+                | MissingAttributeException | InvalidDoubleException | UnknownAddressException e) {
             return new ExceptionResponse(e);
         }
     }
@@ -139,7 +138,7 @@ public class Server {
             Map<String, String> updatedChanges = cleanUpEvidence(req.getChanges());
             return classifier.compareClassifications(updatedInput, updatedChanges);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
-                | MissingAttributeException e) {
+                | MissingAttributeException | UnknownAddressException e) {
             return new ExceptionResponse(e);
         }
     }
@@ -163,7 +162,8 @@ public class Server {
         return input;
     }
 
-    private Map<String, String> updateAdress(Map<String, String> input) throws MissingAttributeException {
+    private Map<String, String> updateAdress(Map<String, String> input)
+            throws MissingAttributeException, UnknownAddressException {
         if (!input.containsKey("address_house_number")) {
             throw new MissingAttributeException("address_house_number");
         } else if (!input.containsKey("address_postcode")) {
@@ -239,9 +239,7 @@ public class Server {
 
     private void setClassifier(RiskRequest req) {
         checkDefault(req);
-        if (req.getModelType() == RiskRequest.ModelType.bayesian) {
-            classifier = new OpenMarkovClassifier(path, model, target, targetValue);
-        } else if (req.getModelType() == RiskRequest.ModelType.score2) {
+        if (req.getModelType() == RiskRequest.ModelType.score2) {
             classifier = new Score2Classifier();
         } else if (req.getModelType() == RiskRequest.ModelType.fineGray) {
             classifier = new FineGrayClassifier();

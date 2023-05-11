@@ -1,21 +1,19 @@
 package com.carrier.modelexposer.util;
 
-import com.carrier.modelexposer.exception.InvalidDoubleException;
-import com.carrier.modelexposer.exception.InvalidIntegerException;
-import com.carrier.modelexposer.exception.MissingAttributeException;
-import com.carrier.modelexposer.exception.UnknownStateException;
+import com.carrier.modelexposer.exception.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SESWOAMapperTest {
     @Test
     public void testUtil()
             throws InvalidIntegerException, InvalidDoubleException,
-                   MissingAttributeException, UnknownStateException {
+                   MissingAttributeException, UnknownStateException, UnknownAddressException {
         {
             List<String> paths = new ArrayList<>();
             paths.add("resources/seswoa_1.csv");
@@ -26,6 +24,7 @@ public class SESWOAMapperTest {
             m.initSESWOA();
             assertEquals(m.findSESWOA("9712EA", "9"), -0.616);
             assertEquals(m.findSESWOA("9712EA", "wrong"), null);
+            assertThrows(UnknownAddressException.class, () -> m.findSESWOA("1234AA", "1"), "Unknown adress 12344AA 1");
         }
     }
 }

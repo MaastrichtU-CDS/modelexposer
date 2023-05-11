@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.carrier.modelexposer.util.Util.getOptionalBooleanValue;
-import static com.carrier.modelexposer.util.Util.getOptionalStringValue;
+import static com.carrier.modelexposer.util.Util.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UtilTest {
     @Test
@@ -20,8 +20,11 @@ public class UtilTest {
         {
             //making test Coverage happy
             Map<String, String> evidence = new HashMap<>();
+            evidence.put("wrongInt", "wrong");
             getOptionalBooleanValue(evidence, "optional");
             getOptionalStringValue(evidence, "optional");
+            assertThrows(InvalidIntegerException.class, () -> getIntValue(evidence, "wrongInt"), "");
+            assertThrows(MissingAttributeException.class, () -> getIntValue(evidence, "this_doesnt_exist"), "");
         }
     }
 }

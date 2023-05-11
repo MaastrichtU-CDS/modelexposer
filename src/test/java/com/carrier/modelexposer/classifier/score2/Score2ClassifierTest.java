@@ -1,6 +1,5 @@
-package com.carrier.modelexposer.classifier.openmarkov;
+package com.carrier.modelexposer.classifier.score2;
 
-import com.carrier.modelexposer.classifier.score2.Score2Classifier;
 import com.carrier.modelexposer.exception.InvalidDoubleException;
 import com.carrier.modelexposer.exception.InvalidIntegerException;
 import com.carrier.modelexposer.exception.MissingAttributeException;

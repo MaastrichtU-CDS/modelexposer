@@ -4,11 +4,9 @@ RUN mkdir /build
 COPY ./pom.xml /build/pom.xml
 COPY /src/. /build/src
 COPY /resources/. /build/resources
-COPY /openmarkov/. /build/openmarkov
 COPY ./checkstyle.xml /build/checkstyle.xml
 
 WORKDIR /build
-RUN mvn install:install-file -Dfile=./openmarkov/OpenMarkov-0.4.1.jar -DgroupId=org.openmarkov -DartifactId=org.openmarkov.full -Dversion=0.4.1-SNAPSHOT -Dpackaging=jar
 RUN mvn clean install
 
 COPY resources /resources
