@@ -1,1 +1,1 @@
-docker run -p 8080:8080 fvandaalen/carrier:modelexposer_2.2
+docker run -p 8080:8080 fvandaalen/carrier:modelexposer_2.4
