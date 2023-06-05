@@ -123,7 +123,11 @@ public class ServerTest {
 
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
-                         "Unknown state 'nonsense' for attribute 'gender', expected valid states: 'male', 'female'");
+                         "Encountered an error. \n" +
+                                 "Currently running version: 2.7\n" +
+                                 "Error: \n" +
+                                 "Unknown state 'nonsense' for attribute 'gender', expected valid states: 'male', " +
+                                 "'female'");
 
             evidence.put("gender", "male");
             evidence.put("current_smoker", "nonsense");
@@ -132,7 +136,11 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
-                         "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: 'yes', 'no'");
+                         "Encountered an error. \n" +
+                                 "Currently running version: 2.7\n" +
+                                 "Error: \n" +
+                                 "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: " +
+                                 "'yes', 'no'");
 
             evidence.put("current_smoker", "yes");
             evidence.put("SBP", "nonsense");
@@ -145,7 +153,10 @@ public class ServerTest {
             evidence.put("address_postcode", "50");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getMessage(), "Attribute 'SBP' is expected to be an double value");
+            assertEquals(r.getMessage(), "Encountered an error. \n" +
+                    "Currently running version: 2.7\n" +
+                    "Error: \n" +
+                    "Attribute 'SBP' is expected to be an double value");
 
             evidence.remove("SBP");
             //readd smoking variables due to unit-test passing along values, unlike the real world where i would be a
@@ -160,7 +171,10 @@ public class ServerTest {
             evidence.put("address_postcode", "50");
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
-            assertEquals(r.getMessage(), "Missing attribute 'SBP' is expected to be present");
+            assertEquals(r.getMessage(), "Encountered an error. \n" +
+                    "Currently running version: 2.7\n" +
+                    "Error: \n" +
+                    "Missing attribute 'SBP' is expected to be present");
         }
     }
 

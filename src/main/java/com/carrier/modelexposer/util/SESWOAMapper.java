@@ -1,7 +1,5 @@
 package com.carrier.modelexposer.util;
 
-import com.carrier.modelexposer.exception.UnknownAddressException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +9,7 @@ import static com.carrier.modelexposer.util.PrintingPress.readCsv;
 
 public class SESWOAMapper {
     private Map<String, Map<String, String>> seswoa;
+    private static final double DEFAULT_SESWOA = 0.096;
 
     private List<String> paths;
 
@@ -42,16 +41,18 @@ public class SESWOAMapper {
         }
     }
 
-    public Double findSESWOA(String postal, String number) throws UnknownAddressException {
+    public Double findSESWOA(String postal, String number) {
         try {
             String value = seswoa.computeIfPresent(postal, (k, v) -> {
                 return v;
             }).computeIfPresent(number, (k, v) -> {
                 return v;
             });
-            return value == null ? null : Double.parseDouble(value);
+            return value == null ? DEFAULT_SESWOA : Double.parseDouble(value);
         } catch (Exception e) {
-            throw new UnknownAddressException(postal, number);
+            //unknown adress return default value
+            throw e;
+//            return DEFAULT_SESWOA;
         }
     }
 }

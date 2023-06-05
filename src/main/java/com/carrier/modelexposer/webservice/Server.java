@@ -79,8 +79,11 @@ public class Server {
             Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
             return classifier.classify(updatedInput);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
-                | MissingAttributeException | InvalidDoubleException | UnknownAddressException e) {
+                | MissingAttributeException | InvalidDoubleException e) {
             return new ExceptionResponse(e);
+        } catch (Exception e) {
+            ModelExposerException e2 = new ModelExposerException("Internal server error: 500");
+            return new ExceptionResponse(e2);
         }
     }
 
@@ -138,8 +141,11 @@ public class Server {
             Map<String, String> updatedChanges = cleanUpEvidence(req.getChanges());
             return classifier.compareClassifications(updatedInput, updatedChanges);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
-                | MissingAttributeException | UnknownAddressException e) {
+                | MissingAttributeException e) {
             return new ExceptionResponse(e);
+        } catch (Exception e) {
+            ModelExposerException e2 = new ModelExposerException("Internal server error: 500");
+            return new ExceptionResponse(e2);
         }
     }
 
@@ -163,7 +169,7 @@ public class Server {
     }
 
     private Map<String, String> updateAdress(Map<String, String> input)
-            throws MissingAttributeException, UnknownAddressException {
+            throws MissingAttributeException {
         if (!input.containsKey("address_house_number")) {
             throw new MissingAttributeException("address_house_number");
         } else if (!input.containsKey("address_postcode")) {
