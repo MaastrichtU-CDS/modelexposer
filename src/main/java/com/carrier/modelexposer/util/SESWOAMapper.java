@@ -51,8 +51,7 @@ public class SESWOAMapper {
             return value == null ? DEFAULT_SESWOA : Double.parseDouble(value);
         } catch (Exception e) {
             //unknown adress return default value
-            throw e;
-//            return DEFAULT_SESWOA;
+            return DEFAULT_SESWOA;
         }
     }
 }

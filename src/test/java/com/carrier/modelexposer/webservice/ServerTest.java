@@ -124,7 +124,7 @@ public class ServerTest {
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
                          "Encountered an error. \n" +
-                                 "Currently running version: 2.7\n" +
+                                 "Currently running version: 2.8\n" +
                                  "Error: \n" +
                                  "Unknown state 'nonsense' for attribute 'gender', expected valid states: 'male', " +
                                  "'female'");
@@ -137,7 +137,7 @@ public class ServerTest {
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
                          "Encountered an error. \n" +
-                                 "Currently running version: 2.7\n" +
+                                 "Currently running version: 2.8\n" +
                                  "Error: \n" +
                                  "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: " +
                                  "'yes', 'no'");
@@ -154,7 +154,7 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Encountered an error. \n" +
-                    "Currently running version: 2.7\n" +
+                    "Currently running version: 2.8\n" +
                     "Error: \n" +
                     "Attribute 'SBP' is expected to be an double value");
 
@@ -172,7 +172,7 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Encountered an error. \n" +
-                    "Currently running version: 2.7\n" +
+                    "Currently running version: 2.8\n" +
                     "Error: \n" +
                     "Missing attribute 'SBP' is expected to be present");
         }
