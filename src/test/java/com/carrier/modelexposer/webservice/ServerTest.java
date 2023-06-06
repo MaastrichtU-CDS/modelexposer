@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -124,7 +122,7 @@ public class ServerTest {
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
                          "Encountered an error. \n" +
-                                 "Currently running version: 2.8\n" +
+                                 "Currently running version: 2.9\n" +
                                  "Error: \n" +
                                  "Unknown state 'nonsense' for attribute 'gender', expected valid states: 'male', " +
                                  "'female'");
@@ -137,7 +135,7 @@ public class ServerTest {
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
                          "Encountered an error. \n" +
-                                 "Currently running version: 2.8\n" +
+                                 "Currently running version: 2.9\n" +
                                  "Error: \n" +
                                  "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: " +
                                  "'yes', 'no'");
@@ -154,7 +152,7 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Encountered an error. \n" +
-                    "Currently running version: 2.8\n" +
+                    "Currently running version: 2.9\n" +
                     "Error: \n" +
                     "Attribute 'SBP' is expected to be an double value");
 
@@ -172,7 +170,7 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Encountered an error. \n" +
-                    "Currently running version: 2.8\n" +
+                    "Currently running version: 2.9\n" +
                     "Error: \n" +
                     "Missing attribute 'SBP' is expected to be present");
         }
@@ -347,9 +345,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -378,9 +374,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -409,9 +403,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -440,9 +432,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -471,9 +461,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -502,9 +490,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -533,9 +519,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
@@ -564,9 +548,7 @@ public class ServerTest {
         {
             String path = "resources/";
             String model = "dummy_model_sananet.pgmx";
-            List<String> seswoa = new ArrayList<>();
-            seswoa.add("resources/seswoa_1.csv");
-            seswoa.add("resources/seswoa_2.csv");
+            String seswoa = "resources/seswoa_";
 
 
             Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);

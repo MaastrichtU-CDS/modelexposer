@@ -36,7 +36,7 @@ public class Server {
     @Value ("${targetValue}")
     private String targetValue;
     @Value ("${SESWOAPath}")
-    private List<String> seswoa;
+    private String seswoa;
     private SESWOAMapper seswaoMapper;
 
 
@@ -45,22 +45,22 @@ public class Server {
     public Server() {
     }
 
-    public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model) {
-        this.target = target;
-        this.targetValue = targetValue;
-        this.defaultClassifier = def;
-        this.path = path;
-        this.model = model;
-    }
-
     public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model,
-                  List<String> seswoa) {
+                  String seswoa) {
         this.target = target;
         this.targetValue = targetValue;
         this.defaultClassifier = def;
         this.path = path;
         this.model = model;
         this.seswoa = seswoa;
+    }
+
+    public Server(String target, String targetValue, RiskRequest.ModelType def, String path, String model) {
+        this.target = target;
+        this.targetValue = targetValue;
+        this.defaultClassifier = def;
+        this.path = path;
+        this.model = model;
     }
 
     @PostMapping ("estimateBaseLineRisk")
@@ -180,7 +180,6 @@ public class Server {
             input.put("seswoa", String.valueOf(
                     seswaoMapper.findSESWOA(input.get("address_postcode"), input.get("address_house_number"))));
         }
-
         input = removeValue(input, "address_house_number");
         input = removeValue(input, "address_postcode");
 

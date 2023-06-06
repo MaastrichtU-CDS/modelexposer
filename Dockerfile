@@ -14,8 +14,7 @@ COPY resources /resources
 FROM maven:3.9.0-eclipse-temurin-17-alpine
 WORKDIR /root
 
-COPY /resources/seswoa_1.csv /build/resources/seswoa_1.csv
-COPY /resources/seswoa_2.csv /build/resources/seswoa_2.csv
+COPY /resources/seswoa*.csv /build/resources/
 COPY /resources/application.properties /build/resources/application.properties
 
 COPY --from=0 /build/target/final.jar /build/target/final.jar
