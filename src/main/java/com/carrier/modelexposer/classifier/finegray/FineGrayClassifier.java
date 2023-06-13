@@ -8,12 +8,16 @@ import com.carrier.modelexposer.exception.UnknownStateException;
 import com.carrier.modelexposer.webservice.domain.ReducedRiskResponse;
 import com.carrier.modelexposer.webservice.domain.RiskResponse;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.carrier.modelexposer.util.Util.*;
 
 public class FineGrayClassifier extends Classifier {
+    private Map<String, Map<String, Double>> riskTable;
+
     @Override
     public RiskResponse classify(Map<String, String> evidence) throws Exception {
         double score = baseLine(evidence);
@@ -164,6 +168,8 @@ public class FineGrayClassifier extends Classifier {
         Boolean exSmoker = getOptionalBooleanValue(evidence, "ex_smoker");
         Double champScore = calcChampScore(evidence) / 60; //finegray wants it in minutes
         Integer eetscore = getIntValue(evidence, "eetscore");
+        double calcChampScoreInterventionModifier = calcChampScoreIntervention(champScore, evidence);
+
 
         Double seswoa = getDoubleValue(evidence, "seswoa");
         int smokingYes = 0;
@@ -208,12 +214,89 @@ public class FineGrayClassifier extends Classifier {
         int preexistingCVD = 0; // this is always 0, cuz exclusion criteria
 
 
-        return (1 - (Math.pow((1 - 0.02369760), Math.exp(
+        //modifying entire risk with calcChampScoreInterventionModifier
+
+        return calcChampScoreInterventionModifier * (1 - (Math.pow((1 - 0.02369760), Math.exp(
                 0.06263895 * (age - 59.63795) + 0.58698845 * genderInt + 0.43360962 * diabetesInt + 0.64925821
                         * preexistingCVD + -0.43304302 * (seswoa - 0.0602643) + 0.75612791 * smokingYes + 0.17357978
                         * exSmokerInt + -0.00606962 * (champScore - 5.433716) + -0.00293096 * (eetscore - 84.15415)))));
 
 
+    }
+
+    private double calcChampScoreIntervention(Double champScore, Map<String, String> evidence)
+            throws UnknownStateException {
+        String interventionExcercise = getOptionalStringValue(evidence, "intervention_exercise");
+        if (interventionExcercise == null) {
+            return 1;
+        }
+        checkValidInterventionExcercise(interventionExcercise);
+        return getRiskTable().get(calcChampScoreIQuartile(champScore))
+                .get(interventionExcercise);
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    private void checkValidInterventionExcercise(String interventionExcercise) throws UnknownStateException {
+        List<String> valid = Arrays.asList("0_3", "3_4.75", "4.75_8", ">8");
+        if (!valid.contains(interventionExcercise)) {
+            String s = "";
+            for (String v : valid) {
+                if (s.length() > 0) {
+                    s += " ";
+                }
+                s += "'" + v + "'";
+            }
+            throw new UnknownStateException(interventionExcercise, "intervention_exercise", s);
+        }
+    }
+
+    private Map<String, Map<String, Double>> getRiskTable() {
+        if (riskTable == null) {
+            riskTable = createRiskTable();
+        }
+        return riskTable;
+    }
+
+    @SuppressWarnings ("checkstyle:magicNumber")
+    private Map<String, Map<String, Double>> createRiskTable() {
+        Map<String, Map<String, Double>> riskTable = new HashMap<>();
+        Map<String, Double> interventions0U3 = new HashMap<>();
+
+        interventions0U3.put("0_3", 1.0);
+        interventions0U3.put("3_4.75", 0.79);
+        interventions0U3.put("4.75_8", 0.72);
+        interventions0U3.put(">8", 0.60);
+
+        riskTable.put("0_3", interventions0U3);
+
+        Map<String, Double> interventions3U475 = new HashMap<>();
+
+        interventions3U475.put("0_3", 1.27);
+        interventions3U475.put("3_4.75", 1.0);
+        interventions3U475.put("4.75_8", 0.91);
+        interventions3U475.put(">8", 0.76);
+
+        riskTable.put("3_4.75", interventions3U475);
+
+        Map<String, Double> interventions475U8 = new HashMap<>();
+
+        interventions475U8.put("0_3", 1.39);
+        interventions475U8.put("3_4.75", 1.1);
+        interventions475U8.put("4.75_8", 1.0);
+        interventions475U8.put(">8", 0.83);
+
+        riskTable.put("4.75_8", interventions475U8);
+
+        Map<String, Double> interventions8 = new HashMap<>();
+
+        interventions8.put("0_3", 1.67);
+        interventions8.put("3_4.75", 1.32);
+        interventions8.put("4.75_8", 1.2);
+        interventions8.put(">8", 1.0);
+
+        riskTable.put(">8", interventions8);
+
+        return riskTable;
     }
 
     private RiskResponse createRiskResponse(double risk) {

@@ -122,7 +122,7 @@ public class ServerTest {
             ExceptionResponse r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
                          "Encountered an error. \n" +
-                                 "Currently running version: 2.9\n" +
+                                 "Currently running version: 2.10\n" +
                                  "Error: \n" +
                                  "Unknown state 'nonsense' for attribute 'gender', expected valid states: 'male', " +
                                  "'female'");
@@ -135,7 +135,7 @@ public class ServerTest {
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(),
                          "Encountered an error. \n" +
-                                 "Currently running version: 2.9\n" +
+                                 "Currently running version: 2.10\n" +
                                  "Error: \n" +
                                  "Unknown state 'nonsense' for attribute 'current_smoker', expected valid states: " +
                                  "'yes', 'no'");
@@ -152,7 +152,7 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Encountered an error. \n" +
-                    "Currently running version: 2.9\n" +
+                    "Currently running version: 2.10\n" +
                     "Error: \n" +
                     "Attribute 'SBP' is expected to be an double value");
 
@@ -170,7 +170,7 @@ public class ServerTest {
 
             r = (ExceptionResponse) server.estimateBaseLineRisk(req);
             assertEquals(r.getMessage(), "Encountered an error. \n" +
-                    "Currently running version: 2.9\n" +
+                    "Currently running version: 2.10\n" +
                     "Error: \n" +
                     "Missing attribute 'SBP' is expected to be present");
         }
@@ -280,7 +280,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
 
-            assertEquals(comparisons.get("CHAMPS_MVPA_score 5.833333333333333"), 0.09, 0.01);
+            assertEquals(comparisons.get("intervention_excercise >8"), 0.12, 0.01);
         }
     }
 
@@ -451,7 +451,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
             assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
-            assertEquals(comparisons.get("CHAMPS_MVPA_score 3.75"), 0.0222, 0.001);
+            assertEquals(comparisons.get("intervention_excercise >8"), 0.0222, 0.001);
         }
     }
 
@@ -509,7 +509,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
             assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
-            assertEquals(comparisons.get("eetscore 110CHAMPS_MVPA_score 3.75"), 0.0197, 0.001);
+            assertEquals(comparisons.get("intervention_excercise >8eetscore 110"), 0.0197, 0.001);
         }
     }
 

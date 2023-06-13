@@ -90,7 +90,6 @@ public class Server {
     private Map<String, String> cleanIntervention(Map<String, String> input) {
         input = removeValue(input, "intervention_bmi");
         input = removeValue(input, "intervention_diet");
-        input = removeValue(input, "intervention_exercise");
         input = removeValue(input, "intervention_glucose");
         input = removeValue(input, "intervention_ldl");
         input = removeValue(input, "intervention_sbp");
@@ -103,7 +102,7 @@ public class Server {
         init();
         Map<String, String> changes = new HashMap<>();
         Integer diet = calcDiet(input);
-        Double interventionCHAMPS = calcChampScoreIntervention(input);
+        String interventionCHAMPS = getOptionalStringValue(input, "intervention_exercise");
         Double interventionLdl = calcLDLIntervention(input);
         Integer sbp = calcSBPIntervention(input);
         Boolean smoking = getOptionalBooleanValue(input, "intervention_smoking");
@@ -112,7 +111,7 @@ public class Server {
             changes.put("eetscore", String.valueOf(diet));
         }
         if (interventionCHAMPS != null) {
-            changes.put("CHAMPS_MVPA_score", String.valueOf(interventionCHAMPS));
+            changes.put("intervention_excercise", interventionCHAMPS);
         }
 
         if (interventionLdl != null) {
@@ -143,10 +142,11 @@ public class Server {
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException e) {
             return new ExceptionResponse(e);
-        } catch (Exception e) {
-            ModelExposerException e2 = new ModelExposerException("Internal server error: 500");
-            return new ExceptionResponse(e2);
         }
+//        } catch (Exception e) {
+//            ModelExposerException e2 = new ModelExposerException("Internal server error: 500");
+//            return new ExceptionResponse(e2);
+//        }
     }
 
     private Map<String, String> cleanUpEvidence(Map<String, String> input)

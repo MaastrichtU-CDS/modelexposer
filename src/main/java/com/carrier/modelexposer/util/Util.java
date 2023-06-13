@@ -147,28 +147,18 @@ public final class Util {
     }
 
     @SuppressWarnings ("checkstyle:magicNumber")
-    public static Double calcChampScoreIntervention(Map<String, String> evidence)
-            throws InvalidDoubleException, UnknownStateException {
-        String intervention = getOptionalStringValue(evidence, "intervention_exercise");
-        if (intervention == null) {
-            return null;
-        }
-        //CHAMPS original score is in hours, intervention is in minute, normalize to hours
-        if (intervention.equals("<30")) {
-            return 15.0 / 60;
-        } else if (intervention.equals("30_90")) {
-            return 60.0 / 60;
-        } else if (intervention.equals("90_150")) {
-            return 120.0 / 60;
-        } else if (intervention.equals("150_300")) {
-            return 225.0 / 60;
-        } else if (intervention.equals(">300")) {
-            return 350.0 / 60;
+    public static String calcChampScoreIQuartile(double champScore) {
+        if (champScore < 3) {
+            return "0_3";
+        } else if (champScore < 4.75) {
+            return "3_4.75";
+        } else if (champScore < 8) {
+            return "4.75_8";
         } else {
-            throw new UnknownStateException(intervention, "intervention_exercise",
-                                            "'<30', '30_90', '90_150', '150_300', '>300'");
+            return ">8";
         }
     }
+
 
     @SuppressWarnings ("checkstyle:magicNumber")
     public static Double calcLDLIntervention(Map<String, String> evidence)

@@ -25,6 +25,6 @@
 	"ex_smoker" : "no",
     "gender" : "male",
     "SBP" : "150",
-    "intervention_exercise" : ">300"
+    "intervention_exercise" : ">8"
   }
 }
