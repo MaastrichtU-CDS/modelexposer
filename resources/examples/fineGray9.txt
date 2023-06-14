@@ -28,8 +28,8 @@
     "SBP" : "140",
     "intervention_smoking" : "null",
     "intervention_exercise" : "null",
-    "intervention_diet" : "very_high",
-    "intervention_sbp" : "null",
+    "intervention_diet" : "null",
+    "intervention_sbp" : "120_130",
     "intervention_ldl" : "null"
   }
 }

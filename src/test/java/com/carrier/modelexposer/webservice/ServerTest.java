@@ -450,8 +450,8 @@ public class ServerTest {
             }
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
-            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
-            assertEquals(comparisons.get("intervention_excercise >8"), 0.0222, 0.001);
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
+            assertEquals(comparisons.get("ex_smoker yesLDL 2.2current_smoker noeetscore 110"), 0.0171, 0.001);
         }
     }
 
@@ -479,8 +479,8 @@ public class ServerTest {
             }
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
-            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
-            assertEquals(comparisons.get("eetscore 110"), 0.0200, 0.001);
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
+            assertEquals(comparisons.get("intervention_excercise 4.75_8"), 0.0681, 0.001);
         }
     }
 
@@ -508,8 +508,8 @@ public class ServerTest {
             }
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
-            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
-            assertEquals(comparisons.get("intervention_excercise >8eetscore 110"), 0.0197, 0.001);
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0225, 0.001);
+            assertEquals(comparisons.get("intervention_excercise 3_4.75"), 0.0178, 0.001);
         }
     }
 
@@ -538,7 +538,7 @@ public class ServerTest {
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
             assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0224, 0.001);
-            assertEquals(comparisons.get("SBP 125"), 0.016, 0.001);
+            assertEquals(comparisons.get("eetscore 110"), 0.020, 0.001);
         }
     }
 
@@ -566,8 +566,66 @@ public class ServerTest {
             }
             comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
 
-            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0748, 0.001);
-            assertEquals(comparisons.get("ex_smoker yesLDL 2.2current_smoker noeetscore 110"), 0.0171, 0.001);
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0225, 0.001);
+            assertEquals(comparisons.get("intervention_excercise 3_4.75eetscore 110"), 0.0158, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_9()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            String seswoa = "resources/seswoa_";
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray9.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0225, 0.001);
+            assertEquals(comparisons.get("SBP 125"), 0.0161, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_10()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            String seswoa = "resources/seswoa_";
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
+
+            ReducedRiskRequest req = readJSONReducedRisk(path + "examples/fineGray10.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            ReducedRiskResponse result = (ReducedRiskResponse) server.estimateBaseLineRisk(req);
+
+            Map<String, Double> comparisons = new HashMap<>();
+
+            String name = "";
+            for (String s : result.getChanges().getChanged().keySet()) {
+                name += s + " " + result.getChanges().getChanged().get(s);
+            }
+            comparisons.put(name, result.getChanges().getProbabilities().get("CVD"));
+
+            assertEquals(result.getBaseline().getProbabilities().get("CVD"), 0.0225, 0.001);
+            assertEquals(comparisons.get("intervention_excercise >8"), 0.0135, 0.001);
         }
     }
 

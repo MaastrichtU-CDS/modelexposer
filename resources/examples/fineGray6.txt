@@ -27,8 +27,8 @@
     "gender" : "male",
     "SBP" : "140",
     "intervention_smoking" : "null",
-    "intervention_exercise" : ">8",
-    "intervention_diet" : "very_high",
+    "intervention_exercise" : "3_4.75",
+    "intervention_diet" : "null",
     "intervention_sbp" : "null",
     "intervention_ldl" : "null"
   }

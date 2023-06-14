@@ -54,7 +54,7 @@ public class FineGrayClassifier extends Classifier {
                 ldlFactor = 1;
             }
 
-            if (!containsOtherVariables(comparison)) {
+            if (!containsOtherVariables(comparison, Arrays.asList("SBP", "LDL"))) {
                 probability = baseLine(evidence) * Math.pow(0.8, (sbp - targetSbp) / 10) * ldlFactor;
             } else {
                 probability *= Math.pow(0.8, (sbp - targetSbp) / 10) * ldlFactor;
@@ -62,7 +62,7 @@ public class FineGrayClassifier extends Classifier {
         } else if (getOptionalDoubleValue(comparison, "SBP") != null) {
             double sbp = getDoubleValue(evidence, "SBP");
             double targetSbp = getDoubleValue(comparison, "SBP");
-            if (!containsOtherVariables(comparison)) {
+            if (!containsOtherVariables(comparison, "SBP")) {
                 probability = baseline * Math.pow(0.8, (sbp - targetSbp) / 10);
             } else {
                 probability *= Math.pow(0.8, (sbp - targetSbp) / 10);
@@ -71,11 +71,22 @@ public class FineGrayClassifier extends Classifier {
             double ldl = getDoubleValue(evidence, "LDL");
             double targetLdl = getDoubleValue(comparison, "LDL");
             if (targetLdl <= 2.5) {
-                if (!containsOtherVariables(comparison)) {
+                if (!containsOtherVariables(comparison, "LDL")) {
                     probability = baseline * Math.pow(0.78, (ldl - targetLdl));
                 } else {
                     probability *= Math.pow(0.78, (ldl - targetLdl));
                 }
+            }
+        }
+        if (getOptionalStringValue(evidence, "intervention_exercise") != null) {
+            // excercise intervention
+            Double champScore = calcChampScore(evidence) / 60; //finegray wants it in minutes
+            double calcChampScoreInterventionModifier = calcChampScoreIntervention(champScore, evidence);
+
+            if (!containsOtherVariables(comparison, "intervention_exercise")) {
+                probability = baseline * calcChampScoreInterventionModifier;
+            } else {
+                probability *= calcChampScoreInterventionModifier;
             }
         }
         Map<String, Double> prob = new HashMap<>();
@@ -168,7 +179,6 @@ public class FineGrayClassifier extends Classifier {
         Boolean exSmoker = getOptionalBooleanValue(evidence, "ex_smoker");
         Double champScore = calcChampScore(evidence) / 60; //finegray wants it in minutes
         Integer eetscore = getIntValue(evidence, "eetscore");
-        double calcChampScoreInterventionModifier = calcChampScoreIntervention(champScore, evidence);
 
 
         Double seswoa = getDoubleValue(evidence, "seswoa");
@@ -216,7 +226,7 @@ public class FineGrayClassifier extends Classifier {
 
         //modifying entire risk with calcChampScoreInterventionModifier
 
-        return calcChampScoreInterventionModifier * (1 - (Math.pow((1 - 0.02369760), Math.exp(
+        return (1 - (Math.pow((1 - 0.02369760), Math.exp(
                 0.06263895 * (age - 59.63795) + 0.58698845 * genderInt + 0.43360962 * diabetesInt + 0.64925821
                         * preexistingCVD + -0.43304302 * (seswoa - 0.0602643) + 0.75612791 * smokingYes + 0.17357978
                         * exSmokerInt + -0.00606962 * (champScore - 5.433716) + -0.00293096 * (eetscore - 84.15415)))));
@@ -307,9 +317,18 @@ public class FineGrayClassifier extends Classifier {
         return response;
     }
 
-    private boolean containsOtherVariables(Map<String, String> comparison) {
-        for (String key : comparison.keySet()) {
-            if (!(key.equals("SBP") || key.equals("LDL"))) {
+    private boolean containsOtherVariables(Map<String, String> comparison, List<String> references) {
+        for (String r : references) {
+            if (containsOtherVariables(comparison, r)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean containsOtherVariables(Map<String, String> comparison, String reference) {
+        for (String c : comparison.keySet()) {
+            if (!c.equals(reference)) {
                 return true;
             }
         }
