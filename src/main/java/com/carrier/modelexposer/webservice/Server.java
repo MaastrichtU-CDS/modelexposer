@@ -70,11 +70,8 @@ public class Server {
         try {
             Map<String, String> changes = detectIntervention(req.getInput());
             if (changes.size() > 0) {
-                ReducedRiskRequest r = new ReducedRiskRequest();
-                r.setInput(req.getInput());
-                r.setModelType(req.getModelType());
-                r.setChanges(changes);
-                return estimateReducedRisk(r);
+                Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
+                return classifier.compareClassifications(updatedInput, changes);
             }
             Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
             return classifier.classify(updatedInput);
@@ -111,7 +108,7 @@ public class Server {
             changes.put("eetscore", String.valueOf(diet));
         }
         if (interventionCHAMPS != null) {
-            changes.put("intervention_excercise", interventionCHAMPS);
+            changes.put("intervention_exercise", interventionCHAMPS);
         }
 
         if (interventionLdl != null) {
@@ -135,9 +132,10 @@ public class Server {
     public Response estimateReducedRisk(
             @RequestBody ReducedRiskRequest req) throws Exception {
         setClassifier(req);
+        init();
         try {
             Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
-            Map<String, String> updatedChanges = cleanUpEvidence(req.getChanges());
+            Map<String, String> updatedChanges = detectIntervention(req.getChanges());
             return classifier.compareClassifications(updatedInput, updatedChanges);
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException e) {
