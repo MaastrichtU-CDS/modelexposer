@@ -78,10 +78,10 @@ public class FineGrayClassifier extends Classifier {
                 }
             }
         }
-        if (getOptionalStringValue(evidence, "intervention_exercise") != null) {
+        if (getOptionalStringValue(comparison, "intervention_exercise") != null) {
             // excercise intervention
             Double champScore = calcChampScore(evidence) / 60; //finegray wants it in minutes
-            double calcChampScoreInterventionModifier = calcChampScoreIntervention(champScore, evidence);
+            double calcChampScoreInterventionModifier = calcChampScoreIntervention(champScore, comparison);
 
             if (!containsOtherVariables(comparison, "intervention_exercise")) {
                 probability = baseline * calcChampScoreInterventionModifier;
