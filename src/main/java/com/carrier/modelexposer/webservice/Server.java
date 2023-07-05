@@ -140,11 +140,10 @@ public class Server {
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException e) {
             return new ExceptionResponse(e);
+        } catch (Exception e) {
+            ModelExposerException e2 = new ModelExposerException("Internal server error: 500");
+            return new ExceptionResponse(e2);
         }
-//        } catch (Exception e) {
-//            ModelExposerException e2 = new ModelExposerException("Internal server error: 500");
-//            return new ExceptionResponse(e2);
-//        }
     }
 
     private Map<String, String> cleanUpEvidence(Map<String, String> input)
