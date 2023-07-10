@@ -13,5 +13,3 @@ public class RiskResponse extends Response {
         this.probabilities = probabilities;
     }
 }
-
-

@@ -17,8 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class Score2ClassifierTest {
     @Test
     public void testClassifyTestSanaNetExample()
-            throws InvalidIntegerException, InvalidDoubleException,
-                   MissingAttributeException, UnknownStateException {
+            throws Exception {
         {
             Map<String, String> evidence = new HashMap<>();
             evidence.put("gender", "male");
@@ -30,7 +29,7 @@ public class Score2ClassifierTest {
 
             Score2Classifier classifier = new Score2Classifier();
             RiskResponse response = classifier.classify(evidence);
-            assertEquals(response.getProbabilities().get("CVD"), 0.06, 0.01);
+            assertEquals(response.getProbabilities().get("CVD"), 0.064, 0.01);
 
             Map<String, String> evidence2 = new HashMap<>();
             evidence2.put("gender", "female");
@@ -44,7 +43,7 @@ public class Score2ClassifierTest {
             assertEquals(response.getProbabilities().get("CVD"), 0.044, 0.001);
 
             ReducedRiskResponse reduced = classifier.compareClassifications(evidence, evidence2);
-            assertEquals(reduced.getBaseline().getProbabilities().get("CVD"), 0.065, 0.001);
+            assertEquals(reduced.getBaseline().getProbabilities().get("CVD"), 0.064, 0.001);
             assertEquals(reduced.getChanges().getProbabilities().get("CVD"), 0.044, 0.001);
         }
     }
@@ -64,7 +63,7 @@ public class Score2ClassifierTest {
 
             Score2Classifier classifier = new Score2Classifier();
             double score = classifier.score2(evidence);
-            assertEquals(score, 0.0631, 0.001);
+            assertEquals(score, 0.063, 0.001);
 
             Map<String, String> evidence2 = new HashMap<>();
             evidence2.put("gender", "female");
@@ -75,7 +74,7 @@ public class Score2ClassifierTest {
             evidence2.put("HDL", "1.4");
 
             score = classifier.score2(evidence2);
-            assertEquals(score, 0.0433, 0.001);
+            assertEquals(score, 0.043, 0.001);
         }
     }
 

@@ -5,10 +5,7 @@ import com.carrier.modelexposer.classifier.finegray.FineGrayClassifier;
 import com.carrier.modelexposer.classifier.score2.Score2Classifier;
 import com.carrier.modelexposer.exception.*;
 import com.carrier.modelexposer.util.SESWOAMapper;
-import com.carrier.modelexposer.webservice.domain.ExceptionResponse;
-import com.carrier.modelexposer.webservice.domain.ReducedRiskRequest;
-import com.carrier.modelexposer.webservice.domain.Response;
-import com.carrier.modelexposer.webservice.domain.RiskRequest;
+import com.carrier.modelexposer.webservice.domain.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,10 +68,15 @@ public class Server {
             Map<String, String> changes = detectIntervention(req.getInput());
             if (changes.size() > 0) {
                 Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
-                return classifier.compareClassifications(updatedInput, changes);
+                ReducedRiskResponse r = classifier.compareClassifications(updatedInput, changes);
+                roundProbabilities(r.getBaseline().getProbabilities());
+                roundProbabilities(r.getChanges().getProbabilities());
+                return r;
             }
             Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
-            return classifier.classify(updatedInput);
+            RiskResponse r = classifier.classify(updatedInput);
+            roundProbabilities(r.getProbabilities());
+            return r;
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException | InvalidDoubleException e) {
             return new ExceptionResponse(e);
@@ -136,7 +138,10 @@ public class Server {
         try {
             Map<String, String> updatedInput = cleanUpEvidence(updateAdress(req.getInput()));
             Map<String, String> updatedChanges = detectIntervention(req.getChanges());
-            return classifier.compareClassifications(updatedInput, updatedChanges);
+            ReducedRiskResponse r = classifier.compareClassifications(updatedInput, updatedChanges);
+            roundProbabilities(r.getBaseline().getProbabilities());
+            roundProbabilities(r.getChanges().getProbabilities());
+            return r;
         } catch (UnknownStateException | UnknownAttributeException | InvalidIntegerException
                 | MissingAttributeException e) {
             return new ExceptionResponse(e);

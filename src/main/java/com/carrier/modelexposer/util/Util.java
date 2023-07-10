@@ -8,6 +8,8 @@ import com.carrier.modelexposer.exception.UnknownStateException;
 import java.util.Map;
 
 public final class Util {
+    private static final double HUNDRED = 100;
+
 
     private Util() {
     }
@@ -267,6 +269,14 @@ public final class Util {
             return 8.5;
         } else {
             throw new UnknownStateException(value, key, "'0', '<0.5', '0.5-1', '1-2', '2-4', '4-6', '6-8', '>8'");
+        }
+    }
+
+    public static void roundProbabilities(Map<String, Double> probabilities) {
+        //format all probabilities so that we get percentages
+        //E.g. 0.05343 becomes 5.34%
+        for (String key : probabilities.keySet()) {
+            probabilities.put(key, (double) Math.round(probabilities.get(key) * HUNDRED * HUNDRED) / HUNDRED);
         }
     }
 }
