@@ -273,10 +273,10 @@ public final class Util {
     }
 
     public static void roundProbabilities(Map<String, Double> probabilities) {
-        //format all probabilities so that we get percentages
-        //E.g. 0.05343 becomes 5.34%
+        //format all probabilities so that we round on  4 decimals
+        //e.g. 0.05341212 becomes 0.0534
         for (String key : probabilities.keySet()) {
-            probabilities.put(key, (double) Math.round(probabilities.get(key) * HUNDRED * HUNDRED) / HUNDRED);
+            probabilities.put(key, (double) Math.round(probabilities.get(key) * HUNDRED * HUNDRED) / HUNDRED / HUNDRED);
         }
     }
 }
