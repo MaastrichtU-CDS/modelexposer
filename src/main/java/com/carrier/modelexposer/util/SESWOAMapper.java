@@ -55,10 +55,8 @@ public class SESWOAMapper {
     }
 
     public Double findSESWOA(String postal, String number) {
-
-        HashMap<String, HashMap<Integer, Double>> seswoa = initSESWOA(determineFile(postal));
-
         try {
+            HashMap<String, HashMap<Integer, Double>> seswoa = initSESWOA(determineFile(postal));
             Double value = seswoa.computeIfPresent(postal, (k, v) -> {
                 return v;
             }).computeIfPresent(Integer.valueOf(number), (k, v) -> {
