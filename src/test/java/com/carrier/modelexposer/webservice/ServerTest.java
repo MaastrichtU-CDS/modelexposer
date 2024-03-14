@@ -630,6 +630,46 @@ public class ServerTest {
     }
 
     @Test
+    public void testFineGrayExample_11()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            String seswoa = "resources/seswoa_";
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
+
+            RiskRequest req = readJSONRiskRequest(path + "examples/fineGray11.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            RiskResponse result = (RiskResponse) server.estimateBaseLineRisk(req);
+
+            assertEquals(result.getProbabilities().get("CVD"), 0.0536, 0.001);
+        }
+    }
+
+    @Test
+    public void testFineGrayExample_12()
+            throws Exception {
+        {
+            String path = "resources/";
+            String model = "dummy_model_sananet.pgmx";
+            String seswoa = "resources/seswoa_";
+
+
+            Server server = new Server("CVD", "yes", RiskRequest.ModelType.fineGray, path, model, seswoa);
+
+            RiskRequest req = readJSONRiskRequest(path + "examples/fineGray12.txt");
+            req.setModelType(RiskRequest.ModelType.fineGray);
+
+            RiskResponse result = (RiskResponse) server.estimateBaseLineRisk(req);
+
+            assertEquals(result.getProbabilities().get("CVD"), 0.1121, 0.001);
+        }
+    }
+
+    @Test
     public void testFineGrayDeclinedAdress()
             throws Exception {
         {

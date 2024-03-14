@@ -159,7 +159,7 @@ public class FineGrayClassifier extends Classifier {
         if ((antihypertensives != null && antihypertensives) || (betaBlockingAgents
                 != null && betaBlockingAgents) || (calciumChannelBlockers != null && calciumChannelBlockers)
                 || (rASInhibitors != null && rASInhibitors)) {
-            bpMeds *= 1.1;
+            bpMeds = 1;
         }
         int preexistingCVD = 0;  // this is always 0, cuz exclusion criteria
 
